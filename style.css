@@ -1,0 +1,30 @@
+html {
+    font-size: 10px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+header {
+    margin: auto;
+}
+
+nav {
+    background-color: #006b6b;
+    color: antiquewhite;
+    padding: 0.2em;
+    font-size: 2rem;
+    position: sticky;
+    top: 0;
+}
+
+nav ul {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    list-style-type: none;
+}
+
+body {
+    font-size: 2em;
+    margin: 0;
+}

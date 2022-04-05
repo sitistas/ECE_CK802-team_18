@@ -4,7 +4,9 @@ html {
 }
 
 header {
-    margin: auto;
+    margin: 0 auto;
+    color: antiquewhite;
+
 }
 
 nav {
@@ -27,6 +29,9 @@ nav ul {
 body {
     font-size: 2em;
     margin: 0;
+    background-image: url(/images/books1.jpg);
+    background-size: cover;
+    color: antiquewhite;
 }
 
 footer,

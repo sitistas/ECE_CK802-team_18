@@ -5,17 +5,22 @@ html {
 
 header {
     margin: 0 auto;
-    color: antiquewhite;
+    color: rgb(0, 0, 0);
 
+}
+
+nav a {
+    color: antiquewhite;
+    font-size: 2rem;
+    text-decoration: none;
 }
 
 nav {
     background-color: #006b6b;
-    color: antiquewhite;
-    padding: 0.2em;
-    font-size: 2rem;
+    padding: 0.5em;
     position: sticky;
     top: 0;
+
 }
 
 nav ul {
@@ -24,14 +29,31 @@ nav ul {
     flex-wrap: wrap;
     justify-content: space-evenly;
     list-style-type: none;
+    margin: 0 auto;
+    max-width: 1080px;
 }
 
 body {
     font-size: 2em;
     margin: 0;
-    background-image: url(/images/books1.jpg);
-    background-size: cover;
-    color: antiquewhite;
+}
+
+.featured {
+    margin: 0 auto;
+    width: 100%;
+    height: 30em;
+    background-color: rgb(255, 216, 216);
+    display: flex;
+}
+
+.featured img {
+    height: 80%;
+}
+
+.featured h2 {
+    text-align: center;
+    margin: 0;
+    padding: 0.5em;
 }
 
 footer,
@@ -52,4 +74,9 @@ address {
     padding-left: 3em;
     font-style: normal;
 
+}
+
+.img1 {
+    max-width: 300px;
+    height: auto;
 }

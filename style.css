@@ -33,6 +33,36 @@ nav ul {
     max-width: 1080px;
 }
 
+.dropmenu .dropdwnbtn{
+    color: antiquewhite;
+    font-size: 2rem;  
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-family: inherit;
+  }
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: #006b6b;
+    z-index: 1;
+    border-radius: 0 0 0.5em 0.5em;
+}
+
+.dropmenu:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a{
+    display: block;
+    width: 6em;
+    text-decoration: none;
+    margin: 0.25em 0.1em;
+    padding: 0.25em;
+    text-align: center;
+  }
+
 body {
     font-size: 2em;
     margin: 0;

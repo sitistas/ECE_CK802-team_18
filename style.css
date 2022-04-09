@@ -29,7 +29,6 @@ nav ul {
     flex-wrap: wrap;
     justify-content: space-evenly;
     list-style-type: none;
-    margin: 0 auto;
     max-width: 1080px;
 }
 

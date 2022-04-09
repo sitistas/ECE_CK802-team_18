@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Εφαρμογή εκδοτικού οίκου</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2436/2436636.png" type="image/x-icon">
+    <!-- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a> -->
     <meta name="theme-color" content="#006b6b">
 </head>
 
@@ -18,36 +21,59 @@
         <h1>Καλωσορίσατε στον εκδοτικό οίκο "Ομάδα 18"!</h1>
 
     </header>
+
+    <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
+
     <nav>
         <ul>
-            <li><a href="">Αρχική σελίδα</a> </li>
-            <li> <a href="">Κατηγορίες βιβλίων</a></li>
+            <li><a href="index.html">Αρχική σελίδα</a> </li>
+            <li>
+                <div class="dropmenu"> <button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
+                    <div class="dropdown-content">
+                        <a href="">Ελληνική Λογοτεχνία</a>
+                        <a href="">Ξένη Λογοτεχνία</a>
+                        <a href="">Παιδικά βιβλία</a>
+                        <a href="">Πανεπιστημιακά συγγράμματα</a>
+                        <a href="">Επιστημονικά βιβλία</a>
+                    </div>
+            </li>
             <li> <a href="">Νέες κυκλοφορίες</a></li>
             <li> <a href="">Best Sellers</a></li>
             <li>
                 <div class="dropmenu"> <button class="dropdwnbtn">Λογαριασμός</button>
                     <div class="dropdown-content">
-                        <a href="">Εγγραφή</a>
+                        <a href="signup.html">Εγγραφή</a>
                         <a href="">Σύνδεση</a>
                         <a href="">Διαχείριση Λογαριασμού</a>
-                      </div>
+                    </div>
                 </div>
             </li>
         </ul>
-        
+
     </nav>
+
+    <!-- Section όπου θα φαίνεται/ονται νέες κυκλοφορίες που θέλουμε να δει ο επισκέπτης -->
 
     <div class="featured">
 
 
-        <img src="/images/PythonSITE.png" alt="book_cover">
-        <h2>Νέα κυκλοφορία: Εισαγωγή στους υπολογιστές</h2>
-        <p>Ανακαλύψτε τώρα την 4η έκδοση του πολυβραβευμένου συγγράμματος! Κάντε τα πρώτα σας βήματα στον
-            προγραμματισμό, ερχόμενοι σε επαφή με την γλώσσα Python.</p>
+        <img src="/images/PythonSITE.webp" alt="book_cover">
+
+        <div class="featured-description">
+            <h2>Νέα κυκλοφορία: Εισαγωγή στους υπολογιστές</h2>
+            <p>Ανακαλύψτε τώρα την 4η έκδοση του πολυβραβευμένου συγγράμματος! Κάντε τα πρώτα σας βήματα στον
+                προγραμματισμό, ερχόμενοι σε επαφή με την γλώσσα Python.</p>
+        </div>
 
     </div>
 
-    <img src="/images/books1.jpg" alt="library with books" class="img1">
+    <div class="best-sellers">
+
+        <h2 style="text-align: center;"> Best Sellers</h2>
+
+    </div>
+
+    <img src="/images/books1-small.webp" alt="library with books" class="img1">
     s sdsf <br>
     s sdsf <br>
     s sdsf <br>

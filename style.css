@@ -32,16 +32,16 @@ nav ul {
     max-width: 1080px;
 }
 
-.dropmenu .dropdwnbtn{
+.dropmenu .dropdwnbtn {
     color: antiquewhite;
-    font-size: 2rem;  
+    font-size: 2rem;
     border: none;
     outline: none;
     background-color: inherit;
     font-family: inherit;
-  }
+}
 
-.dropdown-content{
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #006b6b;
@@ -53,14 +53,15 @@ nav ul {
     display: block;
 }
 
-.dropdown-content a{
+.dropdown-content a {
     display: block;
-    width: 6em;
+    width: max-content;
+    text-align: center;
     text-decoration: none;
     margin: 0.25em 0.1em;
     padding: 0.25em;
     text-align: center;
-  }
+}
 
 body {
     font-size: 2em;
@@ -77,9 +78,10 @@ body {
 
 .featured img {
     height: 80%;
+    padding: 0.5em;
 }
 
-.featured h2 {
+.featured .featured-description {
     text-align: center;
     margin: 0;
     padding: 0.5em;
@@ -106,6 +108,5 @@ address {
 }
 
 .img1 {
-    max-width: 300px;
-    height: auto;
+    width: 30em;
 }

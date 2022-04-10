@@ -42,7 +42,7 @@ header {
     z-index: 100;
 }
 
-.search-bar{
+.search-bar {
     width: 50%;
     max-width: 800px;
     margin: 0 auto;
@@ -50,7 +50,7 @@ header {
     text-align: center;
 }
 
-.search-bar button{
+.search-bar button {
     background-color: #006b6b;
     position: absolute;
     bottom: 0.75em;
@@ -292,6 +292,7 @@ button:hover {
 }
 
 .book-container {
+    margin-top: 2em;
     padding: 2rem;
 }
 
@@ -299,7 +300,15 @@ button:hover {
     padding: 1rem;
 }
 
+.book-cell img {
+    width: 20em;
+}
+
 .grid {
     display: grid;
-    grid-template: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.button1 {
+    padding: 1em;
 }

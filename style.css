@@ -42,6 +42,20 @@ header {
     z-index: 100;
 }
 
+.search-bar{
+    width: 50%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+}
+
+.search-bar button{
+    background-color: #006b6b;
+    position: absolute;
+    bottom: 0.75em;
+}
+
 nav a {
     color: antiquewhite;
     font-size: 2rem;

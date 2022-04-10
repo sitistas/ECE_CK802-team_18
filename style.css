@@ -203,7 +203,7 @@ body {
 
 .best-sellers-list{
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 4fr;
     column-gap: 2em;
 }
 
@@ -212,6 +212,11 @@ body {
     justify-content: start;
     gap: 2.5em;
 }
+
+.best-sellers-list .best-seller:hover{
+    float: right;
+}
+
 
 .filters{
     grid-column: 1;
@@ -234,7 +239,7 @@ body {
 
 .best-seller:hover,
 .best-seller a:hover {
-    flex-basis: 15em;
+    transform: scale(1.2);
 }
 
 footer {

@@ -291,7 +291,6 @@ button {
 
 #submit {
     padding: 1em;
-
 }
 
 
@@ -320,6 +319,10 @@ button:hover {
     width: 25em;
 }
 
+.book-cell li {
+    list-style-type: none;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -327,4 +330,8 @@ button:hover {
 
 .button1 {
     padding: 1em;
+}
+
+.spacing2 {
+    padding: 2em;
 }

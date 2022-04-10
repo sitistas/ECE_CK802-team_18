@@ -7,8 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Εφαρμογή εκδοτικού οίκου</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
-    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2436/2436636.png" type="image/x-icon">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin=""> -->
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2436/2436636.png" type="image/x-icon"> -->
     <!-- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a> -->
     <meta name="theme-color" content="#006b6b">
     <script src="script.js"></script>
@@ -17,14 +18,15 @@
 <!-- Αναδυόμενο παράθυρο στο κέντρο της οθόνης για σύνδεση του χρήστη -->
 
 <div class="signin-form" id="sign-in">
-    <form action="" method="get">
+
+    <form action="" method="get" class="signin">
         <h2>Σύνδεση Χρήστη</h2>
         <input type="email" name="" id="email-signin" placeholder="Διεύθυνση email" required>
         <br>
         <input type="password" name="" id="" placeholder="Κωδικός πρόσβασης" required>
         <br>
-        <button type="submit">Σύνδεση</button>
-        <button onclick="closeForm()">Ακύρωση</button>
+        <button class="button" type="submit">Σύνδεση</button>
+        <button class="button" onclick="closeForm()">Ακύρωση</button>
         <br><br>
         <a href="">Ξέχασα τον κωδικό μου</a>
 
@@ -66,36 +68,46 @@
 
     </nav>
 
-
-
+    <div class="form-container">
+        <form action="" method="get" id="signup">
+            Όνομα<br>
+            <input type="text" required placeholder="Όνομα"><br>
+            Επώνυμο <br>
+            <input type="text" required placeholder="Επώνυμο"><br>
+            Ημερομηνία Γέννησης <br>
+            <input type="date" name="dob" id="dob" required placeholder="Ημ. Γέννησης" autocomplete="bday"><br>
+            Τηλέφωνο <br>
+            <input type="tel" required placeholder="Τηλέφωνο" autocomplete="tel"><br>
+            Διεύθυνση<br>
+            <input type="address" name="address" id="address" required placeholder="Οδός & Αριθμός"
+                autocomplete="street-address"><br>
+            Πόλη<br>
+            <input type="city" placeholder="Πόλη" required><br>
+            Email <br>
+            <input type="email" required placeholder="Email" autocomplete="email"><br>
+            Κωδικός πρόσβασης <br>
+            <input type="password" id="pwd" required placeholder="Κωδικός πρόσβασης" autocomplete="new-password"><br>
+            Επιβεβαίωση κωδικού πρόσβασης <br>
+            <input type="password" id="repeat-pwd" required placeholder="Επιβεβαίωση κωδικού πρόσβασης"
+                autocomplete="new-password">
+            <br><br><br>
+            <button type="submit" value="submit" id="submit">Υποβολή</button>
+        </form>
+    </div>
 </body>
-
-<form action="" method="get">
-    Όνομα<br>
-    <input type="text" required placeholder="Όνομα"><br>
-    Επώνυμο <br>
-    <input type="text" required placeholder="Επώνυμο"><br>
-    Τηλέφωνο <br>
-    <input type="tel" required placeholder="Τηλέφωνο"><br>
-    Email <br>
-    <input type="email" required placeholder="Email"><br>
-    Κωδικός πρόσβασης <br>
-    <input type="password" required placeholder="Κωδικός πρόσβασης"><br>
-    Επιβεβαίωση κωδικού πρόσβασης <br>
-    <input type="password" name="" id="" required placeholder="Επιβεβαίωση κωδικού πρόσβασης">
-
-    <br><br><br>
-    <button type="submit" value="submit">Υποβολή</button>
-</form>
-
 
 <footer>
     <address>
         <h3>Στοιχεία επικοινωνίας</h3>
         Τηλέφωνο: <a href="tel:+302610123456">2610123456</a><br>
-        Email: <a href="mailto:up1066577@upnet.gr">omada18@upnet.gr</a><br>
+        Email: <a href="mailto: up1066577@upnet.gr, up1066579@upnet.gr">omada18@upnet.gr</a><br>
+        Τμήμα Ηλεκτρολόγων Μηχανικών & Τεχνολογίας Υπολογιστών <br>
         Πανεπιστήμιο Πατρών
     </address>
+
+    <a href="https://www.upatras.gr" target="_blank">
+        <img src="/images/up_logo.jpg" alt="Πανεπιστήμιο Πατρών" id="up_img">
+    </a>
 
 </footer>
 

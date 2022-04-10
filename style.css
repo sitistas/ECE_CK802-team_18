@@ -325,7 +325,12 @@ button:hover {
 }
 
 .book-cell img {
-    width: 20em;
+    width: 15em;
+    transition: 0.5s;
+}
+
+.book-cell img:hover {
+    width: 25em;
 }
 
 .grid {

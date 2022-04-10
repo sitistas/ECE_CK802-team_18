@@ -32,7 +32,6 @@
     </form>
 </div>
 
-
 <body>
     <header>
 
@@ -42,11 +41,22 @@
 
     <div id="dim"></div>
 
-    <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
-    <div class="search-bar">
+    <div class="search-bar" id="search-bar">
+        <form action="" method="get">
+            <input type="text" placeholder="Αναζήτηση">
+            <br>
+            <button type="submit">Αναζήτηση</button>
+            <button onclick="closeSearch()">Άκυρο</button>
+    </form>
+    </div>
+
+    <!-- <div class="search-bar">
         <input type="book-search" placeholder="Αναζήτηση">
         <button type="submit">&#x1F50E;&#xFE0E;</button>
-    </div>
+    </div> -->
+
+    <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
+    
     <nav>
         <ul>
             <li><a href="index.html">Αρχική σελίδα</a> </li>
@@ -71,6 +81,8 @@
                     </div>
                 </div>
             </li>
+            <li> <a href="">Καλάθι</a></li>
+            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()">&#x1F50E;&#xFE0E;</button></li>
         </ul>
 
     </nav>

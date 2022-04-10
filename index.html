@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Εφαρμογή εκδοτικού οίκου</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin=""> -->
     <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2436/2436636.png" type="image/x-icon">
     <!-- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a> -->
     <meta name="theme-color" content="#006b6b">
@@ -19,9 +19,9 @@
 <div class="signin-form" id="sign-in">
     <form action="" method="get">
         <h2>Σύνδεση Χρήστη</h2>
-        <input type="email" name="" id="email-signin" placeholder="Διεύθυνση email" required>
+        <input type="email" name="" id="email-signin" placeholder="Διεύθυνση email" required autocomplete="username">
         <br>
-        <input type="password" name="" id="" placeholder="Κωδικός πρόσβασης" required>
+        <input type="password" name="" id="" placeholder="Κωδικός πρόσβασης" required autocomplete="current-password">
         <br>
         <button type="submit">Σύνδεση</button>
         <button onclick="closeForm()">Ακύρωση</button>
@@ -47,7 +47,7 @@
         <ul>
             <li><a href="index.html">Αρχική σελίδα</a> </li>
             <li>
-                <div class="dropmenu"> <button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
+                <div class="dropmenu"><button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
                     <div class="dropdown-content">
                         <a href="">Ελληνική Λογοτεχνία</a>
                         <a href="">Ξένη Λογοτεχνία</a>

@@ -193,12 +193,27 @@ body {
     padding: 2em;
 }
 
-.best-sellers {
+.best-sellers{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 1em 0.25em;
-    margin-bottom: 2em;
+    margin: 2em;
+}
+
+.best-sellers-list{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    column-gap: 2em;
+}
+
+.best-sellers-list .best-sellers{
+    grid-column: 2;
+}
+
+.filters{
+    grid-column: 1;
+    text-align: center;
 }
 
 .best-seller,

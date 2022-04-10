@@ -82,7 +82,22 @@ nav ul {
     text-decoration: none;
     margin: 0.25em 0.1em;
     padding: 0.25em;
-    text-align: center;
+}
+
+@media screen and (max-width:900px) {
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        text-align: center;
+        font-size: 2em;
+    }
+
+    nav {
+        position: relative;
+    }
+
+    /* Χρειάζεται καλύτερη μεταχείριση για όσα έχουν dropdown menu */
 }
 
 body {
@@ -125,6 +140,20 @@ body {
     text-align: center;
     margin: auto;
     padding: 2em;
+}
+
+.best-sellers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.best-seller {
+    width: 10em;
+}
+
+.best-seller img {
+    width: 95%;
 }
 
 footer,

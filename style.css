@@ -10,8 +10,8 @@ header {
 }
 
 .button {
-    padding: 5em;
-    /* Δεν λειτουργεί για κάποιο λόγο */
+    padding: 1em;
+    /* Δεν λειτουργεί για κάποιο λόγο στον live server*/
 }
 
 .signin-form {

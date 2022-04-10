@@ -26,7 +26,7 @@
         <input type="password" name="" id="" placeholder="Κωδικός πρόσβασης" required autocomplete="current-password">
         <br>
         <button type="submit">Σύνδεση</button>
-        <button type="button" onclick="closeForm()">Ακύρωση</button>
+        <button onclick="closeForm()">Ακύρωση</button>
         <br><br>
         <a href="">Ξέχασα τον κωδικό μου</a>
 
@@ -47,7 +47,7 @@
             <input type="text" placeholder="Αναζήτηση">
             <br>
             <button type="submit">Αναζήτηση</button>
-            <button type="button" onclick="closeSearch()">Άκυρο</button>
+            <button onclick="closeSearch()">Άκυρο</button>
         </form>
     </div>
 
@@ -72,7 +72,7 @@
                     </div>
             </li>
             <li> <a href="">Νέες κυκλοφορίες</a></li>
-            <li> <a href="best-sellers.html">Best Sellers</a></li>
+            <li> <a href="">Best Sellers</a></li>
             <li>
                 <div class="dropmenu"> <button class="dropdwnbtn">Λογαριασμός</button>
                     <div class="dropdown-content">
@@ -83,73 +83,62 @@
                 </div>
             </li>
             <li> <a href="">Καλάθι</a></li>
-            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()"><i
-                        class="fa-solid fa-magnifying-glass"></i></button></li>
+            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()">&#x1F50E;&#xFE0E;</button></li>
         </ul>
 
     </nav>
 
-    <!-- Section όπου θα φαίνεται/ονται νέες κυκλοφορίες που θέλουμε να δει ο επισκέπτης -->
-
-    <div class="featured">
-
-
-        <img src="images/PythonSITE32.webp" alt="book_cover">
-
-        <div class="featured-description">
-            <h2>Νέα κυκλοφορία: Εισαγωγή στους υπολογιστές</h2>
-            <p>
-                Ανακαλύψτε τώρα την 4η έκδοση του πολυβραβευμένου συγγράμματος! Κάντε τα πρώτα σας βήματα στον
-                προγραμματισμό, ερχόμενοι σε επαφή με την γλώσσα Python.
-            </p>
-        </div>
-
-    </div>
-
     <h2 style="text-align: center;"> Best Sellers</h2>
 
-    <div class="best-sellers">
+    
+    <div class="best-sellers-list">
+        <div class="filters">
+            <a id="testtext">filters test</a>
+        </div>
+        
+
+        <div class="best-sellers">
 
 
-        <div class="best-seller">
-            <a href="pros-ta-astra.html">
-                <img src="images/pros-ta-astra.webp" alt="Προς τ'άστρα">
-                <h3>Προς τ' άστρα</h3>
-            </a>
-        </div>
-        <div class="best-seller">
-            <img src="images/the_subtle_art.jpeg" alt="The Subtle Art of not Giving a F*ck">
-            <h3>The Subtle Art of not Giving a F*ck</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/sasmos.jpeg" alt="Σασμός">
-            <h3>Σασμός</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/ugly_love.jpeg" alt="Ugly Love">
-            <h3>Ugly Love</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/it_ends_with_us.jpeg" alt="It Ends With Us">
-            <h3>It Ends With Us</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/to_dwro.jpeg" alt="Το Δώρο">
-            <h3>Το Δώρο</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/to_vivlio_pou_tha_itheles.jpeg"
-                alt="Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου">
-            <h3>Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου</h3>
-        </div>
-        <div class="best-seller">
-            <img src="images/to_peirama.jpeg" alt="Το Πείραμα">
-            <h3>Το Πείραμα</h3>
-        </div>
+            <div class="best-seller">
+                <a href="pros-ta-astra.html">
+                    <img src="images/pros-ta-astra.webp" alt="Προς τ'άστρα">
+                    <h3>Προς τ' άστρα</h3>
+                </a>
+            </div>
+            <div class="best-seller">
+                <img src="images/the_subtle_art.jpeg" alt="The Subtle Art of not Giving a F*ck">
+                <h3>The Subtle Art of not Giving a F*ck</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/sasmos.jpeg" alt="Σασμός">
+                <h3>Σασμός</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/ugly_love.jpeg" alt="Ugly Love">
+                <h3>Ugly Love</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/it_ends_with_us.jpeg" alt="It Ends With Us">
+                <h3>It Ends With Us</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/to_dwro.jpeg" alt="Το Δώρο">
+                <h3>Το Δώρο</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/to_vivlio_pou_tha_itheles.jpeg"
+                    alt="Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου">
+                <h3>Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου</h3>
+            </div>
+            <div class="best-seller">
+                <img src="images/to_peirama.jpeg" alt="Το Πείραμα">
+                <h3>Το Πείραμα</h3>
+            </div>
 
 
+        </div>
     </div>
-
 
 </body>
 

@@ -296,7 +296,6 @@ button {
 
 
 
-button:focus,
 button:hover {
     background-color: white;
     color: #006b6b;

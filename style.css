@@ -156,6 +156,12 @@ body {
     width: 95%;
 }
 
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 footer,
 footer a {
     background-color: #002c2c;
@@ -171,11 +177,11 @@ footer a:hover {
 
 
 address {
-    padding-left: 3em;
+    padding: 2em;
     font-style: normal;
 
 }
 
-.img1 {
-    width: 30em;
+#up_img {
+    height: 4em;
 }

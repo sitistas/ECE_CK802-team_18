@@ -17,12 +17,18 @@ header {
 .signin-form {
     display: none;
     position: fixed;
-    top: 40%;
-    left: 40%;
+    top: 35%;
+    left: 45%;
     z-index: 200;
     background-color: #ffffff;
-    padding: 1em;
+    padding: 2em;
     border-radius: 1em;
+    text-align: center;
+}
+
+.signin-form input{
+    width: 75%;
+    margin-top: 0.25em;
 }
 
 #dim {
@@ -51,7 +57,7 @@ nav {
 }
 
 nav a:hover {
-    font-size: larger;
+    text-decoration: underline white;
 }
 
 nav ul {
@@ -106,6 +112,8 @@ nav ul {
         position: relative;
     }
 
+    .dropdown-content{
+        margin-left: 30%;}
     /* Χρειάζεται καλύτερη μεταχείριση για όσα έχουν dropdown menu */
 }
 
@@ -126,12 +134,15 @@ body {
 
 .featured img {
     height: 80%;
-    padding: 0.5em;
+    padding: 2em 0;
+    padding-left: 5em;
     flex-basis: content;
 }
 
 .featured img:hover {
     height: 100%;
+    padding: 0;
+    padding-left: 4em;
     transition: 0.5s;
 }
 
@@ -210,16 +221,16 @@ address {
 input {
     border-radius: 0.5em;
     padding: 0.5em;
-    margin: 0.5em;
+    margin: 1em;
     width: 50%;
     height: 1.5em;
-    transition: border 0.2s;
+    transition: outline 0.2s;
 
 }
 
 input:focus,
 input:hover {
-    border: 0.5em solid #006b6b;
+    outline: 0.5em solid #006b6b;
 }
 
 
@@ -230,6 +241,12 @@ input:hover {
     border: 0.2em solid #002c2c;
     border-radius: 20px;
     width: 60%;
+}
+
+.signin-form button{
+    margin-top: 0.5em;
+    padding: 0 0.5em;
+    height: 2.5em;
 }
 
 button {

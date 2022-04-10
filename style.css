@@ -75,6 +75,7 @@ nav a {
 }
 
 nav {
+    z-index: 1;
     background-color: #006b6b;
     padding: 0.5em;
     position: sticky;

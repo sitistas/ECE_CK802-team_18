@@ -289,6 +289,10 @@ input:hover {
     outline: 0.5em solid #006b6b;
 }
 
+input[type="file"], input[type="file"]:focus,
+input[type="file"]:hover {
+    outline: 0.15em solid black !important;
+}
 
 .form-container {
     text-align: center;
@@ -297,6 +301,15 @@ input:hover {
     border: 0.2em solid #002c2c;
     border-radius: 20px;
     width: 60%;
+}
+
+textarea{
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 1em;
+    width: 50%;
+    height: 4em;
+    transition: outline 0.2s;
 }
 
 .signin-form button {

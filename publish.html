@@ -83,28 +83,22 @@
     </nav>
 
     <div class="form-container">
-        <form action="" method="get" id="signup">
-            <h2>Δημιουργία Λογαριασμού</h2>
-            Όνομα<br>
-            <input type="text" required placeholder="Όνομα"><br>
-            Επώνυμο <br>
-            <input type="text" required placeholder="Επώνυμο"><br>
-            Ημερομηνία Γέννησης <br>
-            <input type="date" name="dob" id="dob" required placeholder="Ημ. Γέννησης" autocomplete="bday"><br>
-            Τηλέφωνο <br>
-            <input type="tel" required placeholder="Τηλέφωνο" autocomplete="tel"><br>
-            Διεύθυνση<br>
-            <input type="address" name="address" id="address" required placeholder="Οδός & Αριθμός"
-                autocomplete="street-address"><br>
-            Πόλη<br>
-            <input type="city" placeholder="Πόλη" required><br>
-            Email <br>
-            <input type="email" required placeholder="Email" autocomplete="email"><br>
-            Κωδικός πρόσβασης <br>
-            <input type="password" id="pwd" required placeholder="Κωδικός πρόσβασης" autocomplete="new-password"><br>
-            Επιβεβαίωση κωδικού πρόσβασης <br>
-            <input type="password" id="repeat-pwd" required placeholder="Επιβεβαίωση κωδικού πρόσβασης"
-                autocomplete="new-password">
+        <form action="" method="get" id="publish">
+            <h2>Έκδοσε το δικό σου βιβλίο</h2>
+            Τίτλος<br>
+            <input type="text" required placeholder="Τίτλος"><br>
+            Κατηγορία/Θεματική ενότητα<br>
+            <input type="text" required placeholder="Κατηγορία"><br>
+            Αριθμός Λέξεων<br>
+            <input type="number" id="page-sum" required  placeholder=50000><br>
+            Περίληψη<br>
+            <input type="file" id="summary" required><br>
+            Σύντομη Ανάλυση του περιεχομένου (2-3 σελίδες)<br>
+            <input type="file" id="analysis" required><br>
+            Ενδεικτικό απόσπασμα<br>
+            <input type="file" id="chapter" required><br>
+            Σχόλια <br>
+            <textarea id="comments" rows="5">Σχόλια (προαιρετικά)</textarea>
             <br><br><br>
             <button type="submit" value="submit" id="submit">Υποβολή</button>
         </form>

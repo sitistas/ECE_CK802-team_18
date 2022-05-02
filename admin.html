@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Εφαρμογή εκδοτικού οίκου</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin=""> -->
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2436/2436636.png" type="image/x-icon"> -->
+    <!-- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a> -->
+    <meta name="theme-color" content="#006b6b">
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/572c0354f8.js" crossorigin="anonymous"></script>
+</head>
+
+<!-- Αναδυόμενο παράθυρο στο κέντρο της οθόνης για σύνδεση του χρήστη -->
+
+<div class="signin-form" id="sign-in">
+    <form action="" method="get">
+        <h2>Σύνδεση Χρήστη</h2>
+        <input type="email" name="" id="email-signin" placeholder="Διεύθυνση email" required autocomplete="username">
+        <br>
+        <input type="password" name="" id="" placeholder="Κωδικός πρόσβασης" required autocomplete="current-password">
+        <br>
+        <button type="submit">Σύνδεση</button>
+        <button type="button" onclick="closeForm()">Ακύρωση</button>
+        <br><br>
+        <a href="">Ξέχασα τον κωδικό μου</a>
+
+    </form>
+</div>
+
+<body>
+    <header>
+
+        <h1 style="text-align: center;">Καλωσορίσατε στον εκδοτικό οίκο "Ομάδα 18"!</h1>
+
+    </header>
+
+    <div id="dim"></div>
+
+    <div class="search-bar" id="search-bar">
+        <form action="" method="get">
+            <input type="text" placeholder="Αναζήτηση">
+            <br>
+            <button type="submit">Αναζήτηση</button>
+            <button type="button" onclick="closeSearch()">Άκυρο</button>
+        </form>
+    </div>
+
+    <!-- <div class="search-bar">
+        <input type="book-search" placeholder="Αναζήτηση">
+        <button type="submit">&#x1F50E;&#xFE0E;</button>
+    </div> -->
+
+    <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Αρχική σελίδα</a> </li>
+            <li>
+                <div class="dropmenu"><button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
+                    <div class="dropdown-content">
+                        <a href="">Ελληνική Λογοτεχνία</a>
+                        <a href="">Ξένη Λογοτεχνία</a>
+                        <a href="">Παιδικά βιβλία</a>
+                        <a href="">Πανεπιστημιακά συγγράμματα</a>
+                        <a href="">Επιστημονικά βιβλία</a>
+                    </div>
+                </div>
+            </li>
+            <li> <a href="">Νέες κυκλοφορίες</a></li>
+            <li> <a href="best-sellers.html">Best Sellers</a></li>
+            <li>
+                <div class="dropmenu"> <button class="dropdwnbtn">Λογαριασμός</button>
+                    <div class="dropdown-content">
+                        <a href="signup.html" class="nav-button">Εγγραφή</a>
+                        <a href="javascript:popupForm()">Σύνδεση</a>
+                        <a href="">Διαχείριση Λογαριασμού</a>
+                    </div>
+                </div>
+            </li>
+            <li> <a href="publish.html">Έκδοσε το έργο σου</a></li>
+            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()"><i
+                        class="fa-solid fa-magnifying-glass"></i></button></li>
+        </ul>
+
+    </nav>
+
+    <h1>Admin dashboard</h1>
+
+    <h2>Αιτήματα εκδώσεων έργων</h2>
+    <div class="requests">
+        <div id="pending">
+            <h3>Εκκρεμή</h3>
+            <a href="request1.html">
+                <ul>
+                    <li>Χαλαντζούκας Φοίβος</li>
+                    <li>Ο τελευταίος πιστός</li>
+                    <li>Ημ.: 13/2</li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a>
+        </div>
+        <div id="accepted">
+            <h3>Εγκεκριμένα</h3>
+            <a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a>
+        </div>
+        <div id="rejected">
+            <h3>Απορριφθέντα</h3>
+            <a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a><a href="">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </a>
+        </div>
+    </div>
+
+
+</body>
+
+
+
+<footer>
+    <address>
+        <h3>Στοιχεία επικοινωνίας</h3>
+        Τηλέφωνο: <a href="tel:+302610123456">2610123456</a><br>
+        Email: <a href="mailto: up1066577@upnet.gr, up1066579@upnet.gr">omada18@upnet.gr</a><br>
+        Τμήμα Ηλεκτρολόγων Μηχανικών & Τεχνολογίας Υπολογιστών <br>
+        Πανεπιστήμιο Πατρών
+    </address>
+
+    <a href="https://www.upatras.gr" target="_blank">
+        <img src="images/up_logo.jpg" alt="Πανεπιστήμιο Πατρών" id="up_img">
+    </a>
+
+</footer>
+
+</html>

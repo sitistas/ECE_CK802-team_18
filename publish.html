@@ -90,7 +90,8 @@
             Κατηγορία/Θεματική ενότητα<br>
             <input type="text" required placeholder="Κατηγορία"><br>
             Αριθμός Λέξεων<br>
-            <input type="number" id="page-sum" required  placeholder=50000><br>
+            <input type="number" id="page-sum" required placeholder='50000' , min="1000" , max="100000" ,
+                step="1000"><br>
             Περίληψη<br>
             <input type="file" id="summary" required><br>
             Σύντομη Ανάλυση του περιεχομένου (2-3 σελίδες)<br>
@@ -98,7 +99,7 @@
             Ενδεικτικό απόσπασμα<br>
             <input type="file" id="chapter" required><br>
             Σχόλια <br>
-            <textarea id="comments" rows="5">Σχόλια (προαιρετικά)</textarea>
+            <textarea id="comments" rows="5" placeholder="Σχόλια (προαιρετικά)"></textarea>
             <br><br><br>
             <button type="submit" value="submit" id="submit">Υποβολή</button>
         </form>

@@ -2,14 +2,16 @@ import express from "express";
 import { engine } from "express-handlebars";
 import dotenv from 'dotenv';
 import http from 'http';
-import { checkAuthenticated, showLogInForm } from "./login.mjs";
+import { checkAuthenticated } from "./login.mjs";
+import Session from './setup-session.mjs'
 
 const app = express()
 
 
-app.engine('.hbs', engine({ extname: '.hbs' }));
+app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 app.use(express.static('public/'));
+app.use(Session);
 
 const redirectHome = (req, res, next) => {
     console.log('redirect...', req.session)
@@ -30,6 +32,7 @@ app.listen(PORT, () => {
 
 app.get("/", (req, res) => {
     console.log("GET / session=", req.session);
+    console.log(req.query)
     res.render("index");
 })
 
@@ -39,7 +42,8 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/publish", (req, res) => {
-    if (checkAuthenticated()==false){
+    if (checkAuthenticated(req)==false){
+        req.session.returnTo = req.originalUrl;
         res.redirect("/login");
     }
     else{
@@ -59,7 +63,32 @@ app.get("/best-sellers", (req, res) => {
 
 app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
-    res.render("signup");
+    res.render("signup", { layout: 'main-logged-in' });
+})
+
+app.get("/login", (req, res) => {
+    // console.log(req);
+    // console.log("GET / session=", req.session);
+    res.render("login");
+})
+
+app.get('/auth', (req, res) => {
+    console.log(req.query.password)
+    if (req.query.password=='123'){
+        req.session.loggedUserId=1;
+        app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main-logged-in' }));
+        res.redirect(req.session.returnTo)
+    }
+    else{
+    res.render("login");}
+  })
+
+app.get("/logout", (req, res) => {
+    // console.log(req);
+    // console.log("GET / session=", req.session);
+    app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main' }));
+    req.session.destroy();
+    res.redirect('/');
 })
 
 // app.get('/books/:title', (req, res) => {

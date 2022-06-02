@@ -66,13 +66,16 @@ export let doLogout = (req, res) => {
 
 //Τη χρησιμοποιούμε για να ανακατευθύνουμε στη σελίδα /login όλα τα αιτήματα από μη συνδεδεμένους χρήστες
 export let checkAuthenticated = function (req, res, next) {
+    console.log('test')
+    // console.log(req);
     // //Αν η μεταβλητή συνεδρίας έχει τεθεί, τότε ο χρήστης είναι συνεδεμένος
-    // if (req.session.loggedUserId) {
+    if (req.session.loggedUserId) {
+        return true;}
     //     console.log("user is authenticated", req.originalUrl);
     //     //Καλεί τον επόμενο χειριστή (handler) του αιτήματος
     //     next();
     // }
-    // else {
+    else {
     //     //Ο χρήστης δεν έχει ταυτοποιηθεί, αν απλά ζητάει το /login ή το register δίνουμε τον
     //     //έλεγχο στο επόμενο middleware που έχει οριστεί στον router
     //     if ((req.originalUrl === "/login") || (req.originalUrl === "/register")) {
@@ -83,7 +86,6 @@ export let checkAuthenticated = function (req, res, next) {
             console.log("not authenticated, redirecting to /login")
             return false;
             // res.redirect('/login');
-        }
-    // }
-// }
-
+        // }
+    }
+}

@@ -9,6 +9,7 @@ const app = express()
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.use(express.static('public'));
+app.use('/public/images', express.static('images'));
 
 
 const redirectHome = (req, res, next) => {

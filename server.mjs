@@ -63,7 +63,7 @@ app.get("/best-sellers", (req, res) => {
 
 app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
-    res.render("signup", { layout: 'main-logged-in' });
+    res.render("signup");
 })
 
 app.get("/login", (req, res) => {

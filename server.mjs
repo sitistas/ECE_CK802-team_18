@@ -32,11 +32,6 @@ app.get("/", (req, res) => {
     res.render("index");
 })
 
-app.get("/index", (req, res) => {
-    console.log("GET / session=", req.session);
-    res.render("index");
-})
-
 app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("signup");

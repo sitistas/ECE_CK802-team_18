@@ -56,3 +56,13 @@ app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("signup");
 })
+
+// app.get('/books/:title', (req, res) => {
+//     console.log('GET / session=', req.session);
+//     res.render('book');
+// })
+
+app.get('/book/pros-ta-astra', (req, res) => {
+    console.log('GET / session=', req.session);
+    res.render('book');
+})

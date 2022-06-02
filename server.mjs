@@ -9,7 +9,7 @@ const app = express()
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
-app.use(express.static('public'));
+app.use(express.static('public/'));
 
 const redirectHome = (req, res, next) => {
     console.log('redirect...', req.session)

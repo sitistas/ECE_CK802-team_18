@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "16.x"
+  },
   "name": "ece_ck802-team_18---copy",
   "version": "1.0.0",
   "description": "Ιστοσελίδα εκδοτικού οίκου στα πλαίσια του μαθήματος \"Προγραμματισμός Διαδικτύου\"",
@@ -9,9 +12,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "engines": {
-    "node": "16.x"
-  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",

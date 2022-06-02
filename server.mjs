@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import dotenv from 'dotenv';
 import http from 'http';
+import { checkAuthenticated, showLogInForm } from "./login.mjs";
 
 const app = express()
 
@@ -38,8 +39,12 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/publish", (req, res) => {
-    console.log("GET / session=", req.session);
-    res.render("publish");
+    if (checkAuthenticated()==false){
+        res.redirect("/login");
+    }
+    else{
+        console.log("GET / session=", req.session);
+        res.render("publish");}
 })
 
 app.get("/admin", (req, res) => {
@@ -55,4 +60,14 @@ app.get("/best-sellers", (req, res) => {
 app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("signup");
+})
+
+// app.get('/books/:title', (req, res) => {
+//     console.log('GET / session=', req.session);
+//     res.render('book');
+// })
+
+app.get('/book/pros-ta-astra', (req, res) => {
+    console.log('GET / session=', req.session);
+    res.render('book');
 })

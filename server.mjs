@@ -1,6 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import dotenv from 'dotenv';
+import http from 'http';
 
 const app = express()
 
@@ -8,8 +9,6 @@ const app = express()
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.use(express.static('public'));
-
-app.listen(8080);
 
 
 const redirectHome = (req, res, next) => {

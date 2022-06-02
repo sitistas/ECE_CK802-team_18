@@ -33,32 +33,32 @@ app.get("/", (req, res) => {
     res.render("index");
 })
 
-app.get("/index.html", (req, res) => {
+app.get("/index", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("index");
 })
 
-app.get("/signup.html", (req, res) => {
+app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("signup");
 })
 
-app.get("/publish.html", (req, res) => {
+app.get("/publish", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("publish");
 })
 
-app.get("/admin.html", (req, res) => {
+app.get("/admin", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("admin");
 })
 
-app.get("/best-sellers.html", (req, res) => {
+app.get("/best-sellers", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("best-sellers");
 })
 
-app.get("/signup.html", (req, res) => {
+app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
     res.render("signup");
 })

@@ -3,9 +3,10 @@ import { engine } from "express-handlebars";
 import sql from './db.heroku-pg.js'
 import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'
-// import Handlebars from 'handlebars';
 const app = express()
 import multer from 'multer'
+
+export let prosTaAstra = { title: "pros-ta-astra", normal_titlos: "Προς τ'άστρα" };
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -32,7 +33,6 @@ app.use(express.static('public/'));
 app.use(Session);
 app.use(express.urlencoded({ extended: true }));
 
-// Handlebars.registerPartial('/views/partials/book-partial', '{{title}}');
 
 const redirectHome = (req, res, next) => {
     console.log('redirect...', req.session)
@@ -150,3 +150,4 @@ app.get('/book/:title', (req, result) => {
 //     console.log('GET / session=', req.session);
 //     res.render('book');
 // })
+

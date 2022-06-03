@@ -3,7 +3,32 @@
 
 <div class="best-sellers-list">
     <div class="filters">
-        <a id="testtext">filters test</a>
+        <a id="testtext">Φίλτρα</a><br><br>
+        <fieldset>
+        <form action="" method="get">
+            <label for="title">Τίτλος Βιβλίου</label><br>
+            <input type="text" id="title" name="book-title"><br>
+            <label for="isbn">ISBN</label><br>
+            <input type="number" id="isbn" name="book-isbn"><br>
+            <label for="year">Έτος κυκλοφορίας</label><br>
+            <input type="number" id="year" name="book-year"><br>
+            <label for="author">Συγγραφέας</label><br>
+            <input type="text" id="author" name="book-author"><br>
+            <a id="testtext">Κατηγορία</a>
+            <div class="checkbox">           
+            <input type="checkbox" id="greek" name="greek">
+            <label for="greek">Eλληνική Λογοτεχνία</label><br>
+            <input type="checkbox" id="foreign" name="foreign">
+            <label for="foreign">Ξένη Λογοτεχνία</label><br>
+            <input type="checkbox" id="kids" name="kids">
+            <label for="kids">Παιδικά Βιβλία</label><br>
+            <input type="checkbox" id="academic" name="academic">
+            <label for="academic">Πανεπιστημιακά συγγράμματα</label><br>
+            <input type="checkbox" id="scientific" name="scientific">
+            <label for="scientific">Eπιστημονικά βιβλία</label></div><br>
+            <button type="submit" value="submit" id="submit">Υποβολή</button>
+        </form>
+        </fieldset>
     </div>
 
 

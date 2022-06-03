@@ -142,7 +142,6 @@ nav ul {
     .dropdown-content {
         margin-left: 30%;
     }
-
     /* Χρειάζεται καλύτερη μεταχείριση για όσα έχουν dropdown menu */
 }
 
@@ -222,6 +221,17 @@ body {
 .filters {
     grid-column: 1;
     text-align: center;
+}
+
+.filters .checkbox{
+    font-size: 0.75em;
+    text-align: left;
+    margin-left: 20%;
+}
+
+.filters input[type='checkbox'] {
+    text-align: left;
+    width: 2rem;
 }
 
 .best-seller,

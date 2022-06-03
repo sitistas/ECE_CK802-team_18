@@ -103,12 +103,13 @@ app.get("/logout", (req, res) => {
 })
 
 app.get('/book/:title', (req, res) => {
+    let details = {};
     sql.query(`SELECT * FROM vivlio1 WHERE titlos='${req.params.title}'`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
         else {
-            let details = res.rows[0];
+            details = res.rows[0];
             console.log(details);
         }
     });

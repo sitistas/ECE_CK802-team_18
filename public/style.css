@@ -93,6 +93,8 @@ nav ul {
     justify-content: space-evenly;
     list-style-type: none;
     max-width: 1080px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .dropmenu .dropdwnbtn,

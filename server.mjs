@@ -5,7 +5,26 @@ import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'
 // import Handlebars from 'handlebars';
 const app = express()
+import multer  from 'multer'
 
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, `./user-data/uploads/`);
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${req.session.loggedUserId}_${file.fieldname}.pdf`);
+    },
+  });
+
+const multerFilter = (req, file, cb) => {
+if (file.mimetype.split("/")[1] === "pdf") {
+    cb(null, true);
+} else {
+    cb(null, false);
+}
+};
+
+const upload = multer({storage: multerStorage, fileFilter: multerFilter})
 
 app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
@@ -56,6 +75,12 @@ app.get("/publish", (req, res) => {
         res.render("publish", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
     }
 })
+
+app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, res) => {
+        console.log("GET / session=", req.session);
+        // console.log(req)
+        res.render("publish", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+    })
 
 app.get("/admin", (req, res) => {
     console.log("GET / session=", req.session);

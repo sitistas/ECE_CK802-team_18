@@ -144,6 +144,7 @@ nav ul {
     .dropdown-content {
         margin-left: 30%;
     }
+
     /* Χρειάζεται καλύτερη μεταχείριση για όσα έχουν dropdown menu */
 }
 
@@ -225,7 +226,7 @@ body {
     text-align: center;
 }
 
-.filters .checkbox{
+.filters .checkbox {
     font-size: 0.75em;
     text-align: left;
     margin-left: 20%;
@@ -410,4 +411,9 @@ button:hover {
     text-decoration: none;
     color: #006b6b;
     transition: 0.2s;
+}
+
+.featured a {
+    color: #002c2c;
+    text-decoration: none;
 }

@@ -103,14 +103,14 @@ app.get("/logout", (req, res) => {
 })
 
 app.get('/book/:title', (req, res) => {
-    // sql.query('SELECT* FROM vivlia', (err, res) => {
-    //     if (err) {
-    //         console.log(err.message);
-    //     }
-    //     else {
-    //         console.log(res.rows);
-    //     }
-    // });
+    sql.query('SELECT * FROM vivlio1', (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            console.log(res.rows[0]);
+        }
+    });
     returnTo = req.originalUrl;
     let bookURL = '/book/' + req.params.title;
     console.log(bookURL);

@@ -108,13 +108,17 @@ app.get('/book/:title', (req, res) => {
             console.log(err.message);
         }
         else {
-            console.log(res.rows[0]);
+            let details = res.rows[0];
+            console.log(details);
         }
     });
     returnTo = req.originalUrl;
     let bookURL = '/book/' + req.params.title;
     console.log(bookURL);
-    res.render('book', { title: req.params.title, layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+    res.render('book', {
+        title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos,
+        layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+    });
 })
 
 // app.get('/book/pros-ta-astra', (req, res) => {

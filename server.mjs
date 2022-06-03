@@ -3,7 +3,7 @@ import { engine } from "express-handlebars";
 import sql from './db.heroku-pg.js'
 import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'
-
+// import Handlebars from 'handlebars';
 const app = express()
 
 
@@ -13,6 +13,7 @@ app.use(express.static('public/'));
 app.use(Session);
 app.use(express.urlencoded({ extended: true }));
 
+// Handlebars.registerPartial('/views/partials/book-partial', '{{title}}');
 
 const redirectHome = (req, res, next) => {
     console.log('redirect...', req.session)

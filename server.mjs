@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import dotenv from 'dotenv';
 import http from 'http';
+import sql from './db.heroku-pg.js'
 import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'
 
@@ -22,7 +23,7 @@ const redirectHome = (req, res, next) => {
     }
 };
 
-let returnTo="/";
+let returnTo = "/";
 
 console.log(process.env.PORT)
 // Εκκίνηση του εξυπηρετητή
@@ -36,7 +37,7 @@ app.get("/", (req, res) => {
     returnTo = req.originalUrl;
     console.log("GET / session=", req.session);
     console.log(req.query)
-    res.render("index", {layout: checkAuthenticated(req)?"main-logged-in":"main"});
+    res.render("index", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
 
 app.get("/signup", (req, res) => {
@@ -51,19 +52,19 @@ app.get("/publish", (req, res) => {
     }
     else {
         console.log("GET / session=", req.session);
-        res.render("publish", {layout: checkAuthenticated(req)?"main-logged-in":"main"});
+        res.render("publish", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
     }
 })
 
 app.get("/admin", (req, res) => {
     console.log("GET / session=", req.session);
-    res.render("admin", {layout:"main-logged-in"});
+    res.render("admin", { layout: "main-logged-in" });
 })
 
 app.get("/best-sellers", (req, res) => {
     returnTo = req.originalUrl;
     console.log("GET / session=", req.session);
-    res.render("best-sellers", {layout: checkAuthenticated(req)?"main-logged-in":"main"});
+    res.render("best-sellers", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
 
 app.get("/signup", (req, res) => {
@@ -100,6 +101,14 @@ app.get("/logout", (req, res) => {
 })
 
 app.get('/book/:title', (req, res) => {
+    // sql.query('SELECT* FROM vivlia', (err, res) => {
+    //     if (err) {
+    //         console.log(err.message);
+    //     }
+    //     else {
+    //         console.log(res.rows);
+    //     }
+    // });
     returnTo = req.originalUrl;
     let bookURL = '/book/' + req.params.title;
     console.log(bookURL);

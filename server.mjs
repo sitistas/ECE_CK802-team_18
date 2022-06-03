@@ -102,7 +102,7 @@ app.get("/logout", (req, res) => {
     res.redirect(returnTo);
 })
 
-app.get('/book/:title', (req, res) => {
+app.get('/book/:title', (req, result) => {
     let details = {};
     sql.query(`SELECT * FROM vivlio1 WHERE titlos='${req.params.title}'`, (err, res) => {
         if (err) {
@@ -110,16 +110,16 @@ app.get('/book/:title', (req, res) => {
         }
         else {
             details = res.rows[0];
-            console.log(details);
+            console.log("Details1", details);
+            returnTo = req.originalUrl;
+            console.log('Details2', details);
+            result.render('book', {
+                title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos,
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
         }
     });
-    returnTo = req.originalUrl;
-    let bookURL = '/book/' + req.params.title;
-    console.log(bookURL);
-    res.render('book', {
-        title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos,
-        layout: checkAuthenticated(req) ? "main-logged-in" : "main"
-    });
+
 })
 
 // app.get('/book/pros-ta-astra', (req, res) => {

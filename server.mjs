@@ -8,7 +8,7 @@ import Session from './setup-session.mjs'
 const app = express()
 
 
-app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main' }));
+app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 app.use(express.static('public/'));
 app.use(Session);
@@ -42,13 +42,14 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/publish", (req, res) => {
-    if (checkAuthenticated(req)==false){
+    if (checkAuthenticated(req) == false) {
         req.session.returnTo = req.originalUrl;
         res.redirect("/login");
     }
-    else{
+    else {
         console.log("GET / session=", req.session);
-        res.render("publish");}
+        res.render("publish");
+    }
 })
 
 app.get("/admin", (req, res) => {
@@ -74,29 +75,31 @@ app.get("/login", (req, res) => {
 
 app.get('/auth', (req, res) => {
     console.log(req.query.password)
-    if (req.query.password=='123'){
-        req.session.loggedUserId=1;
-        app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main-logged-in' }));
+    if (req.query.password == '123') {
+        req.session.loggedUserId = 1;
+        app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main-logged-in' }));
         res.redirect(req.session.returnTo)
     }
-    else{
-    res.render("login");}
-  })
+    else {
+        res.render("login");
+    }
+})
 
 app.get("/logout", (req, res) => {
     // console.log(req);
     // console.log("GET / session=", req.session);
-    app.engine('.hbs', engine({ extname: '.hbs',  defaultLayout: 'main' }));
+    app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
     req.session.destroy();
     res.redirect('/');
 })
 
-// app.get('/books/:title', (req, res) => {
+app.get('/book/:title', (req, res) => {
+    let bookURL = '/book/' + req.params.title;
+    console.log(bookURL);
+    res.render('book', { title: req.params.title });
+})
+
+// app.get('/book/pros-ta-astra', (req, res) => {
 //     console.log('GET / session=', req.session);
 //     res.render('book');
 // })
-
-app.get('/book/pros-ta-astra', (req, res) => {
-    console.log('GET / session=', req.session);
-    res.render('book');
-})

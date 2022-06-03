@@ -12,6 +12,8 @@ app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
 app.use(express.static('public/'));
 app.use(Session);
+app.use(express.urlencoded({ extended: true }));
+
 
 const redirectHome = (req, res, next) => {
     console.log('redirect...', req.session)
@@ -45,8 +47,8 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/publish", (req, res) => {
+    returnTo = req.originalUrl;
     if (checkAuthenticated(req) == false) {
-        returnTo = req.originalUrl;
         res.redirect("/login");
     }
     else {
@@ -78,10 +80,10 @@ app.get("/login", (req, res) => {
     res.render("login");
 })
 
-app.get('/auth', (req, res) => {
-    console.log(req.query.password)
+app.post('/auth', (req, res) => {
+    console.log(req.body.password)
     console.log('test');
-    if (req.query.password == '123') {
+    if (req.body.password == '123') {
         req.session.loggedUserId = 1;
         // app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main-logged-in' }));
         res.redirect(returnTo)

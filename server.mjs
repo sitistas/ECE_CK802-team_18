@@ -103,7 +103,7 @@ app.get("/logout", (req, res) => {
 })
 
 app.get('/book/:title', (req, res) => {
-    sql.query('SELECT * FROM vivlio1', (err, res) => {
+    sql.query(`SELECT * FROM vivlio1 WHERE titlos='${req.params.title}'`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
@@ -114,7 +114,7 @@ app.get('/book/:title', (req, res) => {
     returnTo = req.originalUrl;
     let bookURL = '/book/' + req.params.title;
     console.log(bookURL);
-    res.render('book', { title: req.params.title });
+    res.render('book', { title: req.params.title, layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
 
 // app.get('/book/pros-ta-astra', (req, res) => {

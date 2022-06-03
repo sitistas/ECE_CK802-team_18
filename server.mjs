@@ -1,7 +1,5 @@
 import express from "express";
 import { engine } from "express-handlebars";
-import dotenv from 'dotenv';
-import http from 'http';
 import sql from './db.heroku-pg.js'
 import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'

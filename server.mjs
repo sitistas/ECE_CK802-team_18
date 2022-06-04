@@ -8,7 +8,7 @@ import multer from 'multer'
 import bcrypt from 'bcrypt'
 let log = await import('./login.mjs')
 
-export let prosTaAstra = { title: "pros-ta-astra", normal_titlos: "Προς τ'άστρα" };
+export let prosTaAstra = { title: "pros-ta-astra", normal_title: "Προς τ'άστρα" };
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -56,7 +56,7 @@ app.listen(PORT, () => {
 
 
 app.get("/", (req, result) => {
-    sql.query(`SELECT * FROM vivlio1 LIMIT 7`, (err, res) => {
+    sql.query(`SELECT * FROM book LIMIT 7`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
@@ -105,7 +105,7 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/best-sellers", (req, result) => {
-    sql.query(`SELECT * FROM vivlio1`, (err, res) => {
+    sql.query(`SELECT * FROM book`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
@@ -161,8 +161,8 @@ app.post("/register", async (req, result) => {
         const psswd = await bcrypt.hash(req.body.password, 10);
 
         const query = {
-            text: 'INSERT INTO users (afm, email, password, first_name, last_name, birthdate, phone, address, city) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-            values: [req.body.afm, req.body.email, psswd, req.body.FirstName, req.body.LastName, req.body.dob, req.body.tel,req.body.address, req.body.city]
+            text: 'INSERT INTO users (afm, email, password, name, birthdate, phone, address, city) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+            values: [req.body.afm, req.body.email, psswd, req.body.name, req.body.dob, req.body.tel,req.body.address, req.body.city]
         }
 
         sql.query(query, (err, res) => {
@@ -221,7 +221,7 @@ app.get("/logout", (req, res) => {
 
 app.get('/book/:title', (req, result) => {
     let details = {};
-    sql.query(`SELECT * FROM vivlio1 WHERE titlos='${req.params.title}'`, (err, res) => {
+    sql.query(`SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title='${req.params.title}'`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
@@ -231,7 +231,7 @@ app.get('/book/:title', (req, result) => {
             returnTo = req.originalUrl;
             console.log('Details2', details);
             result.render('book', {
-                title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos, description: details.description, isbn: details.isbn, timi: details.timi, katigoria: details.katigoria, etos_ekdosis: details.etos_ekdosis, glwssa: details.glwssa,
+                title: details.title, pages: details.pages, author: details.name, normal_title: details.normal_title, description: details.description, isbn: details.isbn, price: details.price, category: details.category, release_year: details.release_year, language: details.language,
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }
@@ -246,7 +246,7 @@ app.get('/book/:title', (req, result) => {
 
 app.get("/category/:category", (req, result) => {
     console.log(req.params.category)
-    sql.query(`SELECT * FROM vivlio1 WHERE katigoria='${req.params.category}'`, (err, res) => {
+    sql.query(`SELECT * FROM book WHERE category='${req.params.category}'`, (err, res) => {
         if (err) {
             console.log(err.message);
         }

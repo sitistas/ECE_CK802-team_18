@@ -151,7 +151,7 @@ app.get("/best-sellers", (req, result) => {
 })
 
 app.get("/latest", (req, result) => {
-    sql.query(`SELECT * FROM book ORDER BY release_year DESC`, (err, res) => {
+    sql.query(`SELECT * FROM book ORDER BY release_year DESC LIMIT 7`, (err, res) => {
         if (err) {
             console.log(err.message);
         }

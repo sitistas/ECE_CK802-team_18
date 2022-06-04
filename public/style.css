@@ -358,7 +358,7 @@ input[type="file"]:hover {
     outline: 0.15em solid black !important;
 }
 
-.form-container {
+.form-container, .personal-data fieldset {
     text-align: center;
     margin: 2em auto;
     padding: 2em;

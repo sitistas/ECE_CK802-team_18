@@ -255,6 +255,31 @@ app.get('/book/:title', (req, result) => {
 
 })
 
+app.get('/profile', (req, result) => {
+    returnTo = req.originalUrl;
+    if (!req.session.loggedUserId) {
+        result.redirect("/login");
+    }
+    else{
+    sql.query(`SELECT * FROM users WHERE afm='${req.session.loggedUserId}'`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+            result.redirect('/')
+        }
+        else {
+            let details = res.rows[0];
+            console.log("Details1", details);
+            // returnTo = req.originalUrl;
+            console.log('Details2', details);
+            result.render('profile', {
+                name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
+                layout: "main-logged-in"
+            });
+        }
+    });
+
+}})
+
 app.get('/search', (req, result) => {
     // console.log(req)
     const searchTerm = req.query.term;

@@ -67,7 +67,7 @@ app.get("/", (req, result) => {
             // console.log('Details2', details);
             result.render('index', {
                 books: res.rows,
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -89,7 +89,7 @@ app.get("/publish", (req, res) => {
     }
     else {
         console.log("GET / session=", req.session);
-        res.render("publish", { layout: req.session.loggedUserRole=='admin'? "main-admin" : "main-user"});
+        res.render("publish", { layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user" });
     }
 })
 
@@ -100,10 +100,11 @@ app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'an
 })
 
 app.get("/admin", (req, res) => {
-    if (req.session.loggedUserRole=='admin'){
-    console.log("GET / session=", req.session);
-    res.render("admin", { layout: "main-admin" });}
-    else {res.redirect("/")}
+    if (req.session.loggedUserRole == 'admin') {
+        console.log("GET / session=", req.session);
+        res.render("admin", { layout: "main-admin" });
+    }
+    else { res.redirect("/") }
 })
 
 app.get("/best-sellers", (req, result) => {
@@ -119,7 +120,7 @@ app.get("/best-sellers", (req, result) => {
             result.render('best-sellers', {
                 books: res.rows,
                 page_title: 'Best Sellers',
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -138,7 +139,7 @@ app.get("/latest", (req, result) => {
             result.render('latest', {
                 books: res.rows,
                 page_title: 'Νέες κυκλοφορίες',
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -157,21 +158,23 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/register", async (req, result) => {
-    log.getUserByEmail(req.body.email, (err,user)=> {
+    log.getUserByEmail(req.body.email, (err, user) => {
         console.log(req.body.email)
         if (user != undefined) {
             result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το email' });
-        }})
+        }
+    })
 
-    log.getUserByAFM(req.body.afm, (err,user)=> {
+    log.getUserByAFM(req.body.afm, (err, user) => {
         console.log(req.body.email)
         if (user != undefined) {
             result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το ΑΦΜ' });
-        }})
-    
+        }
+    })
+
     console.log(req.body)
-    if(req.body.password!=req.body.repeatPassword) {
-            result.render('signup', { message: 'Οι κωδικοί πρόσβασης δεν ταιριάζουν' });
+    if (req.body.password != req.body.repeatPassword) {
+        result.render('signup', { message: 'Οι κωδικοί πρόσβασης δεν ταιριάζουν' });
     }
 
     try {
@@ -179,13 +182,14 @@ app.post("/register", async (req, result) => {
 
         const query = {
             text: 'INSERT INTO users (afm, email, password, name, birthdate, phone, address, city) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-            values: [req.body.afm, req.body.email, psswd, req.body.name, req.body.dob, req.body.tel,req.body.address, req.body.city]
+            values: [req.body.afm, req.body.email, psswd, req.body.name, req.body.dob, req.body.tel, req.body.address, req.body.city]
         }
 
         sql.query(query, (err, res) => {
-            if (err){
-            // console.log(err)
-            result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });}
+            if (err) {
+                // console.log(err)
+                result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+            }
             else {
                 result.render('signup', { success: 'Επιτυχής εγγραφή!' });
             }
@@ -199,9 +203,9 @@ app.post("/register", async (req, result) => {
 
 
 app.post('/auth', (req, result) => {
-    
-    
-    log.getUserByEmail(req.body.email, (err,user)=> {
+
+
+    log.getUserByEmail(req.body.email, (err, user) => {
         console.log(req.body.email)
         if (user == undefined) {
             result.render('login', { message: 'Δε βρέθηκε χρήστης με αυτό το email' });
@@ -211,10 +215,10 @@ app.post('/auth', (req, result) => {
                 if (match) {
                     //Θέτουμε τη μεταβλητή συνεδρίας "loggedUserId"
                     req.session.loggedUserId = user.afm;
-                    req.session.loggedUserRole = user.is_admin ? "admin":"user";
+                    req.session.loggedUserRole = user.is_admin ? "admin" : "user";
                     console.log(returnTo)
                     console.log(user.afm)
-                    //Αν έχει τιμή η μεταβλητή req.session.originalUrl, αλλιώς όρισέ τη σε "/" 
+                    //Αν έχει τιμή η μεταβλητή req.session.originalUrl, αλλιώς όρισέ τη σε "/"
                     // returnTo = req.originalUrl || "/";
                     // res.redirect("/");
                     result.redirect(returnTo);
@@ -226,8 +230,8 @@ app.post('/auth', (req, result) => {
             })
         }
     })
-    })
-    
+})
+
 
 app.get("/logout", (req, res) => {
     // console.log(req);
@@ -251,7 +255,7 @@ app.get('/book/:title', (req, result) => {
             console.log('Details2', details);
             result.render('book', {
                 title: details.title, pages: details.pages, author: details.name, normal_title: details.normal_title, description: details.description, isbn: details.isbn, price: details.price, category: details.category, release_year: details.release_year, language: details.language,
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -263,32 +267,33 @@ app.get('/profile', (req, result) => {
     if (!req.session.loggedUserId) {
         result.redirect("/login");
     }
-    else{
-    sql.query(`SELECT * FROM users WHERE afm='${req.session.loggedUserId}'`, (err, res) => {
-        if (err) {
-            console.log(err.message);
-            result.redirect('/')
-        }
-        else {
-            let details = res.rows[0];
-            // console.log("Details1", details);
-            // returnTo = req.originalUrl;
-            // console.log('Details2', details);
-            result.render('profile', {
-                name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
-                layout: req.session.loggedUserRole=='admin'? "main-admin" : "main-user"
-            });
-        }
-    });
+    else {
+        sql.query(`SELECT * FROM users WHERE afm='${req.session.loggedUserId}'`, (err, res) => {
+            if (err) {
+                console.log(err.message);
+                result.redirect('/')
+            }
+            else {
+                let details = res.rows[0];
+                // console.log("Details1", details);
+                // returnTo = req.originalUrl;
+                // console.log('Details2', details);
+                result.render('profile', {
+                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
+                    layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
+                });
+            }
+        });
 
-}})
+    }
+})
 
 app.get('/search', (req, result) => {
     // console.log(req)
     const searchTerm = req.query.term;
     // console.log(searchTerm);
     console.log('1');
-    const query=`SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title like '%${searchTerm}%'
+    const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title like '%${searchTerm}%'
                     OR normal_title like '%${searchTerm}%'
                     OR book.isbn like '%${searchTerm}%'
                     OR category like '%${searchTerm}%'
@@ -310,7 +315,7 @@ app.get('/search', (req, result) => {
             result.render('results', {
                 books: res.rows,
                 page_title: 'Αποτελέσματα Αναζήτησης',
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -339,8 +344,13 @@ app.get("/category/:category", (req, result) => {
             result.render('category', {
                 books: res.rows,
                 page_title: req.params.category,
-                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
+})
+
+app.get("/add-book", (req, res) => {
+    console.log("GET / session=", req.session);
+    res.render("add-book");
 })

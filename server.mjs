@@ -64,7 +64,7 @@ app.get("/", (req, result) => {
             returnTo = req.originalUrl;
             // console.log('Details2', details);
             result.render('index', {
-                books : res.rows,
+                books: res.rows,
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }
@@ -114,7 +114,7 @@ app.get("/best-sellers", (req, result) => {
             returnTo = req.originalUrl;
             // console.log('Details2', details);
             result.render('best-sellers', {
-                books : res.rows,
+                books: res.rows,
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }
@@ -170,7 +170,7 @@ app.get('/book/:title', (req, result) => {
             returnTo = req.originalUrl;
             console.log('Details2', details);
             result.render('book', {
-                title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos, description: details.description,
+                title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos, description: details.description, isbn: details.isbn, timi: details.timi, katigoria: details.katigoria, etos_ekdosis: details.etos_ekdosis, glwssa: details.glwssa,
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }

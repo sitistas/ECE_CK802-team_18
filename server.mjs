@@ -382,3 +382,45 @@ app.get("/add-book", (req, res) => {
     }
     else { res.redirect("/") }
 })
+
+app.post("/add-book", (req, result) => {
+    let aafm="" //author afm
+    log.getBookByISBN(req.body.isbn, (err, user) => {
+        // console.log(req.body.email)
+        if (user != undefined) {
+            result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
+        }
+    })
+
+    log.getUserByName(req.body.author, (err, user) => {
+        if (user == undefined) {
+            result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
+        }
+        else {
+            aafm=user.afm
+       
+
+    console.log(aafm);
+    const query1 = {
+        text: 'INSERT INTO book (pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+        values: [req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
+    }
+
+    const query2 = {
+        text: 'INSERT INTO writes (isbn, afm) VALUES ($1, $2)',
+        values: [req.body.isbn, aafm]
+    }
+
+    sql.query(query1, (err, res) => {
+        if (err) {
+            console.log(err)
+            result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+        }
+        else {
+            sql.query(query2);
+            result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
+        }
+    })     }
+})
+
+})

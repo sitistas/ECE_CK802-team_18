@@ -121,10 +121,25 @@ app.get("/best-sellers", (req, result) => {
             });
         }
     });
+})
 
-    // returnTo = req.originalUrl;
-    // console.log("GET / session=", req.session);
-    // res.render("best-sellers", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+app.get("/latest", (req, result) => {
+    sql.query(`SELECT * FROM book ORDER BY release_year DESC`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            // details = res.rows[0];
+            console.log(res.rows);
+            returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            result.render('latest', {
+                books: res.rows,
+                page_title: 'Νέες κυκλοφορίες',
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
+        }
+    });
 })
 
 

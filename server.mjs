@@ -244,7 +244,7 @@ app.get('/book/:title', (req, result) => {
 //     res.render('book');
 // })
 
-app.get("/results/:category", (req, result) => {
+app.get("/category/:category", (req, result) => {
     console.log(req.params.category)
     sql.query(`SELECT * FROM vivlio1 WHERE katigoria='${req.params.category}'`, (err, res) => {
         if (err) {
@@ -255,7 +255,7 @@ app.get("/results/:category", (req, result) => {
             console.log(res.rows);
             returnTo = req.originalUrl;
             // console.log('Details2', details);
-            result.render('results', {
+            result.render('category', {
                 books: res.rows,
                 page_title: req.params.category,
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"

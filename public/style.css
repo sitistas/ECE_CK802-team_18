@@ -231,7 +231,7 @@ body {
     column-gap: 2em;
 }
 
-.best-sellers-list .best-sellers {
+.best-sellers {
     grid-column: 2;
     justify-content: start;
     gap: 2.5em;

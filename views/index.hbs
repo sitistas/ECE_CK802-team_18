@@ -20,19 +20,21 @@
 
 <div class="best-sellers">
 
-    {{> book-partial title = 'pros-ta-astra' normal-title="Προς τ'άστρα"}}
+    {{!-- {{> book-partial title = 'pros-ta-astra' normal-title="Προς τ'άστρα"}}
     {{> book-partial title = 'the-subtle-art'}}
     {{> book-partial title = 'sasmos'}}
     {{> book-partial title = 'ugly-love'}}
     {{> book-partial title = 'it-ends-with-us'}}
     {{> book-partial title = 'to-dwro'}}
-    {{> book-partial title = 'to-vivlio-pou'}}
+    {{> book-partial title = 'to-vivlio-pou'}} --}}
+    {{#each books}}
     <div class="best-seller">
-        <a href="book/pros-ta-astra">
-            <img src="/images/pros-ta-astra.jpg" alt="Προς τ'άστρα">
-            <h3>Προς τ' άστρα</h3>
+        <a href="/book/{{titlos}}">
+            <img src="/images/{{titlos}}.jpg" alt="{{normal_titlos}}">
+            <h3>{{normal_titlos}}</h3>
         </a>
     </div>
+    {{/each}}
 
     <!-- <div class="best-seller">
             <img src="/images/to_peirama.jpeg" alt="Το Πείραμα">

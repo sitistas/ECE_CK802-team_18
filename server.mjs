@@ -53,11 +53,26 @@ app.listen(PORT, () => {
 });
 
 
-app.get("/", (req, res) => {
-    returnTo = req.originalUrl;
-    console.log("GET / session=", req.session);
-    console.log(req.query)
-    res.render("index", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+app.get("/", (req, result) => {
+    sql.query(`SELECT * FROM vivlio1 LIMIT 7`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            // details = res.rows[0];
+            // console.log(res.rows);
+            returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            result.render('index', {
+                books : res.rows,
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
+        }
+    });
+    // returnTo = req.originalUrl;
+    // console.log("GET / session=", req.session);
+    // console.log(req.query)
+    // res.render("index", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
 
 app.get("/signup", (req, res) => {
@@ -87,10 +102,27 @@ app.get("/admin", (req, res) => {
     res.render("admin", { layout: "main-logged-in" });
 })
 
-app.get("/best-sellers", (req, res) => {
-    returnTo = req.originalUrl;
-    console.log("GET / session=", req.session);
-    res.render("best-sellers", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+app.get("/best-sellers", (req, result) => {
+
+    sql.query(`SELECT * FROM vivlio1`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            // details = res.rows[0];
+            console.log(res.rows);
+            returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            result.render('best-sellers', {
+                books : res.rows,
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
+        }
+    });
+
+    // returnTo = req.originalUrl;
+    // console.log("GET / session=", req.session);
+    // res.render("best-sellers", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
 
 app.get("/signup", (req, res) => {

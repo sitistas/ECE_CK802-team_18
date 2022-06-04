@@ -34,8 +34,16 @@
 
     <div class="best-sellers">
 
+    {{#each books}}
+    <div class="best-seller">
+        <a href="/book/{{titlos}}">
+            <img src="/images/{{titlos}}.jpg" alt="{{normal_titlos}}">
+            <h3>{{normal_titlos}}</h3>
+        </a>
+    </div>
+    {{/each}}
 
-        <div class="best-seller">
+        {{!-- <div class="best-seller">
             <a href="pros-ta-astra.html">
                 <img src="images/pros-ta-astra.webp" alt="Προς τ'άστρα">
                 <h3>Προς τ' άστρα</h3>
@@ -69,7 +77,7 @@
         <div class="best-seller">
             <img src="images/to_peirama.jpeg" alt="Το Πείραμα">
             <h3>Το Πείραμα</h3>
-        </div>
+        </div> --}}
 
 
     </div>

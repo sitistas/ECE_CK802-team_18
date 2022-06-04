@@ -111,7 +111,7 @@ app.get("/best-sellers", (req, result) => {
         }
         else {
             // details = res.rows[0];
-            console.log(res.rows);
+            // console.log(res.rows);
             returnTo = req.originalUrl;
             // console.log('Details2', details);
             result.render('best-sellers', {
@@ -130,7 +130,7 @@ app.get("/latest", (req, result) => {
         }
         else {
             // details = res.rows[0];
-            console.log(res.rows);
+            // console.log(res.rows);
             returnTo = req.originalUrl;
             // console.log('Details2', details);
             result.render('latest', {
@@ -239,6 +239,7 @@ app.get('/book/:title', (req, result) => {
     sql.query(`SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title='${req.params.title}'`, (err, res) => {
         if (err) {
             console.log(err.message);
+            result.redirect('/')
         }
         else {
             details = res.rows[0];
@@ -254,6 +255,42 @@ app.get('/book/:title', (req, result) => {
 
 })
 
+app.get('/search', (req, result) => {
+    // console.log(req)
+    const searchTerm = req.query.term;
+    // console.log(searchTerm);
+    console.log('1');
+    const query=`SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title like '%${searchTerm}%'
+                    OR normal_title like '%${searchTerm}%'
+                    OR book.isbn like '%${searchTerm}%'
+                    OR category like '%${searchTerm}%'
+                    OR language like '%${searchTerm}%'
+                    OR name like '%${searchTerm}%'`
+    console.log(query)
+    sql.query(query, (err, res) => {
+        if (err) {
+            console.log(err.message);
+            result.redirect(returnTo);
+        }
+        else {
+            console.log('2');
+            // details = res.rows[0];
+            console.log(res.rows);
+            returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            console.log('3');
+            result.render('results', {
+                books: res.rows,
+                page_title: 'Αποτελέσματα Αναζήτησης',
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
+        }
+    });
+
+})
+
+
+
 // app.get('/book/pros-ta-astra', (req, res) => {
 //     console.log('GET / session=', req.session);
 //     res.render('book');
@@ -264,6 +301,7 @@ app.get("/category/:category", (req, result) => {
     sql.query(`SELECT * FROM book WHERE category='${req.params.category}'`, (err, res) => {
         if (err) {
             console.log(err.message);
+            res.redirect(returnTo);
         }
         else {
             // details = res.rows[0];

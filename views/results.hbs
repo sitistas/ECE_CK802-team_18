@@ -1,0 +1,84 @@
+<h2 style="text-align: center;">{{page_title}}</h2>
+
+
+<div class="books-list">
+    <div class="filters">
+        <a id="testtext">Φίλτρα</a><br><br>
+        <fieldset>
+        <form action="" method="post">
+            <label for="title">Τίτλος Βιβλίου</label><br>
+            <input type="text" id="title" name="book-title"><br>
+            <label for="isbn">ISBN</label><br>
+            <input type="number" id="isbn" name="book-isbn"><br>
+            <label for="year">Έτος κυκλοφορίας</label><br>
+            <input type="number" id="year" name="book-year"><br>
+            <label for="author">Συγγραφέας</label><br>
+            <input type="text" id="author" name="book-author"><br>
+            <a id="testtext">Κατηγορία</a>
+            <div class="checkbox">           
+            <input type="checkbox" id="greek" name="greek">
+            <label for="greek">Eλληνική Λογοτεχνία</label><br>
+            <input type="checkbox" id="foreign" name="foreign">
+            <label for="foreign">Ξένη Λογοτεχνία</label><br>
+            <input type="checkbox" id="kids" name="kids">
+            <label for="kids">Παιδικά Βιβλία</label><br>
+            <input type="checkbox" id="academic" name="academic">
+            <label for="academic">Πανεπιστημιακά συγγράμματα</label><br>
+            <input type="checkbox" id="scientific" name="scientific">
+            <label for="scientific">Eπιστημονικά βιβλία</label></div><br>
+            <button type="submit" value="submit" id="submit">Αναζήτηση</button>
+        </form>
+        </fieldset>
+    </div>
+
+
+    <div class="book-results">
+
+    {{#each books}}
+    <div class="book">
+        <a href="/book/{{title}}">
+            <img src="/images/{{title}}.jpg" alt="{{normal_title}}">
+            <h3>{{normal_title}}</h3>
+        </a>
+    </div>
+    {{/each}}
+
+        {{!-- <div class="best-seller">
+            <a href="pros-ta-astra.html">
+                <img src="images/pros-ta-astra.webp" alt="Προς τ'άστρα">
+                <h3>Προς τ' άστρα</h3>
+            </a>
+        </div>
+        <div class="best-seller">
+            <img src="images/the_subtle_art.jpeg" alt="The Subtle Art of not Giving a F*ck">
+            <h3>The Subtle Art of not Giving a F*ck</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/sasmos.jpeg" alt="Σασμός">
+            <h3>Σασμός</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/ugly_love.jpeg" alt="Ugly Love">
+            <h3>Ugly Love</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/it_ends_with_us.jpeg" alt="It Ends With Us">
+            <h3>It Ends With Us</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/to_dwro.jpeg" alt="Το Δώρο">
+            <h3>Το Δώρο</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/to_vivlio_pou_tha_itheles.jpeg"
+                alt="Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου">
+            <h3>Το βιβλίο που θα ήθελες να είχαν διαβάσει οι γονείς σου</h3>
+        </div>
+        <div class="best-seller">
+            <img src="images/to_peirama.jpeg" alt="Το Πείραμα">
+            <h3>Το Πείραμα</h3>
+        </div> --}}
+
+
+    </div>
+</div>

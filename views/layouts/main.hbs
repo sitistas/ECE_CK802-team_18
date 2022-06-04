@@ -30,10 +30,10 @@
     <div id="dim"></div>
 
     <div class="search-bar" id="search-bar">
-        <form action="" method="get">
-            <input type="text" placeholder="Αναζήτηση">
+         <form action="/search" method="get" id="search">
+            <input type="text" name="term" id='term' placeholder="Αναζήτηση">
             <br>
-            <button type="submit">Αναζήτηση</button>
+            <button type="submit" name="searchbutton">Αναζήτηση</button>
             <button type="button" onclick="closeSearch()">Άκυρο</button>
         </form>
     </div>

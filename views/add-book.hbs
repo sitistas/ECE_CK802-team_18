@@ -1,0 +1,42 @@
+<div class="form-container">
+    <form action="/add-book" method="post" id="add-book">
+        <h2>Προσθήκη βιβλίου</h2>
+        Τίτλος βιβλίου<br>
+        <input type="text" name="normal_title" required placeholder="Τίτλος βιβλίου">
+        <br>Αρ. Σελίδων <br>
+        <input type="number" name="pages" required placeholder="Αρ. Σελίδων"><br>
+        Περιγραφή <br>
+        <textarea id="description" name="description" rows="5" placeholder="Περιγραφή" required></textarea>
+        ISBN <br>
+        <input type="number" name="isbn" required placeholder="ISBN"><br>
+        Τιμή σε €<br>
+        <input type="number" name="price" id="price" required placeholder="Τιμή σε €"><br>
+        <label for="category">Επιλογή κατηγορίας:</label><br>
+        <select name="category" id="category">
+            <option value="Ξένη Λογοτεχνία">Ξένη Λογοτεχνία</option>
+            <option value="Ελληνική Λογοτεχνία">Ελληνική Λογοτεχνία</option>
+            <option value="Αυτοβελτίωση">Αυτοβελτίωση</option>
+            <option value="Επιστημονικά Βιβλία">Επιστημονικά Βιβλία</option>
+            <option value="Πανεπιστημιακά Συγγράματα">Πανεπιστημιακά Συγγράματα</option>
+        </select><br>
+        Έτος έκδοσης<br>
+        <input type="number" name="release_year" required placeholder="Έτος έκδοσης"><br>
+        <label for="language">Επιλογή γλώσσας:</label><br>
+        <select name="language" id="language">
+            <option value="Ελληνικά">Ελληνικά</option>
+            <option value="Αγγλικά">Αγγλικά</option>
+        </select>
+        <br>
+        {{#if message}}
+        <div class="error-message" role="alert">
+            {{message}}
+        </div>
+        {{/if}}
+        {{#if success}}
+        <div class="success-message" role="alert">
+            {{success}}
+        </div>
+        {{/if}}<br><br>
+        <button type="submit" value="submit" id="submit">Προσθήκη Βιβλίου</button>
+    </form>
+</div>

@@ -47,7 +47,7 @@ const redirectHome = (req, res, next) => {
 };
 
 let returnTo = "/";
-let draftIndex="" //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
+let draftIndex = "" //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
 
 console.log(process.env.PORT)
 // Εκκίνηση του εξυπηρετητή
@@ -87,7 +87,8 @@ app.get("/signup", (req, res) => {
 app.get("/publish", (req, res) => {
 
     sql.query(`SELECT id FROM draft ORDER BY ID DESC LIMIT 1`, (err, res) => {
-           draftIndex = parseInt(res.rows[0].id)+1;})
+        draftIndex = parseInt(res.rows[0].id) + 1;
+    })
 
     returnTo = req.originalUrl;
     if (checkAuthenticated(req) == false) {
@@ -110,18 +111,18 @@ app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'an
 
     const qry2 = {
         text: `INSERT INTO suggests (afm, id) VALUES ($1, $2)`,
-        values: [req.session.loggedUserId ,draftIndex]
+        values: [req.session.loggedUserId, draftIndex]
     }
 
     sql.query(qry1);
 
     sql.query(qry2, (err, res) => {
-        draftIndex+=1;
-        result.render("publish", {layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
+        draftIndex += 1;
+        result.render("publish", { layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
     })
     // console.log("GET / session=", req.session);
     // console.log(req)
-   })
+})
 
 app.get("/admin", (req, res) => {
     if (req.session.loggedUserRole == 'admin') {
@@ -375,6 +376,9 @@ app.get("/category/:category", (req, result) => {
 })
 
 app.get("/add-book", (req, res) => {
-    console.log("GET / session=", req.session);
-    res.render("add-book");
+    if (req.session.loggedUserRole == 'admin') {
+        console.log("GET / session=", req.session);
+        res.render("add-book", { layout: "main-admin" });
+    }
+    else { res.redirect("/") }
 })

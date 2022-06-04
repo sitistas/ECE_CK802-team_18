@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="el">
+
+{{>head}}
+
+<body>
+    <header>
+
+        <h1 style="text-align: center;">Καλωσορίσατε στον εκδοτικό οίκο "Ομάδα 18"!</h1>
+
+    </header>
+
+    <div id="dim"></div>
+
+    <div class="search-bar" id="search-bar">
+        <form action="/search" method="get">
+            <input type="text" name="term" placeholder="Αναζήτηση">
+            <br>
+            <button type="submit">Αναζήτηση</button>
+            <button type="button" onclick="closeSearch()">Άκυρο</button>
+        </form>
+    </div>
+
+    <!-- <div class="search-bar">
+        <input type="book-search" placeholder="Αναζήτηση">
+        <button type="submit">&#x1F50E;&#xFE0E;</button>
+    </div> -->
+
+    <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
+
+    <nav>
+        <ul>
+            <li><a href="/">Αρχική σελίδα</a> </li>
+            <li>
+                <div class="dropmenu"><button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
+                    <div class="dropdown-content">
+                        <a href="/category/Ελληνική Λογοτεχνία">Ελληνική Λογοτεχνία</a>
+                        <a href="/category/Ξένη Λογοτεχνία">Ξένη Λογοτεχνία</a>
+                        <a href="/category/Αυτοβελτίωση">Αυτοβελτίωση</a>
+                        <a href="/category/Πανεπιστημιακά Συγγράματα">Πανεπιστημιακά Συγγράμματα</a>
+                        <a href="/category/Επιστημονικά Βιβλία">Επιστημονικά Βιβλία</a>
+                    </div>
+                </div>
+            </li>
+            <li> <a href="/latest">Νέες κυκλοφορίες</a></li>
+            <li> <a href="/best-sellers">Best Sellers</a></li>
+            <li>
+                <div class="dropmenu"> <button class="dropdwnbtn">Λογαριασμός</button>
+                    <div class="dropdown-content">
+                        <a href="/profile">Προφίλ</a>
+                        <a href="/logout" class="nav-button">Αποσύνδεση</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropmenu"> <button class="dropdwnbtn">Διαχείριση</button>
+                    <div class="dropdown-content">
+                        <a href="/admin">Αιτήματα Έκδοσης</a>
+                        <a href="" class="nav-button">Προσθήκη Βιβλίου</a>
+                    </div>
+                </div>
+            </li>
+            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()"><i
+                        class="fa-solid fa-magnifying-glass"></i></button></li>
+        </ul>
+    </nav>
+
+    {{{body}}}
+</body>
+
+{{>footer}}
+
+</html>

@@ -93,7 +93,7 @@ export let checkAuthenticated = function (req, res, next) {
 
 export let getUserByEmail = (email, callback) => {
     const query = {
-        text: `SELECT afm, password FROM users WHERE email=$1`,
+        text: `SELECT afm, password, is_admin FROM users WHERE email=$1`,
         values: [email],
     }
 

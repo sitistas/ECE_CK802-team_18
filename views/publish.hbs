@@ -15,7 +15,11 @@
         <input type="file" id="chapter" name="chapter" accept=".pdf" required><br>
         Σχόλια <br>
         <textarea id="comments" name="comments" rows="5" placeholder="Σχόλια (προαιρετικά)"></textarea>
-        <br><br><br>
+        <br>
+        {{#if message}}
+                <div class="success-message" role="alert">{{message}}</div>
+        {{/if}}
+        <br><br>
         <button type="submit" value="submit" id="submit">Υποβολή</button>
     </form>
 </div>

@@ -67,14 +67,14 @@ app.get("/", (req, result) => {
             // console.log('Details2', details);
             result.render('index', {
                 books: res.rows,
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });
     // returnTo = req.originalUrl;
-    // console.log("GET / session=", req.session);
+    console.log("GET / session=", req.session);
     // console.log(req.query)
-    // res.render("index", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+    // res.render("index", { layout: checkAuthenticated(req) ? "main-user" : "main" });
 })
 
 app.get("/signup", (req, res) => {
@@ -89,19 +89,21 @@ app.get("/publish", (req, res) => {
     }
     else {
         console.log("GET / session=", req.session);
-        res.render("publish", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+        res.render("publish", { layout: req.session.loggedUserRole=='admin'? "main-admin" : "main-user"});
     }
 })
 
 app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, res) => {
     console.log("GET / session=", req.session);
     // console.log(req)
-    res.render("publish", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+    res.render("publish", { layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
 })
 
 app.get("/admin", (req, res) => {
+    if (req.session.loggedUserRole=='admin'){
     console.log("GET / session=", req.session);
-    res.render("admin", { layout: "main-logged-in" });
+    res.render("admin", { layout: "main-admin" });}
+    else {res.redirect("/")}
 })
 
 app.get("/best-sellers", (req, result) => {
@@ -117,7 +119,7 @@ app.get("/best-sellers", (req, result) => {
             result.render('best-sellers', {
                 books: res.rows,
                 page_title: 'Best Sellers',
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -136,7 +138,7 @@ app.get("/latest", (req, result) => {
             result.render('latest', {
                 books: res.rows,
                 page_title: 'Νέες κυκλοφορίες',
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -209,6 +211,7 @@ app.post('/auth', (req, result) => {
                 if (match) {
                     //Θέτουμε τη μεταβλητή συνεδρίας "loggedUserId"
                     req.session.loggedUserId = user.afm;
+                    req.session.loggedUserRole = user.is_admin ? "admin":"user";
                     console.log(returnTo)
                     console.log(user.afm)
                     //Αν έχει τιμή η μεταβλητή req.session.originalUrl, αλλιώς όρισέ τη σε "/" 
@@ -248,7 +251,7 @@ app.get('/book/:title', (req, result) => {
             console.log('Details2', details);
             result.render('book', {
                 title: details.title, pages: details.pages, author: details.name, normal_title: details.normal_title, description: details.description, isbn: details.isbn, price: details.price, category: details.category, release_year: details.release_year, language: details.language,
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -268,12 +271,12 @@ app.get('/profile', (req, result) => {
         }
         else {
             let details = res.rows[0];
-            console.log("Details1", details);
+            // console.log("Details1", details);
             // returnTo = req.originalUrl;
-            console.log('Details2', details);
+            // console.log('Details2', details);
             result.render('profile', {
                 name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
-                layout: "main-logged-in"
+                layout: req.session.loggedUserRole=='admin'? "main-admin" : "main-user"
             });
         }
     });
@@ -307,7 +310,7 @@ app.get('/search', (req, result) => {
             result.render('results', {
                 books: res.rows,
                 page_title: 'Αποτελέσματα Αναζήτησης',
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });
@@ -336,7 +339,7 @@ app.get("/category/:category", (req, result) => {
             result.render('category', {
                 books: res.rows,
                 page_title: req.params.category,
-                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole=='admin'? "main-admin" : "main-user") : "main"
             });
         }
     });

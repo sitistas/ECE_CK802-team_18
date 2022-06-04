@@ -219,12 +219,6 @@ body {
     margin: 2em;
 }
 
-.best-sellers-list {
-    display: grid;
-    grid-template-columns: 1fr 4fr;
-    column-gap: 2em;
-}
-
 .books-list {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -243,7 +237,7 @@ body {
     gap: 2.5em;
 }
 
-.best-sellers-list .best-seller:hover {
+.best-seller:hover {
     float: right;
 }
 

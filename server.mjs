@@ -2,6 +2,7 @@ import express from "express";
 import { engine } from "express-handlebars";
 import sql from './db.heroku-pg.js'
 import { checkAuthenticated } from "./login.mjs";
+import { convertDate } from "./date.mjs";
 import Session from './setup-session.mjs'
 const app = express()
 import multer from 'multer'
@@ -15,7 +16,7 @@ const multerStorage = multer.diskStorage({
         cb(null, `./user-data/uploads/`);
     },
     filename: (req, file, cb) => {
-        cb(null, `${req.session.loggedUserId}_${file.fieldname}.pdf`);
+        cb(null, `${draftIndex}_${req.session.loggedUserId}_${file.fieldname}.pdf`);
     },
 });
 
@@ -46,6 +47,7 @@ const redirectHome = (req, res, next) => {
 };
 
 let returnTo = "/";
+let draftIndex="" //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
 
 console.log(process.env.PORT)
 // Εκκίνηση του εξυπηρετητή
@@ -83,6 +85,10 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/publish", (req, res) => {
+
+    sql.query(`SELECT id FROM draft ORDER BY ID DESC LIMIT 1`, (err, res) => {
+           draftIndex = parseInt(res.rows[0].id)+1;})
+
     returnTo = req.originalUrl;
     if (checkAuthenticated(req) == false) {
         res.redirect("/login");
@@ -93,11 +99,29 @@ app.get("/publish", (req, res) => {
     }
 })
 
-app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, res) => {
-    console.log("GET / session=", req.session);
+app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, result) => {
+    let todaysDate = new Date();
+    todaysDate = convertDate(todaysDate);
+    console.log('1')
+    const qry1 = {
+        text: `INSERT INTO draft (id, title, category, words, comments, post_date) VALUES ($1, $2, $3, $4, $5, $6)`,
+        values: [draftIndex, req.body.title, req.body.category, req.body.wordsum, req.body.comments, todaysDate]
+    }
+
+    const qry2 = {
+        text: `INSERT INTO suggests (afm, id) VALUES ($1, $2)`,
+        values: [req.session.loggedUserId ,draftIndex]
+    }
+
+    sql.query(qry1);
+
+    sql.query(qry2, (err, res) => {
+        draftIndex+=1;
+        result.render("publish", {layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
+    })
+    // console.log("GET / session=", req.session);
     // console.log(req)
-    res.render("publish", { layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
-})
+   })
 
 app.get("/admin", (req, res) => {
     if (req.session.loggedUserRole=='admin'){

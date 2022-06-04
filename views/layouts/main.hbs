@@ -58,37 +58,7 @@
 
     <!-- navigation bar για περιήγηση στις διάφορες υποσελίδες -->
 
-    <nav>
-        <ul>
-            <li><a href="/">Αρχική σελίδα</a> </li>
-            <li>
-                <div class="dropmenu"><button class="dropdwnbtn">Κατηγορίες βιβλίων</button>
-                    <div class="dropdown-content">
-                        <a href="">Ελληνική Λογοτεχνία</a>
-                        <a href="">Ξένη Λογοτεχνία</a>
-                        <a href="">Παιδικά βιβλία</a>
-                        <a href="">Πανεπιστημιακά συγγράμματα</a>
-                        <a href="">Επιστημονικά βιβλία</a>
-                    </div>
-                </div>
-            </li>
-            <li> <a href="">Νέες κυκλοφορίες</a></li>
-            <li> <a href="/best-sellers">Best Sellers</a></li>
-            <li>
-                <div class="dropmenu"> <button class="dropdwnbtn">Λογαριασμός</button>
-                    <div class="dropdown-content">
-                        <a href="/signup" class="nav-button">Εγγραφή</a>
-                        <a href="javascript:popupForm()">Σύνδεση</a>
-                        <a href="">Διαχείριση Λογαριασμού</a>
-                    </div>
-                </div>
-            </li>
-            <li> <a href="/publish">Έκδοσε το έργο σου</a></li>
-            <li><button class="searchbtn" type="search-icon" onclick="popupSearch()"><i
-                        class="fa-solid fa-magnifying-glass"></i></button></li>
-        </ul>
-
-    </nav>
+    {{>navbar}}
 
     {{{body}}}
 </body>

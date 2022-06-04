@@ -28,13 +28,14 @@
     {{> book-partial title = 'to-dwro'}}
     {{> book-partial title = 'to-vivlio-pou'}} --}}
     {{#each books}}
-    <div class="best-seller">
+    {{> book-partial titlos=titlos normal_titlos=normal_titlos}}
+    {{!-- <div class="best-seller">
         <a href="/book/{{titlos}}">
             <img src="/images/{{titlos}}.jpg" alt="{{normal_titlos}}">
             <h3>{{normal_titlos}}</h3>
-        </a>
+        </a> --}}
+        {{/each}}
     </div>
-    {{/each}}
 
     <!-- <div class="best-seller">
             <img src="/images/to_peirama.jpeg" alt="Το Πείραμα">

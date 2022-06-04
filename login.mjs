@@ -107,3 +107,20 @@ export let getUserByEmail = (email, callback) => {
         }
     })
 }
+
+export let getUserByAFM = (afm, callback) => {
+    const query = {
+        text: `SELECT email FROM users WHERE afm=$1`,
+        values: [afm],
+    }
+
+    sql.query(query, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+            callback(err.stack)
+        }
+        else {
+            callback(null, res.rows[0])
+        }
+    })
+}

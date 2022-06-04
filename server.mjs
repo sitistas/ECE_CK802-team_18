@@ -105,7 +105,6 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/best-sellers", (req, result) => {
-
     sql.query(`SELECT * FROM vivlio1`, (err, res) => {
         if (err) {
             console.log(err.message);
@@ -117,6 +116,7 @@ app.get("/best-sellers", (req, result) => {
             // console.log('Details2', details);
             result.render('best-sellers', {
                 books: res.rows,
+                page_title: 'Best sellers',
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }
@@ -128,7 +128,6 @@ app.get("/best-sellers", (req, result) => {
 })
 
 app.get("/signup", (req, res) => {
-    returnTo = req.originalUrl;
     console.log("GET / session=", req.session);
     res.render("signup");
 })
@@ -138,6 +137,48 @@ app.get("/login", (req, res) => {
     // console.log("GET / session=", req.session);
     res.render("login");
 })
+
+app.post("/register", async (req, result) => {
+    log.getUserByEmail(req.body.email, (err,user)=> {
+        console.log(req.body.email)
+        if (user != undefined) {
+            result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το email' });
+        }})
+
+    log.getUserByAFM(req.body.afm, (err,user)=> {
+        console.log(req.body.email)
+        if (user != undefined) {
+            result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το ΑΦΜ' });
+        }})
+    
+    console.log(req.body)
+    if(req.body.password!=req.body.repeatPassword) {
+            result.render('signup', { message: 'Οι κωδικοί πρόσβασης δεν ταιριάζουν' });
+    }
+
+    try {
+        const psswd = await bcrypt.hash(req.body.password, 10);
+
+        const query = {
+            text: 'INSERT INTO users (afm, email, password, first_name, last_name, birthdate, phone, address, city) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+            values: [req.body.afm, req.body.email, psswd, req.body.FirstName, req.body.LastName, req.body.dob, req.body.tel,req.body.address, req.body.city]
+        }
+
+        sql.query(query, (err, res) => {
+            if (err){
+            // console.log(err)
+            result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });}
+            else {
+                result.render('signup', { success: 'Επιτυχής εγγραφή!' });
+            }
+        })
+    } catch (err) {
+        // console.log(err)
+        result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+    }
+})
+
+
 
 app.post('/auth', (req, result) => {
     

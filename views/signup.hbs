@@ -1,27 +1,38 @@
 <div class="form-container">
-    <form action="" method="get" id="signup">
+    <form action="/register" method="post" id="signup">
         <h2>Δημιουργία Λογαριασμού</h2>
         Όνομα<br>
-        <input type="text" required placeholder="Όνομα"><br>
+        <input type="text" name="FirstName" required placeholder="Όνομα"><br>
         Επώνυμο <br>
-        <input type="text" required placeholder="Επώνυμο"><br>
+        <input type="text" name="LastName" required placeholder="Επώνυμο"><br>ΑΦΜ <br>
+        <input type="number" name="afm" required placeholder="ΑΦΜ"><br>
         Ημερομηνία Γέννησης <br>
         <input type="date" name="dob" id="dob" required placeholder="Ημ. Γέννησης" autocomplete="bday"><br>
         Τηλέφωνο <br>
-        <input type="tel" required placeholder="Τηλέφωνο" autocomplete="tel"><br>
+        <input type="tel" name="tel" required placeholder="Τηλέφωνο" autocomplete="tel"><br>
         Διεύθυνση<br>
         <input type="address" name="address" id="address" required placeholder="Οδός & Αριθμός"
             autocomplete="street-address"><br>
         Πόλη<br>
-        <input type="city" placeholder="Πόλη" required><br>
+        <input type="city" name="city" placeholder="Πόλη" required><br>
         Email <br>
-        <input type="email" required placeholder="Email" autocomplete="email"><br>
+        <input type="email" required name="email" placeholder="Email" autocomplete="email"><br>
         Κωδικός πρόσβασης <br>
-        <input type="password" id="pwd" required placeholder="Κωδικός πρόσβασης" autocomplete="new-password"><br>
+        <input type="password" id="pwd" name="password" required placeholder="Κωδικός πρόσβασης" autocomplete="new-password"><br>
         Επιβεβαίωση κωδικού πρόσβασης <br>
-        <input type="password" id="repeat-pwd" required placeholder="Επιβεβαίωση κωδικού πρόσβασης"
+        <input type="password" id="repeat-pwd" name="repeatPassword" required placeholder="Επιβεβαίωση κωδικού πρόσβασης"
             autocomplete="new-password">
-        <br><br><br>
-        <button type="submit" value="submit" id="submit">Υποβολή</button>
+        <br>
+        {{#if message}}
+                <div class="error-message" role="alert">
+                    {{message}}
+                </div>
+        {{/if}}
+        {{#if success}}
+                <div class="success-message" role="alert">
+                    {{success}}
+                </div>
+        {{/if}}<br><br>
+        <button type="submit" value="submit" id="submit">Εγγραφή</button>
     </form>
 </div>

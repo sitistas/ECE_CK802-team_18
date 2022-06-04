@@ -193,6 +193,10 @@ body {
     color: red;
 }
 
+.success-message{
+    color: green;
+}
+
 .featured-description {
     text-align: center;
     margin: auto;

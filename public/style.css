@@ -211,7 +211,21 @@ body {
     margin: 2em;
 }
 
+.book-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1em 0.25em;
+    margin: 2em;
+}
+
 .best-sellers-list {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    column-gap: 2em;
+}
+
+.books-list {
     display: grid;
     grid-template-columns: 1fr 4fr;
     column-gap: 2em;
@@ -223,7 +237,17 @@ body {
     gap: 2.5em;
 }
 
+.books-list .book-results {
+    grid-column: 2;
+    justify-content: start;
+    gap: 2.5em;
+}
+
 .best-sellers-list .best-seller:hover {
+    float: right;
+}
+
+.books-list .book:hover {
     float: right;
 }
 
@@ -253,13 +277,32 @@ body {
     color: black;
 }
 
+.book,
+.book a{
+    flex-basis: 10em;
+    padding: 0.5em;
+    transition: 0.5s;
+    text-decoration: none;
+    color: black;
+}
+
 .best-seller > *,
 .best-seller a > * {
     width: 95%;
 }
 
+.book > *,
+.book a > * {
+    width: 95%;
+}
+
 .best-seller:hover,
 .best-seller a:hover {
+    transform: scale(1.2);
+}
+
+.book:hover,
+.book a:hover {
     transform: scale(1.2);
 }
 

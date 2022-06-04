@@ -116,7 +116,7 @@ app.get("/best-sellers", (req, result) => {
             // console.log('Details2', details);
             result.render('best-sellers', {
                 books: res.rows,
-                page_title: 'Best sellers',
+                page_title: 'Best Sellers',
                 layout: checkAuthenticated(req) ? "main-logged-in" : "main"
             });
         }
@@ -126,6 +126,7 @@ app.get("/best-sellers", (req, result) => {
     // console.log("GET / session=", req.session);
     // res.render("best-sellers", { layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
 })
+
 
 app.get("/signup", (req, res) => {
     console.log("GET / session=", req.session);
@@ -208,47 +209,7 @@ app.post('/auth', (req, result) => {
         }
     })
     })
-    // console.log(req.body.password)
-    // const psswd = bcrypt.hash(req.body.password, 10);
-    // console.log('test');
-
-    // sql.query({text: `SELECT password FROM users WHERE email=$1`, values:[req.body.email]}, (err, res) => {
-    //     if (err) {
-    //         console.log('x1')
-    //         console.log(err.message);
-    //         result.render("login");
-    //     }
-    //     else {
-    //         console.log(req.body.password+'test'+res.rows[0])
-    //         if (bcrypt.compare(req.body.password, res.rows[0])){
-    //             console.log('x3')
-    //             req.session.loggedUserId = 1;
-    //             result.redirect(returnTo)
-    //         }
-    //         else{
-    //             console.log('x4')
-    //             console.log(res.rows[0].password);
-    //             console.log(psswd);
-    //             result.render("login");
-    //         }
-    //         // console.log("Details1", details);
-    //         // returnTo = req.originalUrl;
-    //         // result.render("login");
-    //         // console.log('Details2', details);
-    //         // result.render('book', {
-    //         //     title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos, description: details.description, isbn: details.isbn, timi: details.timi, katigoria: details.katigoria, etos_ekdosis: details.etos_ekdosis, glwssa: details.glwssa,
-    //         //     layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
-    //     }
-    // });
-    // if (req.body.password == '123') {
-    //     req.session.loggedUserId = 1;
-    //     // app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main-logged-in' }));
-    //     res.redirect(returnTo)
-    // }
-    // else {
-    //     res.render("login");
-    // }
-// })
+    
 
 app.get("/logout", (req, res) => {
     // console.log(req);
@@ -283,3 +244,22 @@ app.get('/book/:title', (req, result) => {
 //     res.render('book');
 // })
 
+app.get("/results/:category", (req, result) => {
+    console.log(req.params.category)
+    sql.query(`SELECT * FROM vivlio1 WHERE katigoria='${req.params.category}'`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            // details = res.rows[0];
+            console.log(res.rows);
+            returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            result.render('results', {
+                books: res.rows,
+                page_title: req.params.category,
+                layout: checkAuthenticated(req) ? "main-logged-in" : "main"
+            });
+        }
+    });
+})

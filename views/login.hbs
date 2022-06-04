@@ -6,7 +6,12 @@
         <input type="email" id='email' name='email' required placeholder="Email" autocomplete="email"><br>
         Κωδικός πρόσβασης <br>
         <input type="password" id="pwd" name='password' required placeholder="Κωδικός πρόσβασης" autocomplete="new-password"><br>
-        <br><br><br>
+        <br>
+        {{#if message}}
+                <div class="error-message" role="alert">
+                    {{message}}
+                </div>
+        {{/if}}<br><br>
         <button type="submit" value="submit" id="submit">Υποβολή</button>
     </form>
 </div>

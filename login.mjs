@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import sql from './db.heroku-pg.js'
 // import dotenv from 'dotenv'
 // if (process.env.NODE_ENV !== 'production') {
 //     dotenv.config();
@@ -63,7 +64,7 @@ export let doLogout = (req, res) => {
     req.session.destroy();
     res.redirect('/');
 }
-
+export let tasks = { "id": 1, "task": "Να βρω σφάλματα", "status": 0, "created_at": "2022-05-07 09:08:10" };
 //Τη χρησιμοποιούμε για να ανακατευθύνουμε στη σελίδα /login όλα τα αιτήματα από μη συνδεδεμένους χρήστες
 export let checkAuthenticated = function (req, res, next) {
     // console.log('test')
@@ -88,4 +89,21 @@ export let checkAuthenticated = function (req, res, next) {
             // res.redirect('/login');
         // }
     }
+}
+
+export let getUserByEmail = (email, callback) => {
+    const query = {
+        text: `SELECT afm, password FROM users WHERE email=$1`,
+        values: [email],
+    }
+
+    sql.query(query, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+            callback(err.stack)
+        }
+        else {
+            callback(null, res.rows[0])
+        }
+    })
 }

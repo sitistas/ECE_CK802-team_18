@@ -189,6 +189,9 @@ body {
     }
 }
 
+.error-message{
+    color: red;
+}
 
 .featured-description {
     text-align: center;

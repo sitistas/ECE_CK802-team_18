@@ -5,6 +5,8 @@ import { checkAuthenticated } from "./login.mjs";
 import Session from './setup-session.mjs'
 const app = express()
 import multer from 'multer'
+import bcrypt from 'bcrypt'
+let log = await import('./login.mjs')
 
 export let prosTaAstra = { title: "pros-ta-astra", normal_titlos: "Προς τ'άστρα" };
 
@@ -137,18 +139,75 @@ app.get("/login", (req, res) => {
     res.render("login");
 })
 
-app.post('/auth', (req, res) => {
-    console.log(req.body.password)
-    console.log('test');
-    if (req.body.password == '123') {
-        req.session.loggedUserId = 1;
-        // app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main-logged-in' }));
-        res.redirect(returnTo)
-    }
-    else {
-        res.render("login");
-    }
-})
+app.post('/auth', (req, result) => {
+    
+    
+    log.getUserByEmail(req.body.email, (err,user)=> {
+        console.log(req.body.email)
+        if (user == undefined) {
+            result.render('login', { message: 'Δε βρέθηκε χρήστης με αυτό το email' });
+        }
+        else {
+            const match = bcrypt.compare(req.body.password, user.password, (err, match) => {
+                if (match) {
+                    //Θέτουμε τη μεταβλητή συνεδρίας "loggedUserId"
+                    req.session.loggedUserId = user.afm;
+                    console.log(returnTo)
+                    console.log(user.afm)
+                    //Αν έχει τιμή η μεταβλητή req.session.originalUrl, αλλιώς όρισέ τη σε "/" 
+                    // returnTo = req.originalUrl || "/";
+                    // res.redirect("/");
+                    result.redirect(returnTo);
+                }
+                else {
+                    console.log('getop')
+                    result.render("login", { message: 'Ο κωδικός πρόσβασης είναι λάθος' })
+                }
+            })
+        }
+    })
+    })
+    // console.log(req.body.password)
+    // const psswd = bcrypt.hash(req.body.password, 10);
+    // console.log('test');
+
+    // sql.query({text: `SELECT password FROM users WHERE email=$1`, values:[req.body.email]}, (err, res) => {
+    //     if (err) {
+    //         console.log('x1')
+    //         console.log(err.message);
+    //         result.render("login");
+    //     }
+    //     else {
+    //         console.log(req.body.password+'test'+res.rows[0])
+    //         if (bcrypt.compare(req.body.password, res.rows[0])){
+    //             console.log('x3')
+    //             req.session.loggedUserId = 1;
+    //             result.redirect(returnTo)
+    //         }
+    //         else{
+    //             console.log('x4')
+    //             console.log(res.rows[0].password);
+    //             console.log(psswd);
+    //             result.render("login");
+    //         }
+    //         // console.log("Details1", details);
+    //         // returnTo = req.originalUrl;
+    //         // result.render("login");
+    //         // console.log('Details2', details);
+    //         // result.render('book', {
+    //         //     title: details.titlos, selides: details.selides, syggrafeas: details.syggrafeas, normal_titlos: details.normal_titlos, description: details.description, isbn: details.isbn, timi: details.timi, katigoria: details.katigoria, etos_ekdosis: details.etos_ekdosis, glwssa: details.glwssa,
+    //         //     layout: checkAuthenticated(req) ? "main-logged-in" : "main" });
+    //     }
+    // });
+    // if (req.body.password == '123') {
+    //     req.session.loggedUserId = 1;
+    //     // app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main-logged-in' }));
+    //     res.redirect(returnTo)
+    // }
+    // else {
+    //     res.render("login");
+    // }
+// })
 
 app.get("/logout", (req, res) => {
     // console.log(req);

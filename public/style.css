@@ -373,6 +373,11 @@ button:hover {
     list-style-type: none;
 }
 
+.book-cell a {
+    text-decoration: none;
+    color: #006b6b;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -460,7 +460,7 @@ app.get('/drafts/:id', (req, result) => {
             else {
                 let details = res.rows[0];
                 result.render('drafts', {
-                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
+                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
                 });
             }
@@ -477,6 +477,16 @@ app.get("/add-book", (req, res) => {
     }
     else { res.redirect("/") }
 })
+
+app.get("/review", (req, res) => {
+    console.log(req)
+    if (req.session.loggedUserRole == 'admin') {
+
+        res.render("profile", { layout: "main-admin" });
+    }
+    else { res.redirect("/") }
+})
+
 
 app.post("/add-book", (req, result) => {
     let aafm = "" //author afm

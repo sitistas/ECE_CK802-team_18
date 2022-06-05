@@ -9,6 +9,11 @@ import multer from 'multer'
 import bcrypt from 'bcrypt'
 let log = await import('./login.mjs')
 import greekUtils from 'greek-utils';
+import aws from 'aws-sdk';
+
+aws.config.region = 'eu-central-1';
+const S3_BUCKET = process.env.S3_BUCKET;
+
 
 export let prosTaAstra = { title: "pros-ta-astra", normal_title: "Προς τ'άστρα" };
 
@@ -364,7 +369,7 @@ app.post('/results', (req, result) => {
     let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE name like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
     // let q0=q1+q2+q3+q4+q5+q6==""? "": " WHERE "
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
-    
+
     // console.log(query)
     sql.query(query, (err, res) => {
         console.log(query);
@@ -424,7 +429,7 @@ app.get("/add-book", (req, res) => {
 })
 
 app.post("/add-book", (req, result) => {
-    let aafm="" //author afm
+    let aafm = "" //author afm
     log.getBookByISBN(req.body.isbn, (err, user) => {
         // console.log(req.body.email)
         if (user != undefined) {
@@ -437,31 +442,32 @@ app.post("/add-book", (req, result) => {
             result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
         }
         else {
-            aafm=user.afm
-       
-    let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
-    title=title.replace(/\s+/g, '-')
-    // console.log(aafm);
-    const query1 = {
-        text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-        values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
-    }
+            aafm = user.afm
 
-    const query2 = {
-        text: 'INSERT INTO writes (isbn, afm) VALUES ($1, $2)',
-        values: [req.body.isbn, aafm]
-    }
+            let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
+            title = title.replace(/\s+/g, '-')
+            // console.log(aafm);
+            const query1 = {
+                text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+                values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
+            }
 
-    sql.query(query1, (err, res) => {
-        if (err) {
-            console.log(err)
-            result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+            const query2 = {
+                text: 'INSERT INTO writes (isbn, afm) VALUES ($1, $2)',
+                values: [req.body.isbn, aafm]
+            }
+
+            sql.query(query1, (err, res) => {
+                if (err) {
+                    console.log(err)
+                    result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+                }
+                else {
+                    sql.query(query2);
+                    result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
+                }
+            })
         }
-        else {
-            sql.query(query2);
-            result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
-        }
-    })     }
-})
+    })
 
 })

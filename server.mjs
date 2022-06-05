@@ -173,7 +173,7 @@ app.get('/drafts/:id', (req, result) => {
 
 app.get('/editprofile/:afm', (req, result) => {
     returnTo = req.originalUrl;
-    if (req.session.loggedUserRole!='admin') {
+    if (req.session.loggedUserRole != 'admin') {
         result.redirect("/");
     }
     else {
@@ -211,7 +211,7 @@ app.get("/latest", (req, result) => {
 })
 
 app.get("/listallusers", (req, result) => {
-    if (req.session.loggedUserRole!='admin'){
+    if (req.session.loggedUserRole != 'admin') {
         result.redirect('/');
     }
     sql.query(`SELECT name,afm FROM users ORDER BY name ASC`, (err, res) => {
@@ -396,8 +396,8 @@ app.post("/add-book", multer1.none(), (req, result) => {
             let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
             title = title.replace(/\s+/g, '-')
             const query1 = {
-                text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-                values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
+                text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language, cover) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+                values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language, req.body.book.cover_url]
             }
 
             const query2 = {
@@ -512,27 +512,27 @@ app.post('/results', (req, result) => {
 
 
 app.post("/updateprofile/:afm", (req, result) => {
-   
 
 
-    if (req.session.loggedUserRole!='admin') {
+
+    if (req.session.loggedUserRole != 'admin') {
         result.redirect('/');
     }
 
-        const query = {
-            text: `UPDATE users SET name=$1, phone=$2, address=$3, city=$4, email=$5 WHERE afm='${req.params.afm}'`,
-            values: [req.body.name, req.body.phone, req.body.address, req.body.city, req.body.email]
-        }
+    const query = {
+        text: `UPDATE users SET name=$1, phone=$2, address=$3, city=$4, email=$5 WHERE afm='${req.params.afm}'`,
+        values: [req.body.name, req.body.phone, req.body.address, req.body.city, req.body.email]
+    }
 
-        sql.query(query, (err, res) => {
-            if (err) {
-                result.redirect("/editprofile/"+req.params.afm+"/?error=err");
-            }
-            else {
-                result.redirect("/editprofile/"+req.params.afm+"/?message=success");
-            }
-        })
-    
+    sql.query(query, (err, res) => {
+        if (err) {
+            result.redirect("/editprofile/" + req.params.afm + "/?error=err");
+        }
+        else {
+            result.redirect("/editprofile/" + req.params.afm + "/?message=success");
+        }
+    })
+
 })
 
 

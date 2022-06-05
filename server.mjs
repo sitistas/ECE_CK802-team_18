@@ -46,7 +46,7 @@ app.listen(PORT, () => {
     console.log(`Συνδεθείτε στη σελίδα: http://localhost:${PORT}`);
 });
 
-
+//Αρχική σελίδα
 app.get("/", (req, result) => {
     sql.query(`SELECT * FROM book LIMIT 7`, (err, res) => {
         if (err) {
@@ -62,7 +62,7 @@ app.get("/", (req, result) => {
     });
 })
 
-
+//Σελίδα προσθήκης βιβλίου από admin
 app.get("/add-book", (req, res) => {
     if (req.session.loggedUserRole == 'admin') {
         res.render("add-book", { layout: "main-admin" });
@@ -70,6 +70,7 @@ app.get("/add-book", (req, res) => {
     else { res.redirect("/") }
 })
 
+//Σελίδα διαχείρισης αιτημάτων δημοσίευσης
 app.get("/admin", (req, result) => {
     if (req.session.loggedUserRole == 'admin') {
         sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm`, (err, res) => {
@@ -89,7 +90,7 @@ app.get("/admin", (req, result) => {
 })
 
 
-
+//Σελίδα με τα best sellers
 app.get("/best-sellers", (req, result) => {
     sql.query(`SELECT * FROM book ORDER BY sales LIMIT 10`, (err, res) => {
         if (err) {
@@ -107,6 +108,7 @@ app.get("/best-sellers", (req, result) => {
 })
 
 
+//Σελίδα εμφάνισης λεπτομερειών του κάθε βιβλίου
 app.get('/book/:title', (req, result) => {
     let details = {};
     sql.query(`SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title='${req.params.title}'`, (err, res) => {
@@ -125,6 +127,7 @@ app.get('/book/:title', (req, result) => {
 
 })
 
+//Εμφάνιση βιβλίων μιας κατηγορίας
 app.get("/category/:category", (req, result) => {
     sql.query(`SELECT * FROM book WHERE category='${req.params.category}'`, (err, res) => {
         if (err) {
@@ -141,6 +144,7 @@ app.get("/category/:category", (req, result) => {
     });
 })
 
+//Σελίδα αιτήματος για δημοσίευση
 app.get('/drafts/:id', (req, result) => {
     if (!req.session.loggedUserId) {
         result.redirect("/");
@@ -171,6 +175,7 @@ app.get('/drafts/:id', (req, result) => {
 
 })
 
+//Σελίδα επεξεργασίας δεδομένων χρήστη από admin
 app.get('/editprofile/:afm', (req, result) => {
     returnTo = req.originalUrl;
     if (req.session.loggedUserRole != 'admin') {
@@ -193,7 +198,7 @@ app.get('/editprofile/:afm', (req, result) => {
     }
 })
 
-
+//Τελευταίες κυκλοφορίες
 app.get("/latest", (req, result) => {
     sql.query(`SELECT * FROM book ORDER BY release_year DESC LIMIT 7`, (err, res) => {
         if (err) {
@@ -210,6 +215,7 @@ app.get("/latest", (req, result) => {
     });
 })
 
+//Λίστα όλων των χρηστών (για διαχείριση από admin)
 app.get("/listallusers", (req, result) => {
     if (req.session.loggedUserRole != 'admin') {
         result.redirect('/');
@@ -219,7 +225,6 @@ app.get("/listallusers", (req, result) => {
             console.log(err.message);
         }
         else {
-            // returnTo = req.originalUrl;
             result.render('listallusers', {
                 user: res.rows,
                 layout: "main-admin"
@@ -228,6 +233,7 @@ app.get("/listallusers", (req, result) => {
     })
 })
 
+//Σύνδεση
 app.get("/login", (req, res) => {
     if (req.session.loggedUserId) {
         res.redirect('/');
@@ -235,13 +241,13 @@ app.get("/login", (req, res) => {
     res.render("login");
 })
 
-
+//Αποσύνδεση
 app.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect(returnTo);
 })
 
-
+//Τα αιτήματά μου για έκδοση
 app.get("/mydrafts", (req, result) => {
     if (req.session.loggedUserRole == 'user') {
         sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id WHERE suggests.afm='${req.session.loggedUserId}'`, (err, res) => {
@@ -260,7 +266,7 @@ app.get("/mydrafts", (req, result) => {
     else { result.redirect("login") }
 })
 
-
+//Προβολή προσωπικών στοιχείων
 app.get('/profile', (req, result) => {
     returnTo = req.originalUrl;
     if (!req.session.loggedUserId) {
@@ -283,6 +289,7 @@ app.get('/profile', (req, result) => {
     }
 })
 
+//Σελίδα αίτησης δημοσίευσης έργου από χρήστη
 app.get("/publish", (req, res) => {
 
     sql.query(`SELECT id FROM draft ORDER BY ID DESC LIMIT 1`, (err, res) => {
@@ -298,7 +305,7 @@ app.get("/publish", (req, res) => {
     }
 })
 
-
+//Ενημέρωση αιτήματος έκδοσης από admin
 app.get("/review/:id", (req, result) => {
 
     if (req.session.loggedUserRole != 'admin') {
@@ -342,7 +349,7 @@ app.get("/review/:id", (req, result) => {
     }
 })
 
-
+//Αναζήτηση
 app.get('/search', (req, result) => {
 
     const searchTerm = req.query.term;
@@ -368,12 +375,14 @@ app.get('/search', (req, result) => {
 
 })
 
-
+//Σελίδα εγγραφής
 app.get("/signup", (req, res) => {
-    res.render("signup");
+    if (req.session.loggedUserId){res.redirect('/')}
+    else{
+        res.render("signup");}
 })
 
-
+//Προσθήκη βιβλίου από admin
 app.post("/add-book", multer1.none(), (req, result) => {
     console.log(req.body.book.cover_url);
     let aafm = "" //author afm
@@ -422,6 +431,7 @@ app.post("/add-book", multer1.none(), (req, result) => {
 
 })
 
+//Έλεγχος διαπιστευτηρίων
 app.post('/auth', (req, result) => {
 
 
@@ -445,6 +455,7 @@ app.post('/auth', (req, result) => {
 })
 
 
+//Εγγραφή νέου χρήστη
 app.post("/register", async (req, result) => {
     db.getUserByEmail(req.body.email, (err, user) => {
         if (user != undefined) {
@@ -510,7 +521,7 @@ app.post('/results', (req, result) => {
 
 })
 
-
+//Αποθήκευση αλλαγών στα προσωπικά στοιχεία ενός χρήστη από admin
 app.post("/updateprofile/:afm", (req, result) => {
 
 
@@ -536,7 +547,7 @@ app.post("/updateprofile/:afm", (req, result) => {
 })
 
 
-
+//Ανέβασμα αιτήματος δημοσίευσης έργου
 app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, result) => {
     let todaysDate = new Date();
     todaysDate = convertDate(todaysDate);

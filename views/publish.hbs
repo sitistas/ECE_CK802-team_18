@@ -3,7 +3,7 @@
         <h2>Έκδοσε το δικό σου βιβλίο</h2>
         Τίτλος<br>
         <input type="text" name="title" required placeholder="Τίτλος"><br>
-       <label for="category">Επιλογή κατηγορίας:</label><br>
+        <label for="category">Επιλογή κατηγορίας:</label><br>
         <select name="category" id="category">
             <option value="Ξένη Λογοτεχνία">Ξένη Λογοτεχνία</option>
             <option value="Ελληνική Λογοτεχνία">Ελληνική Λογοτεχνία</option>
@@ -12,7 +12,8 @@
             <option value="Πανεπιστημιακά Συγγράματα">Πανεπιστημιακά Συγγράματα</option>
         </select><br>
         Αριθμός Λέξεων<br>
-        <input type="number" id="word-sum" name="wordsum" required placeholder='50000' , min="1000" , max="100000" , step="1000"><br>
+        <input type="number" id="word-sum" name="wordsum" required placeholder='50000' , min="1000" , max="100000" ,
+            step="1000"><br>
         Περίληψη<br>
         <input type="file" id="summary" name="summary" accept=".pdf" required><br>
         Σύντομη Ανάλυση του περιεχομένου (2-3 σελίδες)<br>
@@ -23,10 +24,10 @@
         <textarea id="comments" name="comments" rows="5" placeholder="Σχόλια (προαιρετικά)"></textarea>
         <br>
         {{#if message}}
-                <div class="success-message" role="alert">
-                    {{message}}
-                </div>
-        {{/if}}<br><br>
+        <div class="success-message" role="alert">
+            {{message}}
+        </div>
+        {{/if}}<br>
         <button type="submit" value="submit" id="submit">Υποβολή</button>
     </form>
 </div>

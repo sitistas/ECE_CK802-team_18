@@ -6,12 +6,7 @@
     <div class="book-results">
 
         {{#each books}}
-        <div class="book">
-            <a href="/book/{{title}}">
-                <img src="/images/{{title}}.jpg" alt="{{normal_title}}">
-                <h3>{{normal_title}}</h3>
-            </a>
-        </div>
+            {{> book-partial title=title normal_title=normal_title}}
         {{/each}}
 
         {{!-- <div class="best-seller">

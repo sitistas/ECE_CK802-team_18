@@ -139,7 +139,7 @@ app.get("/admin", (req, res) => {
 })
 
 app.get("/best-sellers", (req, result) => {
-    sql.query(`SELECT * FROM book`, (err, res) => {
+    sql.query(`SELECT * FROM book ORDER BY sales LIMIT 10`, (err, res) => {
         if (err) {
             console.log(err.message);
         }

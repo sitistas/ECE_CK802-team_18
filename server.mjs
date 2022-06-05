@@ -80,7 +80,7 @@ app.get("/", (req, result) => {
         }
     });
     // returnTo = req.originalUrl;
-    console.log("GET / session=", req.session);
+    // console.log("GET / session=", req.session);
     // console.log(req.query)
     // res.render("index", { layout: checkAuthenticated(req) ? "main-user" : "main" });
 })
@@ -438,16 +438,20 @@ app.get("/category/:category", (req, result) => {
 app.get('/drafts/:id', (req, result) => {
     // returnTo = req.originalUrl;
     if (!req.session.loggedUserId) {
+        console.log('no')
         result.redirect("/");
     }
 
     if (req.session.loggedUserRole!='admin'){
         log.getAFMFromDraftID(req.params.id, (err, user) => {
             if (user.afm != req.session.loggedUserId) {
+                console.log(user.afm);
+                console.log(req.session.loggedUserId)
                 result.redirect("/");
             }})
     }
-    else {
+    
+        console.log('test')
         sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
             if (err) {
                 console.log(err.message);
@@ -462,7 +466,7 @@ app.get('/drafts/:id', (req, result) => {
             }
         });
 
-    }
+    
 })
 
 

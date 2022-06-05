@@ -493,7 +493,7 @@ button:hover {
     color: black;
 }
 
-.requests li:hover {
+.requests a:hover {
     text-decoration: none;
     color: #006b6b;
     transition: 0.2s;

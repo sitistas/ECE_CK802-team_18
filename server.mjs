@@ -166,7 +166,7 @@ app.get('/drafts/:id', (req, result) => {
         else {
             let details = res.rows[0];
             result.render('drafts', {
-                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, analysis: details.analysis, snippet: details.snippet, abstract: details.abstract,admin: (req.session.loggedUserRole == 'admin'),
+                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole == 'admin'),
                 layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
             });
         }
@@ -549,12 +549,12 @@ app.post("/updateprofile/:afm", (req, result) => {
 
 
 //Ανέβασμα αιτήματος δημοσίευσης έργου
-app.post("/upload", upload.fields([{ name: 'abstract', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'snippet', maxCount: 1 }]), (req, result) => {
+app.post("/upload", multer1.none(), (req, result) => {
     let todaysDate = new Date();
     todaysDate = convertDate(todaysDate);
     const qry1 = {
-        text: `INSERT INTO draft (id, title, category, words, comments, post_date) VALUES ($1, $2, $3, $4, $5, $6)`,
-        values: [draftIndex, req.body.title, req.body.category, req.body.wordsum, req.body.comments, todaysDate]
+        text: `INSERT INTO draft (id, title, category, words, comments, post_date, abstract, analysis, snippet) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+        values: [draftIndex, req.body.title, req.body.category, req.body.wordsum, req.body.comments, todaysDate, req.body.abstract, req.body.analysis, req.body.snippet]
     }
 
     const qry2 = {

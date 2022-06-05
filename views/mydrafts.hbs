@@ -1,0 +1,38 @@
+<div class="mydrafts">
+<h2>Τα αιτήματά μου</h2>
+<div class="requests">
+    
+    <div id="pending">
+        <h3>Εκκρεμή</h3>
+            <ul>
+            {{#each drafts}}
+            {{#unless is_reviewed}}
+                {{> draft-partial title=title normal_title=normal_title}}
+            {{/unless}}
+            {{/each}}
+            </ul>
+    </div>
+    <div id="accepted">
+        <h3>Εγκεκριμένα</h3>
+         <ul>
+            {{#each drafts}}
+            {{#if is_accepted}}
+                {{> draft-partial title=title normal_title=normal_title}}
+            {{/if}}
+            {{/each}}
+            </ul>
+    </div>
+    <div id="rejected">
+        <h3>Απορριφθέντα</h3>
+         <ul>
+            {{#each drafts}}
+            {{#unless is_accepted}}
+                {{#if is_reviewed}}
+                    {{> draft-partial title=title normal_title=normal_title}}
+                {{/if}}
+            {{/unless}}
+            {{/each}}
+            </ul>
+    </div>
+</div>
+</div>

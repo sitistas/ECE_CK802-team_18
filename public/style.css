@@ -151,6 +151,9 @@ nav ul {
 body {
     font-size: 2em;
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .featured {
@@ -304,6 +307,8 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-top: auto;
+
 }
 
 footer,
@@ -353,7 +358,8 @@ input[type="file"]:hover {
 }
 
 .form-container,
-.personal-data fieldset, .draft-data fieldset {
+.personal-data fieldset,
+.draft-data fieldset {
     text-align: center;
     margin: 2em auto;
     padding: 2em;
@@ -471,7 +477,8 @@ button:hover {
     justify-content: space-around;
 }
 
-.admin h2, .requests h3{
+.admin h2,
+.requests h3 {
     text-align: center;
 }
 

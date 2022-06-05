@@ -506,6 +506,11 @@ button:hover {
     transition: 0.2s;
 }
 
+.draft-column {
+    flex: 1 1 0px;
+    max-width: 25%;
+}
+
 .featured a {
     color: #002c2c;
     text-decoration: none;

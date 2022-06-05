@@ -152,6 +152,29 @@ app.get("/admin", (req, result) => {
     else { result.redirect("/") }
 })
 
+app.get("/mydrafts", (req, result) => {
+    if (req.session.loggedUserRole == 'user') {
+        sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id WHERE suggests.afm='${req.session.loggedUserId}'`, (err, res) => {
+            if (err) {
+                console.log(err.message);
+            }
+            else {
+                // details = res.rows[0];
+                // console.log(res.rows);
+                returnTo = req.originalUrl;
+                // console.log('Details2', details);
+                result.render('mydrafts', {
+                    drafts: res.rows,
+                    // page_title: 'Best Sellers',
+                    layout: "main-user"
+                });
+            }
+        });
+    }
+    else { result.redirect("login") }
+})
+
+
 app.get("/best-sellers", (req, result) => {
     sql.query(`SELECT * FROM book ORDER BY sales LIMIT 10`, (err, res) => {
         if (err) {
@@ -197,6 +220,9 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
+    if (req.session.loggedUserId){
+        res.redirect('/');
+    }
     // console.log(req);
     // console.log("GET / session=", req.session);
     res.render("login");

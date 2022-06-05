@@ -3,8 +3,14 @@
         <h2>Έκδοσε το δικό σου βιβλίο</h2>
         Τίτλος<br>
         <input type="text" name="title" required placeholder="Τίτλος"><br>
-        Κατηγορία/Θεματική ενότητα<br>
-        <input type="text" name='category' required placeholder="Κατηγορία"><br>
+       <label for="category">Επιλογή κατηγορίας:</label><br>
+        <select name="category" id="category">
+            <option value="Ξένη Λογοτεχνία">Ξένη Λογοτεχνία</option>
+            <option value="Ελληνική Λογοτεχνία">Ελληνική Λογοτεχνία</option>
+            <option value="Αυτοβελτίωση">Αυτοβελτίωση</option>
+            <option value="Επιστημονικά Βιβλία">Επιστημονικά Βιβλία</option>
+            <option value="Πανεπιστημιακά Συγγράματα">Πανεπιστημιακά Συγγράματα</option>
+        </select><br>
         Αριθμός Λέξεων<br>
         <input type="number" id="word-sum" name="wordsum" required placeholder='50000' , min="1000" , max="100000" , step="1000"><br>
         Περίληψη<br>

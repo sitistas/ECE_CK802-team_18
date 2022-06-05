@@ -4,6 +4,4 @@
 
 5) access αρχείων pdf
 
-6) selector στο publish
-
 7) favorites

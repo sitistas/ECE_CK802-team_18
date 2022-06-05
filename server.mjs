@@ -1,21 +1,18 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import sql from './db.heroku-pg.js'
-import { checkAuthenticated } from "./login.mjs";
 import { convertDate } from "./date.mjs";
 import Session from './setup-session.mjs'
 const app = express()
 import multer from 'multer'
 import bcrypt from 'bcrypt'
-let log = await import('./login.mjs')
+let db = await import('./database-checks.mjs')
 import greekUtils from 'greek-utils';
 import aws from 'aws-sdk';
 
 aws.config.region = 'eu-central-1';
 const S3_BUCKET = process.env.S3_BUCKET;
 
-
-export let prosTaAstra = { title: "pros-ta-astra", normal_title: "Προς τ'άστρα" };
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -43,15 +40,6 @@ app.use(Session);
 app.use(express.urlencoded({ extended: true }));
 
 
-const redirectHome = (req, res, next) => {
-    console.log('redirect...', req.session)
-    if (!req.session.userID) {
-        res.redirect('/');
-    } else {
-        next();
-    }
-};
-
 let returnTo = "/";
 let draftIndex = "" //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
 
@@ -69,20 +57,13 @@ app.get("/", (req, result) => {
             console.log(err.message);
         }
         else {
-            // details = res.rows[0];
-            // console.log(res.rows);
             returnTo = req.originalUrl;
-            // console.log('Details2', details);
             result.render('index', {
                 books: res.rows,
                 layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }
     });
-    // returnTo = req.originalUrl;
-    // console.log("GET / session=", req.session);
-    // console.log(req.query)
-    // res.render("index", { layout: checkAuthenticated(req) ? "main-user" : "main" });
 })
 
 app.get("/signup", (req, res) => {
@@ -97,7 +78,7 @@ app.get("/publish", (req, res) => {
     })
 
     returnTo = req.originalUrl;
-    if (checkAuthenticated(req) == false) {
+    if (!req.session.loggedUserId) {
         res.redirect("/login");
     }
     else {
@@ -126,8 +107,6 @@ app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'an
         draftIndex += 1;
         result.render("publish", { layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
     })
-    // console.log("GET / session=", req.session);
-    // console.log(req)
 })
 
 app.get("/admin", (req, result) => {
@@ -137,13 +116,9 @@ app.get("/admin", (req, result) => {
                 console.log(err.message);
             }
             else {
-                // details = res.rows[0];
-                // console.log(res.rows);
                 returnTo = req.originalUrl;
-                // console.log('Details2', details);
                 result.render('admin', {
                     drafts: res.rows,
-                    // page_title: 'Best Sellers',
                     layout: "main-admin"
                 });
             }
@@ -159,13 +134,9 @@ app.get("/mydrafts", (req, result) => {
                 console.log(err.message);
             }
             else {
-                // details = res.rows[0];
-                // console.log(res.rows);
                 returnTo = req.originalUrl;
-                // console.log('Details2', details);
                 result.render('mydrafts', {
                     drafts: res.rows,
-                    // page_title: 'Best Sellers',
                     layout: "main-user"
                 });
             }
@@ -181,10 +152,7 @@ app.get("/best-sellers", (req, result) => {
             console.log(err.message);
         }
         else {
-            // details = res.rows[0];
-            // console.log(res.rows);
             returnTo = req.originalUrl;
-            // console.log('Details2', details);
             result.render('best-sellers', {
                 books: res.rows,
                 page_title: 'Best Sellers',
@@ -200,10 +168,7 @@ app.get("/latest", (req, result) => {
             console.log(err.message);
         }
         else {
-            // details = res.rows[0];
-            // console.log(res.rows);
             returnTo = req.originalUrl;
-            // console.log('Details2', details);
             result.render('latest', {
                 books: res.rows,
                 page_title: 'Νέες κυκλοφορίες',
@@ -223,27 +188,25 @@ app.get("/login", (req, res) => {
     if (req.session.loggedUserId){
         res.redirect('/');
     }
-    // console.log(req);
-    // console.log("GET / session=", req.session);
     res.render("login");
 })
 
 app.post("/register", async (req, result) => {
-    log.getUserByEmail(req.body.email, (err, user) => {
+    db.getUserByEmail(req.body.email, (err, user) => {
         console.log(req.body.email)
         if (user != undefined) {
             result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το email' });
         }
     })
 
-    log.getUserByAFM(req.body.afm, (err, user) => {
+    db.getUserByAFM(req.body.afm, (err, user) => {
         console.log(req.body.email)
         if (user != undefined) {
             result.render('signup', { message: 'Υπάρχει ήδη χρήστης με αυτό το ΑΦΜ' });
         }
     })
 
-    // console.log(req.body)
+
     if (req.body.password != req.body.repeatPassword) {
         result.render('signup', { message: 'Οι κωδικοί πρόσβασης δεν ταιριάζουν' });
     }
@@ -258,7 +221,6 @@ app.post("/register", async (req, result) => {
 
         sql.query(query, (err, res) => {
             if (err) {
-                // console.log(err)
                 result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
             }
             else {
@@ -266,7 +228,6 @@ app.post("/register", async (req, result) => {
             }
         })
     } catch (err) {
-        // console.log(err)
         result.render('signup', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
     }
 })
@@ -276,7 +237,7 @@ app.post("/register", async (req, result) => {
 app.post('/auth', (req, result) => {
 
 
-    log.getUserByEmail(req.body.email, (err, user) => {
+    db.getUserByEmail(req.body.email, (err, user) => {
         console.log(req.body.email)
         if (user == undefined) {
             result.render('login', { message: 'Δε βρέθηκε χρήστης με αυτό το email' });
@@ -284,14 +245,10 @@ app.post('/auth', (req, result) => {
         else {
             const match = bcrypt.compare(req.body.password, user.password, (err, match) => {
                 if (match) {
-                    //Θέτουμε τη μεταβλητή συνεδρίας "loggedUserId"
                     req.session.loggedUserId = user.afm;
                     req.session.loggedUserRole = user.is_admin ? "admin" : "user";
                     console.log(returnTo)
                     console.log(user.afm)
-                    //Αν έχει τιμή η μεταβλητή req.session.originalUrl, αλλιώς όρισέ τη σε "/"
-                    // returnTo = req.originalUrl || "/";
-                    // res.redirect("/");
                     result.redirect(returnTo);
                 }
                 else {
@@ -305,9 +262,6 @@ app.post('/auth', (req, result) => {
 
 
 app.get("/logout", (req, res) => {
-    // console.log(req);
-    // console.log("GET / session=", req.session);
-    // app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
     req.session.destroy();
     res.redirect(returnTo);
 })
@@ -346,9 +300,6 @@ app.get('/profile', (req, result) => {
             }
             else {
                 let details = res.rows[0];
-                // console.log("Details1", details);
-                // returnTo = req.originalUrl;
-                // console.log('Details2', details);
                 result.render('profile', {
                     name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
@@ -360,9 +311,8 @@ app.get('/profile', (req, result) => {
 })
 
 app.get('/search', (req, result) => {
-    // console.log(req)
+  
     const searchTerm = req.query.term;
-    // console.log(searchTerm);
     console.log('1');
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title like '%${searchTerm}%'
                     OR normal_title like '%${searchTerm}%'
@@ -377,12 +327,7 @@ app.get('/search', (req, result) => {
             result.redirect(returnTo);
         }
         else {
-            // console.log('2');
-            // details = res.rows[0];
-            // console.log(res.rows);
             returnTo = req.originalUrl;
-            // console.log('Details2', details);
-            // console.log('3');
             result.render('results', {
                 books: res.rows,
                 page_title: 'Αποτελέσματα Αναζήτησης',
@@ -396,10 +341,6 @@ app.get('/search', (req, result) => {
 
 //Χρειάζεται προσοχή στα κεφαλαία και στα μικρά γράμματα
 app.post('/results', (req, result) => {
-    // console.log(req)
-    // const searchTerm = req.query.term;
-    // console.log(searchTerm);
-    // console.log('1');
     console.log(req.body.bookisbn);
     let q1=req.body.booktitle==""? "": ` WHERE title like '%${req.body.booktitle}%'`;
     let q2=req.body.booktitle==""? "": (q1==""? ` WHERE normal_title like '%${req.body.booktitle}%'`: ` OR normal_title like '%${req.body.booktitle}%'`)
@@ -407,10 +348,8 @@ app.post('/results', (req, result) => {
     let q4=req.body.bookcategory==""? "": (q1+q2+q3==""? ` WHERE category like '%${req.body.bookcategory}%'`: ` OR category like '%${req.body.bookcategory}%'`)
     let q5=req.body.bookyear==""? "": (q1+q4+q2+q3==""? ` WHERE release_year=${req.body.bookyear}`: ` OR language=${req.body.booklanguage}`)
     let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE name like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
-    // let q0=q1+q2+q3+q4+q5+q6==""? "": " WHERE "
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
 
-    // console.log(query)
     sql.query(query, (err, res) => {
         console.log(query);
         if (err) {
@@ -418,12 +357,6 @@ app.post('/results', (req, result) => {
             result.redirect(returnTo);
         }
         else {
-            // console.log('2');
-            // details = res.rows[0];
-            // console.log(res.rows);
-            // returnTo = req.originalUrl;
-            // console.log('Details2', details);
-            // console.log('3');
             result.render('results', {
                 books: res.rows,
                 page_title: 'Αποτελέσματα Αναζήτησης',
@@ -435,11 +368,6 @@ app.post('/results', (req, result) => {
 })
 
 
-// app.get('/book/pros-ta-astra', (req, res) => {
-//     console.log('GET / session=', req.session);
-//     res.render('book');
-// })
-
 app.get("/category/:category", (req, result) => {
     sql.query(`SELECT * FROM book WHERE category='${req.params.category}'`, (err, res) => {
         if (err) {
@@ -447,10 +375,8 @@ app.get("/category/:category", (req, result) => {
             res.redirect(returnTo);
         }
         else {
-            // details = res.rows[0];
             console.log(res.rows);
             returnTo = req.originalUrl;
-            // console.log('Details2', details);
             result.render('category', {
                 books: res.rows,
                 page_title: req.params.category,
@@ -462,14 +388,13 @@ app.get("/category/:category", (req, result) => {
 
 
 app.get('/drafts/:id', (req, result) => {
-    // returnTo = req.originalUrl;
     if (!req.session.loggedUserId) {
         console.log('no')
         result.redirect("/");
     }
 
     if (req.session.loggedUserRole!='admin'){
-        log.getAFMFromDraftID(req.params.id, (err, user) => {
+        db.getAFMFromDraftID(req.params.id, (err, user) => {
             if (user.afm != req.session.loggedUserId) {
                 console.log(user.afm);
                 console.log(req.session.loggedUserId)
@@ -486,7 +411,6 @@ app.get('/drafts/:id', (req, result) => {
             }
             else {
                 let details = res.rows[0];
-                // console.log(details);
                 result.render('drafts', {
                     id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
@@ -507,10 +431,8 @@ app.get("/add-book", (req, res) => {
 })
 
 app.get("/review/:id", (req, result) => {
-    // console.log(req)
-    console.log('test1')
+   
     if (req.session.loggedUserRole != 'admin') {
-        // console.log(loggedUserRole)
         result.redirect("/")}
     else {
         console.log('test2')
@@ -528,7 +450,6 @@ app.get("/review/:id", (req, result) => {
         }
 
         if (action=='reject'){
-            // console.log(req.params)
             sql.query(`UPDATE draft SET is_reviewed=true, is_approved=false, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
                 if (err) {
                     console.log(err.message);
@@ -541,7 +462,6 @@ app.get("/review/:id", (req, result) => {
         }
 
         if (action=='delete'){
-            // console.log(req.params)
             sql.query(`DELETE FROM suggests WHERE id='${req.params.id}'`);
             sql.query(`DELETE FROM draft WHERE id='${req.params.id}'`, (err, res) => {
                 if (err) {
@@ -558,14 +478,13 @@ app.get("/review/:id", (req, result) => {
 
 app.post("/add-book", (req, result) => {
     let aafm = "" //author afm
-    log.getBookByISBN(req.body.isbn, (err, user) => {
-        // console.log(req.body.email)
+    db.getBookByISBN(req.body.isbn, (err, user) => {
         if (user != undefined) {
             result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
         }
     })
 
-    log.getUserByName(req.body.author, (err, user) => {
+    db.getUserByName(req.body.author, (err, user) => {
         if (user == undefined) {
             result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
         }
@@ -574,7 +493,6 @@ app.post("/add-book", (req, result) => {
 
             let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
             title = title.replace(/\s+/g, '-')
-            // console.log(aafm);
             const query1 = {
                 text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
                 values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]

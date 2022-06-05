@@ -385,20 +385,16 @@ app.get("/signup", (req, res) => {
 
 //Προσθήκη βιβλίου από admin
 app.post("/add-book", multer1.none(), (req, result) => {
-    console.log(req.body.book.cover_url);
     let aafm = "" //author afm
     db.getBookByISBN(req.body.isbn, (err, user) => {
         if (user != undefined) {
             result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
-            console.log('test1');
         }
     })
 
     db.getUserByName(req.body.author, (err, user) => {
         if (user == undefined) {
             result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
-            console.log('test2');
-            console.log('req.body.author');
 
         }
         else {
@@ -420,12 +416,10 @@ app.post("/add-book", multer1.none(), (req, result) => {
             sql.query(query1, (err, res) => {
                 if (err) {
                     result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
-                    console.log('test3');
                 }
                 else {
                     sql.query(query2);
                     result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
-                    console.log('test4');
                 }
             })
         }

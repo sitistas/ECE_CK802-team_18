@@ -17,11 +17,6 @@
             <h3>Κατάσταση αιτήματος</h3>
             {{#unless isReviewed}}
                 <a>Έχει υποβληθεί</a>
-                    {{#if admin}}
-                        <br>
-                        <button type="submit" name="approve" value="approve" id="approve">Έγκριση</button>
-                        <button type="submit" name="reject" value="reject" id="reject">Απόρριψη</button>
-                    {{/if}}
             {{/unless}}
             {{#if isAccepted}}
                 <a style="color: green">Έχει εγκριθεί</a>
@@ -31,9 +26,19 @@
                     <a style="color: red">Έχει αποριφθεί</a>
                 {{/if}}
             {{/unless}}
+            <h3>Σχόλια διαχείρισης</h3>
+            {{#unless admin}}
+                <a>{{adminComments}}</a>
+            {{/unless}}
             {{#if admin}}
+                <textarea id="admincomments" name=admin"comments" rows="3" placeholder="{{adminComments}}"></textarea>
                 <br>
-                <button type="submit" name="delete" value="delete" id="delete">Διαγραφή αιτήματος</button>
+                <select name="edit" id="edit">
+                    <option value="approve">Έγκριση αιτήματος</option>
+                    <option value="reject">Απόρριψη αιτήματος</option>
+                    <option value="delete">Διαγραφή αιτήματος</option>
+                </select><br>
+                <button type="submit" name="update" value="update" id="update">Ενημέρωση αιτήματος</button>
             {{/if}}
         </form>
         <br><br>

@@ -5,29 +5,29 @@
     <div class="filters">
         <a id="testtext">Φίλτρα</a><br><br>
         <fieldset>
-        <form action="/results" method="post">
-            <label for="title">Τίτλος Βιβλίου</label><br>
-            <input type="text" id="title" name="booktitle"><br>
-            <label for="isbn">ISBN</label><br>
-            <input type="number" id="isbn" name="bookisbn"><br>
-            <label for="year">Έτος κυκλοφορίας</label><br>
-            <input type="number" id="year" name="bookyear"><br>
-            <label for="author">Συγγραφέας</label><br>
-            <input type="text" id="author" name="bookauthor"><br>
-            <label for="category">Κατηγορία</label><br>
-            <input type="text" id="category" name="bookcategory"><br>
-            <br>
-            <button type="submit" value="submit" id="submit">Αναζήτηση</button>
-        </form>
+            <form action="/results" method="post">
+                <label for="title">Τίτλος Βιβλίου</label><br>
+                <input type="text" id="title" name="booktitle"><br>
+                <label for="isbn">ISBN</label><br>
+                <input type="number" id="isbn" name="bookisbn"><br>
+                <label for="year">Έτος κυκλοφορίας</label><br>
+                <input type="number" id="year" name="bookyear"><br>
+                <label for="author">Συγγραφέας</label><br>
+                <input type="text" id="author" name="bookauthor"><br>
+                <label for="category">Κατηγορία</label><br>
+                <input type="text" id="category" name="bookcategory"><br>
+                <br>
+                <button type="submit" value="submit" id="submit">Αναζήτηση</button>
+            </form>
         </fieldset>
     </div>
 
 
     <div class="book-results">
 
-    {{#each books}}
-        {{> book-partial title=title normal_title=normal_title}}
-    {{/each}}
+        {{#each books}}
+        {{> book-partial title=title normal_title=normal_title cover=cover}}
+        {{/each}}
 
     </div>
 </div>

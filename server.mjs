@@ -117,7 +117,7 @@ app.get('/book/:title', (req, result) => {
             details = res.rows[0];
             returnTo = req.originalUrl;
             result.render('book', {
-                title: details.title, pages: details.pages, author: details.name, normal_title: details.normal_title, description: details.description, isbn: details.isbn, price: details.price, category: details.category, release_year: details.release_year, language: details.language,
+                title: details.title, pages: details.pages, author: details.name, normal_title: details.normal_title, description: details.description, isbn: details.isbn, price: details.price, category: details.category, release_year: details.release_year, language: details.language, cover: details.cover,
                 layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
             });
         }

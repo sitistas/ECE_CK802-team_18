@@ -220,7 +220,7 @@ app.get("/signup", (req, res) => {
 })
 
 app.get("/login", (req, res) => {
-    if (req.session.loggedUserId){
+    if (req.session.loggedUserId) {
         res.redirect('/');
     }
     // console.log(req);
@@ -401,12 +401,12 @@ app.post('/results', (req, result) => {
     // console.log(searchTerm);
     // console.log('1');
     console.log(req.body.bookisbn);
-    let q1=req.body.booktitle==""? "": ` WHERE title like '%${req.body.booktitle}%'`;
-    let q2=req.body.booktitle==""? "": (q1==""? ` WHERE normal_title like '%${req.body.booktitle}%'`: ` OR normal_title like '%${req.body.booktitle}%'`)
-    let q3=req.body.bookisbn==""? "": (q1+q2==""? ` WHERE book.isbn like '%${req.body.bookisbn}%'`: ` OR book.isbn like '%${req.body.bookisbn}%'`)
-    let q4=req.body.bookcategory==""? "": (q1+q2+q3==""? ` WHERE category like '%${req.body.bookcategory}%'`: ` OR category like '%${req.body.bookcategory}%'`)
-    let q5=req.body.bookyear==""? "": (q1+q4+q2+q3==""? ` WHERE release_year=${req.body.bookyear}`: ` OR language=${req.body.booklanguage}`)
-    let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE name like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
+    let q1 = req.body.booktitle == "" ? "" : ` WHERE title like '%${req.body.booktitle}%'`;
+    let q2 = req.body.booktitle == "" ? "" : (q1 == "" ? ` WHERE normal_title like '%${req.body.booktitle}%'` : ` OR normal_title like '%${req.body.booktitle}%'`)
+    let q3 = req.body.bookisbn == "" ? "" : (q1 + q2 == "" ? ` WHERE book.isbn like '%${req.body.bookisbn}%'` : ` OR book.isbn like '%${req.body.bookisbn}%'`)
+    let q4 = req.body.bookcategory == "" ? "" : (q1 + q2 + q3 == "" ? ` WHERE category like '%${req.body.bookcategory}%'` : ` OR category like '%${req.body.bookcategory}%'`)
+    let q5 = req.body.bookyear == "" ? "" : (q1 + q4 + q2 + q3 == "" ? ` WHERE release_year=${req.body.bookyear}` : ` OR language=${req.body.booklanguage}`)
+    let q6 = req.body.bookauthor == "" ? "" : (q1 + q5 + q4 + q2 + q3 == "" ? ` WHERE name like '%${req.body.bookauthor}%'` : ` OR author like '%${req.body.bookauthor}%'`)
     // let q0=q1+q2+q3+q4+q5+q6==""? "": " WHERE "
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
 
@@ -468,31 +468,32 @@ app.get('/drafts/:id', (req, result) => {
         result.redirect("/");
     }
 
-    if (req.session.loggedUserRole!='admin'){
+    if (req.session.loggedUserRole != 'admin') {
         log.getAFMFromDraftID(req.params.id, (err, user) => {
             if (user.afm != req.session.loggedUserId) {
                 console.log(user.afm);
                 console.log(req.session.loggedUserId)
                 result.redirect("/");
-            }})
+            }
+        })
     }
-    
-        console.log('test')
-        sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
-            if (err) {
-                console.log(err.message);
-                result.redirect('/')
-            }
-            else {
-                let details = res.rows[0];
-                result.render('drafts', {
-                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
-                    layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
-                });
-            }
-        });
 
-    
+    console.log('test')
+    sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+            result.redirect('/')
+        }
+        else {
+            let details = res.rows[0];
+            result.render('drafts', {
+                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole == 'admin'),
+                layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
+            });
+        }
+    });
+
+
 })
 
 
@@ -520,6 +521,10 @@ app.post("/add-book", (req, result) => {
         // console.log(req.body.email)
         if (user != undefined) {
             result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
+            const el = document.getElementById("test-files-uploader");
+            el.addEventListener("fileUploadSuccess", function (e) {
+                console.log(this.value)
+            });
         }
     })
 
@@ -558,30 +563,31 @@ app.post("/add-book", (req, result) => {
 
 })
 
-app.get('/up', (req, res) => {
-    const s3 = new aws.S3();
-    // const fileName = req.query['file-name'];
-    // const fileType = req.query['file-type'];
-    const fileName = 'up_logo';
-    const fileType = '.jpg';
-    const s3Params = {
-        Bucket: S3_BUCKET,
-        Key: fileName,
-        Expires: 60,
-        ContentType: fileType,
-        ACL: 'public-read'
-    };
 
-    s3.getSignedUrl('putObject', s3Params, (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.end();
-        }
-        const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        };
-        res.write(JSON.stringify(returnData));
-        res.end();
-    });
-});
+// app.get('/up', (req, res) => {
+//     const s3 = new aws.S3();
+//     // const fileName = req.query['file-name'];
+//     // const fileType = req.query['file-type'];
+//     const fileName = 'up_logo';
+//     const fileType = '.jpg';
+//     const s3Params = {
+//         Bucket: S3_BUCKET,
+//         Key: fileName,
+//         Expires: 60,
+//         ContentType: fileType,
+//         ACL: 'public-read'
+//     };
+
+//     s3.getSignedUrl('putObject', s3Params, (err, data) => {
+//         if (err) {
+//             console.log(err);
+//             return res.end();
+//         }
+//         const returnData = {
+//             signedRequest: data,
+//             url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+//         };
+//         res.write(JSON.stringify(returnData));
+//         res.end();
+//     });
+// });

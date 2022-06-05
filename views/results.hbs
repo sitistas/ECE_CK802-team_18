@@ -5,27 +5,18 @@
     <div class="filters">
         <a id="testtext">Φίλτρα</a><br><br>
         <fieldset>
-        <form action="" method="post">
+        <form action="/results" method="post">
             <label for="title">Τίτλος Βιβλίου</label><br>
-            <input type="text" id="title" name="book-title"><br>
+            <input type="text" id="title" name="booktitle"><br>
             <label for="isbn">ISBN</label><br>
-            <input type="number" id="isbn" name="book-isbn"><br>
+            <input type="number" id="isbn" name="bookisbn"><br>
             <label for="year">Έτος κυκλοφορίας</label><br>
-            <input type="number" id="year" name="book-year"><br>
+            <input type="number" id="year" name="bookyear"><br>
             <label for="author">Συγγραφέας</label><br>
-            <input type="text" id="author" name="book-author"><br>
-            <a id="testtext">Κατηγορία</a>
-            <div class="checkbox">           
-            <input type="checkbox" id="greek" name="greek">
-            <label for="greek">Eλληνική Λογοτεχνία</label><br>
-            <input type="checkbox" id="foreign" name="foreign">
-            <label for="foreign">Ξένη Λογοτεχνία</label><br>
-            <input type="checkbox" id="kids" name="kids">
-            <label for="kids">Παιδικά Βιβλία</label><br>
-            <input type="checkbox" id="academic" name="academic">
-            <label for="academic">Πανεπιστημιακά συγγράμματα</label><br>
-            <input type="checkbox" id="scientific" name="scientific">
-            <label for="scientific">Eπιστημονικά βιβλία</label></div><br>
+            <input type="text" id="author" name="bookauthor"><br>
+            <label for="category">Κατηγορία</label><br>
+            <input type="text" id="category" name="bookcategory"><br>
+            <br>
             <button type="submit" value="submit" id="submit">Αναζήτηση</button>
         </form>
         </fieldset>

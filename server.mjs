@@ -332,12 +332,51 @@ app.get('/search', (req, result) => {
             result.redirect(returnTo);
         }
         else {
-            console.log('2');
+            // console.log('2');
             // details = res.rows[0];
-            console.log(res.rows);
+            // console.log(res.rows);
             returnTo = req.originalUrl;
             // console.log('Details2', details);
-            console.log('3');
+            // console.log('3');
+            result.render('results', {
+                books: res.rows,
+                page_title: 'Αποτελέσματα Αναζήτησης',
+                layout: req.session.loggedUserId ? (req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user") : "main"
+            });
+        }
+    });
+
+})
+
+app.post('/results', (req, result) => {
+    // console.log(req)
+    // const searchTerm = req.query.term;
+    // console.log(searchTerm);
+    // console.log('1');
+    console.log(req.body.bookisbn);
+    let q1=req.body.booktitle==""? "": ` WHERE title like '%${req.body.booktitle}%'`;
+    let q2=req.body.booktitle==""? "": (q1==""? ` WHERE normal_title like '%${req.body.booktitle}%'`: ` OR normal_title like '%${req.body.booktitle}%'`)
+    let q3=req.body.bookisbn==""? "": (q1+q2==""? ` WHERE book.isbn like '%${req.body.bookisbn}%'`: ` OR book.isbn like '%${req.body.bookisbn}%'`)
+    let q4=req.body.bookcategory==""? "": (q1+q2+q3==""? ` WHERE category like '%${req.body.bookcategory}%'`: ` OR category like '%${req.body.bookcategory}%'`)
+    let q5=req.body.booklanguage==""? "": (q1+q4+q2+q3==""? ` WHERE language like '%${req.body.booklanguage}%'`: ` OR language like '%${req.body.booklanguage}%'`)
+    let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE author like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
+    // let q0=q1+q2+q3+q4+q5+q6==""? "": " WHERE "
+    const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
+    
+    // console.log(query)
+    sql.query(query, (err, res) => {
+        console.log(query);
+        if (err) {
+            console.log(err.message);
+            result.redirect(returnTo);
+        }
+        else {
+            // console.log('2');
+            // details = res.rows[0];
+            // console.log(res.rows);
+            // returnTo = req.originalUrl;
+            // console.log('Details2', details);
+            // console.log('3');
             result.render('results', {
                 books: res.rows,
                 page_title: 'Αποτελέσματα Αναζήτησης',
@@ -349,14 +388,12 @@ app.get('/search', (req, result) => {
 })
 
 
-
 // app.get('/book/pros-ta-astra', (req, res) => {
 //     console.log('GET / session=', req.session);
 //     res.render('book');
 // })
 
 app.get("/category/:category", (req, result) => {
-    console.log(req.params.category)
     sql.query(`SELECT * FROM book WHERE category='${req.params.category}'`, (err, res) => {
         if (err) {
             console.log(err.message);

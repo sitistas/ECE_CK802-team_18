@@ -521,10 +521,6 @@ app.post("/add-book", (req, result) => {
         // console.log(req.body.email)
         if (user != undefined) {
             result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
-            const el = document.getElementById("test-files-uploader");
-            el.addEventListener("fileUploadSuccess", function (e) {
-                console.log(this.value)
-            });
         }
     })
 
@@ -534,7 +530,6 @@ app.post("/add-book", (req, result) => {
         }
         else {
             aafm = user.afm
-
             let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
             title = title.replace(/\s+/g, '-')
             // console.log(aafm);

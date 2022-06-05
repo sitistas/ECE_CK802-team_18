@@ -353,7 +353,7 @@ input[type="file"]:hover {
 }
 
 .form-container,
-.personal-data fieldset {
+.personal-data fieldset, .draft-data fieldset {
     text-align: center;
     margin: 2em auto;
     padding: 2em;

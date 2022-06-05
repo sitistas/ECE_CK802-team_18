@@ -158,3 +158,20 @@ export let getUserByName = (name, callback) => {
         }
     })
 }
+
+export let getAFMFromDraftID = (id, callback) => {
+    const query = {
+        text: `SELECT afm FROM suggests WHERE id=$1`,
+        values: [id],
+    }
+
+    sql.query(query, (err, res) => {
+        if (err) {
+            console.log(err.stack)
+            callback(err.stack)
+        }
+        else {
+            callback(null, res.rows[0])
+        }
+    })
+}

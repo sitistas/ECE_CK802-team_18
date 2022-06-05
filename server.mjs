@@ -434,6 +434,38 @@ app.get("/category/:category", (req, result) => {
     });
 })
 
+
+app.get('/drafts/:id', (req, result) => {
+    // returnTo = req.originalUrl;
+    if (!req.session.loggedUserId) {
+        result.redirect("/");
+    }
+
+    if (req.session.loggedUserRole!='admin'){
+        log.getAFMFromDraftID(req.params.id, (err, user) => {
+            if (user.afm != req.session.loggedUserId) {
+                result.redirect("/");
+            }})
+    }
+    else {
+        sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
+            if (err) {
+                console.log(err.message);
+                result.redirect('/')
+            }
+            else {
+                let details = res.rows[0];
+                result.render('drafts', {
+                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
+                    layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
+                });
+            }
+        });
+
+    }
+})
+
+
 app.get("/add-book", (req, res) => {
     if (req.session.loggedUserRole == 'admin') {
         console.log("GET / session=", req.session);

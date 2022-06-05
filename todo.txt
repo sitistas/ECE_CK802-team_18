@@ -1,7 +1,7 @@
 1) αναζήτηση με φίλτρα
 2) admin page
 3) γέμισμα βάσης
-4) αλλαγή πίνακα book (σχετικά με το link)
+
 5) access αρχείων pdf
 
 6) selector στο publish

@@ -8,6 +8,7 @@ const app = express()
 import multer from 'multer'
 import bcrypt from 'bcrypt'
 let log = await import('./login.mjs')
+import greekUtils from 'greek-utils';
 
 export let prosTaAstra = { title: "pros-ta-astra", normal_title: "Προς τ'άστρα" };
 
@@ -399,11 +400,12 @@ app.post("/add-book", (req, result) => {
         else {
             aafm=user.afm
        
-
-    console.log(aafm);
+    let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
+    title=title.replace(/\s+/g, '-')
+    // console.log(aafm);
     const query1 = {
-        text: 'INSERT INTO book (pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-        values: [req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
+        text: 'INSERT INTO book (title, pages, normal_title, description, isbn, price, category, release_year, language) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+        values: [title, req.body.pages, req.body.normal_title, req.body.description, req.body.isbn, req.body.price, req.body.category, req.body.release_year, req.body.language]
     }
 
     const query2 = {

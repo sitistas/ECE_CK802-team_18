@@ -238,7 +238,7 @@ app.get('/profile', (req, result) => {
             else {
                 let details = res.rows[0];
                 result.render('profile', {
-                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email,
+                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email, admin: (req.session.loggedUserRole=='admin'),
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
                 });
             }

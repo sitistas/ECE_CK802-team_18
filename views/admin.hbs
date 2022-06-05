@@ -17,7 +17,7 @@
             <h3>Εγκεκριμένα</h3>
             <ul>
                 {{#each drafts}}
-                {{#if is_accepted}}
+                {{#if is_approved}}
                 {{> draft-partial title=title normal_title=normal_title}}
                 {{/if}}
                 {{/each}}
@@ -27,7 +27,7 @@
             <h3>Απορριφθέντα</h3>
             <ul>
                 {{#each drafts}}
-                {{#unless is_accepted}}
+                {{#unless is_approved}}
                 {{#if is_reviewed}}
                 {{> draft-partial title=title normal_title=normal_title}}
                 {{/if}}

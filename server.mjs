@@ -377,13 +377,14 @@ app.get('/search', (req, result) => {
 
 //Σελίδα εγγραφής
 app.get("/signup", (req, res) => {
-    if (req.session.loggedUserId){res.redirect('/')}
-    else{
-        res.render("signup");}
+    if (req.session.loggedUserId) { res.redirect('/') }
+    else {
+        res.render("signup");
+    }
 })
 
 //Προσθήκη βιβλίου από admin
-app.post("/add-book", multer1.none(), (req, result) => {
+app.post("/add-book", (req, result) => {
     console.log(req.body.book.cover_url);
     let aafm = "" //author afm
     db.getBookByISBN(req.body.isbn, (err, user) => {
@@ -548,7 +549,7 @@ app.post("/updateprofile/:afm", (req, result) => {
 
 
 //Ανέβασμα αιτήματος δημοσίευσης έργου
-app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, result) => {
+app.post("/upload", upload.fields([{ name: 'abstract', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'snippet', maxCount: 1 }]), (req, result) => {
     let todaysDate = new Date();
     todaysDate = convertDate(todaysDate);
     const qry1 = {

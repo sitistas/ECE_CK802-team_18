@@ -15,11 +15,14 @@
         <input type="number" id="word-sum" name="wordsum" required placeholder='50000' , min="1000" , max="100000" ,
             step="1000"><br>
         Περίληψη<br>
-        <input type="file" id="summary" name="summary" accept=".pdf" required><br>
+        <input class="simple-file-upload" data-preview="true" id="abstract" name="abstract" data-accepted=".pdf"
+            data-maxFileSize="2" required><br>
         Σύντομη Ανάλυση του περιεχομένου (2-3 σελίδες)<br>
-        <input type="file" id="analysis" name="analysis" accept=".pdf" required><br>
+        <input class="simple-file-upload" data-preview="true" id="analysis" name="analysis" data-accepted=".pdf"
+            data-maxFileSize="2" required><br>
         Ενδεικτικό απόσπασμα<br>
-        <input type="file" id="chapter" name="chapter" accept=".pdf" required><br>
+        <input class="simple-file-upload" data-preview="true" id="snippet" name="snippet" data-accepted=".pdf"
+            data-maxFileSize="2" required><br>
         Σχόλια <br>
         <textarea id="comments" name="comments" rows="5" placeholder="Σχόλια (προαιρετικά)"></textarea>
         <br>

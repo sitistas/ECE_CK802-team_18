@@ -353,18 +353,20 @@ app.get('/search', (req, result) => {
 
 })
 
+
+//Χρειάζεται προσοχή στα κεφαλαία και στα μικρά γράμματα
 app.post('/results', (req, result) => {
     // console.log(req)
     // const searchTerm = req.query.term;
     // console.log(searchTerm);
     // console.log('1');
     console.log(req.body.bookisbn);
-    let q1 = req.body.booktitle == "" ? "" : ` WHERE title like '%${req.body.booktitle}%'`;
-    let q2 = req.body.booktitle == "" ? "" : (q1 == "" ? ` WHERE normal_title like '%${req.body.booktitle}%'` : ` OR normal_title like '%${req.body.booktitle}%'`)
-    let q3 = req.body.bookisbn == "" ? "" : (q1 + q2 == "" ? ` WHERE book.isbn like '%${req.body.bookisbn}%'` : ` OR book.isbn like '%${req.body.bookisbn}%'`)
-    let q4 = req.body.bookcategory == "" ? "" : (q1 + q2 + q3 == "" ? ` WHERE category like '%${req.body.bookcategory}%'` : ` OR category like '%${req.body.bookcategory}%'`)
-    let q5 = req.body.booklanguage == "" ? "" : (q1 + q4 + q2 + q3 == "" ? ` WHERE language like '%${req.body.booklanguage}%'` : ` OR language like '%${req.body.booklanguage}%'`)
-    let q6 = req.body.bookauthor == "" ? "" : (q1 + q5 + q4 + q2 + q3 == "" ? ` WHERE author like '%${req.body.bookauthor}%'` : ` OR author like '%${req.body.bookauthor}%'`)
+    let q1=req.body.booktitle==""? "": ` WHERE title like '%${req.body.booktitle}%'`;
+    let q2=req.body.booktitle==""? "": (q1==""? ` WHERE normal_title like '%${req.body.booktitle}%'`: ` OR normal_title like '%${req.body.booktitle}%'`)
+    let q3=req.body.bookisbn==""? "": (q1+q2==""? ` WHERE book.isbn like '%${req.body.bookisbn}%'`: ` OR book.isbn like '%${req.body.bookisbn}%'`)
+    let q4=req.body.bookcategory==""? "": (q1+q2+q3==""? ` WHERE category like '%${req.body.bookcategory}%'`: ` OR category like '%${req.body.bookcategory}%'`)
+    let q5=req.body.bookyear==""? "": (q1+q4+q2+q3==""? ` WHERE release_year=${req.body.bookyear}`: ` OR language=${req.body.booklanguage}`)
+    let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE name like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
     // let q0=q1+q2+q3+q4+q5+q6==""? "": " WHERE "
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
 

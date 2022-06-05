@@ -27,6 +27,7 @@ const multerFilter = (req, file, cb) => {
 };
 
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter })
+const multer1 = multer();
 
 app.engine('.hbs', engine({ extname: '.hbs', defaultLayout: 'main' }));
 app.set('view engine', '.hbs');
@@ -334,21 +335,25 @@ app.get("/signup", (req, res) => {
 })
 
 
-app.post("/add-book", (req, result) => {
+app.post("/add-book", multer1.none(), (req, result) => {
+    console.log(req.body.book.cover_url);
     let aafm = "" //author afm
     db.getBookByISBN(req.body.isbn, (err, user) => {
         if (user != undefined) {
             result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
+            console.log('test1');
         }
     })
 
     db.getUserByName(req.body.author, (err, user) => {
         if (user == undefined) {
             result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
+            console.log('test2');
+
         }
         else {
             aafm = user.afm
-
+            console.log('Going to insert\n\n\n\n');
             let title = (greekUtils.toGreeklish(req.body.normal_title)).toLowerCase();
             title = title.replace(/\s+/g, '-')
             const query1 = {
@@ -361,13 +366,16 @@ app.post("/add-book", (req, result) => {
                 values: [req.body.isbn, aafm]
             }
 
+            console.log('Inserted values\n\n\n\n');
             sql.query(query1, (err, res) => {
                 if (err) {
                     result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+                    console.log('test3');
                 }
                 else {
                     sql.query(query2);
                     result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
+                    console.log('test4');
                 }
             })
         }

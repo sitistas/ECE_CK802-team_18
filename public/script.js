@@ -20,7 +20,9 @@ function closeSearch() {
 
 document.addEventListener('DOMContentLoaded', e => {
     const el = document.getElementById("book_cover_url");
+    let bookCoverUrl = "";
     el.addEventListener("fileUploadSuccess", function (e) {
-        console.log(this.value)
+        bookCoverUrl = this.value;
+        console.log(bookCoverUrl);
     });
 })

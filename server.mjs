@@ -8,12 +8,6 @@ import multer from 'multer'
 import bcrypt from 'bcrypt'
 let db = await import('./database-checks.mjs')
 import greekUtils from 'greek-utils';
-import aws from 'aws-sdk';
-import { query } from "express";
-
-aws.config.region = 'eu-central-1';
-const S3_BUCKET = process.env.S3_BUCKET;
-
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -151,28 +145,29 @@ app.get('/drafts/:id', (req, result) => {
         result.redirect("/");
     }
 
-    if (req.session.loggedUserRole!='admin'){
+    if (req.session.loggedUserRole != 'admin') {
         db.getAFMFromDraftID(req.params.id, (err, user) => {
             if (user.afm != req.session.loggedUserId) {
                 result.redirect("/");
-            }})
+            }
+        })
     }
 
-        returnTo=req.originalUrl;
-        sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
-            if (err) {
-                result.redirect('/')
-            }
-            else {
-                let details = res.rows[0];
-                result.render('drafts', {
-                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
-                    layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
-                });
-            }
-        });
+    returnTo = req.originalUrl;
+    sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
+        if (err) {
+            result.redirect('/')
+        }
+        else {
+            let details = res.rows[0];
+            result.render('drafts', {
+                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole == 'admin'),
+                layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
+            });
+        }
+    });
 
-    
+
 })
 
 app.get('/editprofile/:afm', (req, result) => {
@@ -233,7 +228,7 @@ app.get("/listallusers", (req, result) => {
 })
 
 app.get("/login", (req, res) => {
-    if (req.session.loggedUserId){
+    if (req.session.loggedUserId) {
         res.redirect('/');
     }
     res.render("login");
@@ -278,7 +273,7 @@ app.get('/profile', (req, result) => {
             else {
                 let details = res.rows[0];
                 result.render('profile', {
-                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email, admin: (req.session.loggedUserRole=='admin'),
+                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email, admin: (req.session.loggedUserRole == 'admin'),
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
                 });
             }
@@ -304,12 +299,13 @@ app.get("/publish", (req, res) => {
 
 
 app.get("/review/:id", (req, result) => {
-   
+
     if (req.session.loggedUserRole != 'admin') {
-        result.redirect("/")}
+        result.redirect("/")
+    }
     else {
-        let action=req.query.edit;
-        if (action=='approve'){
+        let action = req.query.edit;
+        if (action == 'approve') {
             sql.query(`UPDATE draft SET is_reviewed=true, is_approved=true, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
                 if (err) {
                     result.redirect('/');
@@ -317,10 +313,10 @@ app.get("/review/:id", (req, result) => {
                 else {
                     result.redirect(returnTo);
                 }
-            });   
+            });
         }
 
-        if (action=='reject'){
+        if (action == 'reject') {
             sql.query(`UPDATE draft SET is_reviewed=true, is_approved=false, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
                 if (err) {
                     result.redirect('/');
@@ -328,10 +324,10 @@ app.get("/review/:id", (req, result) => {
                 else {
                     result.redirect(returnTo);
                 }
-            });   
+            });
         }
 
-        if (action=='delete'){
+        if (action == 'delete') {
             sql.query(`DELETE FROM suggests WHERE id='${req.params.id}'`);
             sql.query(`DELETE FROM draft WHERE id='${req.params.id}'`, (err, res) => {
                 if (err) {
@@ -340,13 +336,14 @@ app.get("/review/:id", (req, result) => {
                 else {
                     result.redirect('/admin');
                 }
-            });   
+            });
         }
-}})
+    }
+})
 
 
 app.get('/search', (req, result) => {
-  
+
     const searchTerm = req.query.term;
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm WHERE title like '%${searchTerm}%'
                     OR normal_title like '%${searchTerm}%'
@@ -482,12 +479,12 @@ app.post("/register", async (req, result) => {
 
 //Χρειάζεται προσοχή στα κεφαλαία και στα μικρά γράμματα
 app.post('/results', (req, result) => {
-    let q1=req.body.booktitle==""? "": ` WHERE title like '%${req.body.booktitle}%'`;
-    let q2=req.body.booktitle==""? "": (q1==""? ` WHERE normal_title like '%${req.body.booktitle}%'`: ` OR normal_title like '%${req.body.booktitle}%'`)
-    let q3=req.body.bookisbn==""? "": (q1+q2==""? ` WHERE book.isbn like '%${req.body.bookisbn}%'`: ` OR book.isbn like '%${req.body.bookisbn}%'`)
-    let q4=req.body.bookcategory==""? "": (q1+q2+q3==""? ` WHERE category like '%${req.body.bookcategory}%'`: ` OR category like '%${req.body.bookcategory}%'`)
-    let q5=req.body.bookyear==""? "": (q1+q4+q2+q3==""? ` WHERE release_year=${req.body.bookyear}`: ` OR language=${req.body.booklanguage}`)
-    let q6=req.body.bookauthor==""? "": (q1+q5+q4+q2+q3==""? ` WHERE name like '%${req.body.bookauthor}%'`: ` OR author like '%${req.body.bookauthor}%'`)
+    let q1 = req.body.booktitle == "" ? "" : ` WHERE title like '%${req.body.booktitle}%'`;
+    let q2 = req.body.booktitle == "" ? "" : (q1 == "" ? ` WHERE normal_title like '%${req.body.booktitle}%'` : ` OR normal_title like '%${req.body.booktitle}%'`)
+    let q3 = req.body.bookisbn == "" ? "" : (q1 + q2 == "" ? ` WHERE book.isbn like '%${req.body.bookisbn}%'` : ` OR book.isbn like '%${req.body.bookisbn}%'`)
+    let q4 = req.body.bookcategory == "" ? "" : (q1 + q2 + q3 == "" ? ` WHERE category like '%${req.body.bookcategory}%'` : ` OR category like '%${req.body.bookcategory}%'`)
+    let q5 = req.body.bookyear == "" ? "" : (q1 + q4 + q2 + q3 == "" ? ` WHERE release_year=${req.body.bookyear}` : ` OR language=${req.body.booklanguage}`)
+    let q6 = req.body.bookauthor == "" ? "" : (q1 + q5 + q4 + q2 + q3 == "" ? ` WHERE name like '%${req.body.bookauthor}%'` : ` OR author like '%${req.body.bookauthor}%'`)
     const query = `SELECT * FROM book JOIN writes on book.isbn=writes.isbn join users on writes.afm=users.afm${q1}${q2}${q3}${q4}${q5}${q6}`
 
     sql.query(query, (err, res) => {
@@ -552,32 +549,3 @@ app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'an
         result.render("publish", { layout: "main-user", message: "Το ανέβασμα ολοκληρώθηκε" });
     })
 })
-
-
-app.get('/up', (req, res) => {
-    const s3 = new aws.S3();
-    // const fileName = req.query['file-name'];
-    // const fileType = req.query['file-type'];
-    const fileName = 'up_logo';
-    const fileType = '.jpg';
-    const s3Params = {
-        Bucket: S3_BUCKET,
-        Key: fileName,
-        Expires: 60,
-        ContentType: fileType,
-        ACL: 'public-read'
-    };
-
-    s3.getSignedUrl('putObject', s3Params, (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.end();
-        }
-        const returnData = {
-            signedRequest: data,
-            url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-        };
-        res.write(JSON.stringify(returnData));
-        res.end();
-    });
-});

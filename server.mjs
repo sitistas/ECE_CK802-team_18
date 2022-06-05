@@ -522,9 +522,6 @@ app.get("/review/:id", (req, result) => {
                     result.redirect('/');
                 }
                 else {
-                    // returnTo = req.originalUrl;
-                    // console.log('Details2', details);
-                    // console.log('Details2');
                     result.redirect(returnTo);
                 }
             });   
@@ -538,16 +535,24 @@ app.get("/review/:id", (req, result) => {
                     result.redirect('/');
                 }
                 else {
-                    // returnTo = req.originalUrl;
-                    // console.log('Details2', details);
-                    // console.log('Details2');
                     result.redirect(returnTo);
                 }
             });   
         }
 
-
-        // result.redirect("/") }
+        if (action=='delete'){
+            // console.log(req.params)
+            sql.query(`DELETE FROM suggests WHERE id='${req.params.id}'`);
+            sql.query(`DELETE FROM draft WHERE id='${req.params.id}'`, (err, res) => {
+                if (err) {
+                    console.log(err.message);
+                    result.redirect(returnTo);
+                }
+                else {
+                    result.redirect('/admin');
+                }
+            });   
+        }
 }})
 
 

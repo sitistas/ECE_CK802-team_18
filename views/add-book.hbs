@@ -39,8 +39,9 @@
             {{success}}
         </div>
         {{/if}}<br>
-        Προσθήκη Εξωφύλλου <br><br>
-        <input class="simple-file-upload" data-preview="true" name="user[avatar_url]" id="user_avatar_url"><br><br>
+        Προσθήκη Εξωφύλλου (όριο 2 MB) <br><br>
+        <input class="simple-file-upload" data-preview="true" name="book[cover_url]" id="book_cover_url"
+            tag="book_covers" data-accepted="image/*" data-maxFileSize="2"><br><br>
         <button type="submit" value="submit" id="submit">Προσθήκη Βιβλίου</button>
     </form>
 </div>

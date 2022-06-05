@@ -142,7 +142,7 @@ nav ul {
     }
 
     .dropdown-content {
-        margin-left: 30%;
+        margin-left: 40%;
     }
 
     /* Χρειάζεται καλύτερη μεταχείριση για όσα έχουν dropdown menu */
@@ -369,15 +369,9 @@ input[type="file"]:hover {
     width: 60%;
 }
 
-/* .form-container select {
-    text-align: center;
-    padding: 0.5em;
-    margin: 1em;
-    border: 0.2em solid #002c2c;
-    border-radius: 20px;
-    width: 50%;
-    transition: outline 0.2s;
-} */
+.draft-data button{
+    height: 2.5em;
+}
 
 textarea,
 select {

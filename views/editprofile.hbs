@@ -1,0 +1,30 @@
+<div class="personal-data">
+    <fieldset>
+        <form action="/updateprofile/{{afm}}" method="post">
+    <h2>Προσωπικά στοιχεία</h2>
+    <h3>ΑΦΜ</h3>
+    <a>{{afm}}</a>
+    <h3>Ονοματεπώνυμο</h3>
+    <input type="text" name="name" value="{{name}}"></a>
+    {{!-- <h3>Ημερομηνία Γέννησης</h3>
+    <a>{{birthdate}}</a> --}}
+    <h3>Τηλέφωνο</h3>
+    <input type="text" name="phone" value="{{phone}}"></a>
+    <h3>Διεύθυνση</h3>
+    <input type="address" name="address" value="{{address}}"></a>
+    <h3>Πόλη</h3>
+    <input type="text" name="city" value="{{city}}"></a>
+    <h3>Email</h3>
+    <input type="text" name="email" value="{{email}}"></a>
+    <br><br>
+    <button type="submit" name="update" value="update" id="update">Αποθήκευση</button>
+    </form>
+    <br>
+    {{#if message}}
+                <a style="color: green">Επιτυχής Αποθήκευση!</a>
+    {{/if}}
+    {{#if error}}
+                <a style="color: red">Προέκυψε πρόβλημα, προσπάθησε ξανά</a>
+    {{/if}}
+    </fieldset>
+<br><br><br>

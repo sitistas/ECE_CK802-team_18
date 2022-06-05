@@ -369,8 +369,12 @@ input[type="file"]:hover {
     width: 60%;
 }
 
-.draft-data button{
+.draft-data button, .personal-data button{
     height: 2.5em;
+}
+
+.personal-data input{
+    width: 30%;
 }
 
 textarea,
@@ -497,6 +501,25 @@ button:hover {
 }
 
 .requests a:hover {
+    text-decoration: none;
+    color: #006b6b;
+    transition: 0.2s;
+}
+
+.users-list ul{
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.users-list{
+    text-align: center;
+}
+
+.users-list a {
+    color: black;
+    text-decoration: none;
+}
+.users-list a:hover {
     text-decoration: none;
     color: #006b6b;
     transition: 0.2s;

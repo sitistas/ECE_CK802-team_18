@@ -9,6 +9,7 @@ import bcrypt from 'bcrypt'
 let db = await import('./database-checks.mjs')
 import greekUtils from 'greek-utils';
 import aws from 'aws-sdk';
+import { query } from "express";
 
 aws.config.region = 'eu-central-1';
 const S3_BUCKET = process.env.S3_BUCKET;
@@ -174,6 +175,28 @@ app.get('/drafts/:id', (req, result) => {
     
 })
 
+app.get('/editprofile/:afm', (req, result) => {
+    returnTo = req.originalUrl;
+    if (req.session.loggedUserRole!='admin') {
+        result.redirect("/");
+    }
+    else {
+        sql.query(`SELECT * FROM users WHERE afm='${req.params.afm}'`, (err, res) => {
+            if (err) {
+                result.redirect('/')
+            }
+            else {
+                let details = res.rows[0];
+                result.render('editprofile', {
+                    name: details.name, afm: details.afm, birthdate: details.birthdate, phone: details.phone, address: details.address, city: details.city, email: details.email, message: req.query.message, error: req.query.error,
+                    layout: 'main-admin'
+                });
+            }
+        });
+
+    }
+})
+
 
 app.get("/latest", (req, result) => {
     sql.query(`SELECT * FROM book ORDER BY release_year DESC LIMIT 7`, (err, res) => {
@@ -191,6 +214,23 @@ app.get("/latest", (req, result) => {
     });
 })
 
+app.get("/listallusers", (req, result) => {
+    if (req.session.loggedUserRole!='admin'){
+        result.redirect('/');
+    }
+    sql.query(`SELECT name,afm FROM users ORDER BY name ASC`, (err, res) => {
+        if (err) {
+            console.log(err.message);
+        }
+        else {
+            // returnTo = req.originalUrl;
+            result.render('listallusers', {
+                user: res.rows,
+                layout: "main-admin"
+            });
+        }
+    })
+})
 
 app.get("/login", (req, res) => {
     if (req.session.loggedUserId){
@@ -464,6 +504,33 @@ app.post('/results', (req, result) => {
     });
 
 })
+
+
+app.post("/updateprofile/:afm", (req, result) => {
+   
+
+
+    if (req.session.loggedUserRole!='admin') {
+        result.redirect('/');
+    }
+
+        const query = {
+            text: `UPDATE users SET name=$1, phone=$2, address=$3, city=$4, email=$5 WHERE afm='${req.params.afm}'`,
+            values: [req.body.name, req.body.phone, req.body.address, req.body.city, req.body.email]
+        }
+
+        sql.query(query, (err, res) => {
+            if (err) {
+                result.redirect("/editprofile/"+req.params.afm+"/?error=err");
+            }
+            else {
+                result.redirect("/editprofile/"+req.params.afm+"/?message=success");
+            }
+        })
+    
+})
+
+
 
 app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'analysis', maxCount: 1 }, { name: 'chapter', maxCount: 1 }]), (req, result) => {
     let todaysDate = new Date();

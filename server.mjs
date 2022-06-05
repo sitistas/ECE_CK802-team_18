@@ -385,7 +385,7 @@ app.get("/signup", (req, res) => {
 
 //Προσθήκη βιβλίου από admin
 app.post("/add-book", (req, result) => {
-    console.log(req.body.book.cover_url);
+    // console.log(req.body.book.cover_url);
     let aafm = "" //author afm
     db.getBookByISBN(req.body.isbn, (err, user) => {
         if (user != undefined) {

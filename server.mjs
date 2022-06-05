@@ -244,7 +244,7 @@ app.get("/login", (req, res) => {
 //Αποσύνδεση
 app.get("/logout", (req, res) => {
     req.session.destroy();
-    res.redirect(returnTo);
+    res.redirect("/");
 })
 
 //Τα αιτήματά μου για έκδοση

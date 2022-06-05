@@ -5,5 +5,4 @@
 
 7) favorites
 
-8) admin page: max width στα πλαίσια των αιτημάτων
 9) drop down menus: διαστάσεις (not auth) και διάταξη (mobile)?

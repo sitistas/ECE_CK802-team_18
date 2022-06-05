@@ -166,7 +166,7 @@ app.get('/drafts/:id', (req, result) => {
         else {
             let details = res.rows[0];
             result.render('drafts', {
-                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole == 'admin'),
+                id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole == 'admin'), analysis: details.analysis, snippet: details.snippet, abstract: details.abstract,
                 layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
             });
         }
@@ -244,7 +244,7 @@ app.get("/login", (req, res) => {
 //Αποσύνδεση
 app.get("/logout", (req, res) => {
     req.session.destroy();
-    res.redirect(returnTo);
+    res.redirect("/");
 })
 
 //Τα αιτήματά μου για έκδοση

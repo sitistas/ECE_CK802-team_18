@@ -1,95 +1,39 @@
-<h1>Admin dashboard</h1>
-
+{{!-- <h1>Admin dashboard</h1> --}}
+<div class="admin">
 <h2>Αιτήματα εκδόσεων έργων</h2>
 <div class="requests">
+    
     <div id="pending">
         <h3>Εκκρεμή</h3>
-        <a href="request1.html">
             <ul>
-                <li>Χαλαντζούκας Φοίβος</li>
-                <li>Ο τελευταίος πιστός</li>
-                <li>Ημ.: 13/2</li>
+            {{#each drafts}}
+            {{#unless is_reviewed}}
+                {{> draft-partial title=title normal_title=normal_title}}
+            {{/unless}}
+            {{/each}}
             </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a>
     </div>
     <div id="accepted">
         <h3>Εγκεκριμένα</h3>
-        <a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
+         <ul>
+            {{#each drafts}}
+            {{#if is_accepted}}
+                {{> draft-partial title=title normal_title=normal_title}}
+            {{/if}}
+            {{/each}}
             </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a>
     </div>
     <div id="rejected">
         <h3>Απορριφθέντα</h3>
-        <a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
+         <ul>
+            {{#each drafts}}
+            {{#unless is_accepted}}
+                {{#if is_reviewed}}
+                    {{> draft-partial title=title normal_title=normal_title}}
+                {{/if}}
+            {{/unless}}
+            {{/each}}
             </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a><a href="">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-        </a>
     </div>
+</div>
 </div>

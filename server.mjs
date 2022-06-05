@@ -243,7 +243,7 @@ app.post("/register", async (req, result) => {
         }
     })
 
-    console.log(req.body)
+    // console.log(req.body)
     if (req.body.password != req.body.repeatPassword) {
         result.render('signup', { message: 'Οι κωδικοί πρόσβασης δεν ταιριάζουν' });
     }
@@ -476,8 +476,9 @@ app.get('/drafts/:id', (req, result) => {
                 result.redirect("/");
             }})
     }
-    
+
         console.log('test')
+        returnTo=req.originalUrl;
         sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
             if (err) {
                 console.log(err.message);
@@ -485,8 +486,9 @@ app.get('/drafts/:id', (req, result) => {
             }
             else {
                 let details = res.rows[0];
+                // console.log(details);
                 result.render('drafts', {
-                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_accepted, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
+                    id: req.params.id, name: details.name, title: details.title, category: details.category, words: details.words, comments: details.comments, adminComments: details.admin_comments, isAccepted: details.is_approved, isReviewed: details.is_reviewed, admin: (req.session.loggedUserRole=='admin'),
                     layout: req.session.loggedUserRole == 'admin' ? "main-admin" : "main-user"
                 });
             }
@@ -504,14 +506,49 @@ app.get("/add-book", (req, res) => {
     else { res.redirect("/") }
 })
 
-app.get("/review", (req, res) => {
-    console.log(req)
-    if (req.session.loggedUserRole == 'admin') {
+app.get("/review/:id", (req, result) => {
+    // console.log(req)
+    console.log('test1')
+    if (req.session.loggedUserRole != 'admin') {
+        // console.log(loggedUserRole)
+        result.redirect("/")}
+    else {
+        console.log('test2')
+        let action=req.query.edit;
+        if (action=='approve'){
+            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=true, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
+                if (err) {
+                    console.log(err.message);
+                    result.redirect('/');
+                }
+                else {
+                    // returnTo = req.originalUrl;
+                    // console.log('Details2', details);
+                    // console.log('Details2');
+                    result.redirect(returnTo);
+                }
+            });   
+        }
 
-        res.render("profile", { layout: "main-admin" });
-    }
-    else { res.redirect("/") }
-})
+        if (action=='reject'){
+            // console.log(req.params)
+            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=false, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
+                if (err) {
+                    console.log(err.message);
+                    result.redirect('/');
+                }
+                else {
+                    // returnTo = req.originalUrl;
+                    // console.log('Details2', details);
+                    // console.log('Details2');
+                    result.redirect(returnTo);
+                }
+            });   
+        }
+
+
+        // result.redirect("/") }
+}})
 
 
 app.post("/add-book", (req, result) => {

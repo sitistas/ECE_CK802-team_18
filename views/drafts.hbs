@@ -1,6 +1,6 @@
 <div class="draft-data">
     <fieldset>
-        <form action="/review" method="get">
+        <form action="/review/{{id}}" method="get">
             <h2>Στοιχεία αιτήματος</h2>
             <h3>Αριθμός αιτήματος</h3>
             <a>{{id}}</a>
@@ -31,7 +31,7 @@
                 <a>{{adminComments}}</a>
             {{/unless}}
             {{#if admin}}
-                <textarea id="admincomments" name=admin"comments" rows="3" placeholder="{{adminComments}}"></textarea>
+                <textarea id="admincomments" name="admincomments" rows="3" placeholder="{{adminComments}}"></textarea>
                 <br>
                 <select name="edit" id="edit">
                     <option value="approve">Έγκριση αιτήματος</option>

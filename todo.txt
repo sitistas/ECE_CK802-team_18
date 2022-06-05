@@ -1,3 +1,0 @@
-2) admin page
-3) γέμισμα βάσης
-9) drop down menus: διαστάσεις (not auth) και διάταξη (mobile)?

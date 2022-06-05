@@ -478,6 +478,16 @@ app.get("/add-book", (req, res) => {
     else { res.redirect("/") }
 })
 
+app.get("/review", (req, res) => {
+    console.log(req)
+    if (req.session.loggedUserRole == 'admin') {
+
+        res.render("profile", { layout: "main-admin" });
+    }
+    else { res.redirect("/") }
+})
+
+
 app.post("/add-book", (req, result) => {
     let aafm = "" //author afm
     log.getBookByISBN(req.body.isbn, (err, user) => {

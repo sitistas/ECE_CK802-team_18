@@ -1,39 +1,41 @@
 <div class="draft-data">
     <fieldset>
-    <h2>Στοιχεία αιτήματος</h2>
-    <h3>Αριθμός αιτήματος</h3>
-    <a>{{id}}</a>
-    <h3>Συγγραφέας</h3>
-    <a>{{name}}</a>
-    <h3>Τίτλος</h3>
-    <a>{{title}}</a>
-    <h3>Κατηγορία</h3>
-    <a>{{category}}</a>
-    <h3>Αριθμός λέξεων</h3>
-    <a>{{words}}</a>
-    <h3>Σχόλια</h3>
-    <a>{{comments}}</a>
-    <h3>Κατάσταση αιτήματος</h3>
-    {{#unless isReviewed}}
-        <a>Έχει υποβληθεί</a>
+        <form action="/review" method="get">
+            <h2>Στοιχεία αιτήματος</h2>
+            <h3>Αριθμός αιτήματος</h3>
+            <a>{{id}}</a>
+            <h3>Συγγραφέας</h3>
+            <a>{{name}}</a>
+            <h3>Τίτλος</h3>
+            <a>{{title}}</a>
+            <h3>Κατηγορία</h3>
+            <a>{{category}}</a>
+            <h3>Αριθμός λέξεων</h3>
+            <a>{{words}}</a>
+            <h3>Σχόλια</h3>
+            <a>{{comments}}</a>
+            <h3>Κατάσταση αιτήματος</h3>
+            {{#unless isReviewed}}
+                <a>Έχει υποβληθεί</a>
+                    {{#if admin}}
+                        <br>
+                        <button type="submit" name="approve" value="approve" id="approve">Έγκριση</button>
+                        <button type="submit" name="reject" value="reject" id="reject">Απόρριψη</button>
+                    {{/if}}
+            {{/unless}}
+            {{#if isAccepted}}
+                <a style="color: green">Έχει εγκριθεί</a>
+            {{/if}}
+            {{#unless isAccepted}}
+                {{#if isReviewed}}
+                    <a style="color: red">Έχει αποριφθεί</a>
+                {{/if}}
+            {{/unless}}
             {{#if admin}}
                 <br>
-                <button type="submit" value="approve" id="approve">Έγκριση</button>
-                <button type="submit" value="reject" id="reject">Απόρριψη</button>
+                <button type="submit" name="delete" value="delete" id="delete">Διαγραφή αιτήματος</button>
             {{/if}}
-    {{/unless}}
-    {{#if isAccepted}}
-        <a style="color: green">Έχει εγκριθεί</a>
-    {{/if}}
-    {{#unless isAccepted}}
-        {{#if isReviewed}}
-            <a style="color: red">Έχει αποριφθεί</a>
-        {{/if}}
-    {{/unless}}
-    {{#if admin}}
-        <br>
-        <button type="submit" value="delete" id="delete">Διαγραφή αιτήματος</button>
-    {{/if}}
-    <br><br>
+        </form>
+        <br><br>
     </fieldset>
 </div>

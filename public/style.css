@@ -231,13 +231,13 @@ body {
 
 .best-sellers {
     grid-column: 2;
-    justify-content: start;
+    /* justify-content: start; */
     gap: 2.5em;
 }
 
 .books-list .book-results {
     grid-column: 2;
-    justify-content: start;
+    /* justify-content: start; */
     gap: 2.5em;
 }
 
@@ -435,6 +435,11 @@ button:hover {
 
 .book-cell {
     padding: 1rem;
+    padding-left: 5rem;
+}
+
+.book-cell ul{
+    padding-left: 0;
 }
 
 .book-cell img {
@@ -465,7 +470,7 @@ button:hover {
 }
 
 .spacing2 {
-    padding: 2em;
+    padding: 4em;
 }
 
 #description {

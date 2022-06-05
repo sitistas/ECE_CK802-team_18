@@ -468,14 +468,24 @@ button:hover {
 
 .requests {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 
-.requests ul {
+.admin h2, .requests h3{
+    text-align: center;
+}
+
+.requests li {
     list-style-type: none;
     border: 0.1em #002c2c solid;
     padding: 0.4em;
     border-radius: 0.5em;
+    margin-bottom: 0.25em;
+}
+
+.requests ul {
+    padding: 0;
+    list-style-type: none;
 }
 
 .requests a {
@@ -483,7 +493,7 @@ button:hover {
     color: black;
 }
 
-.requests a:hover {
+.requests li:hover {
     text-decoration: none;
     color: #006b6b;
     transition: 0.2s;

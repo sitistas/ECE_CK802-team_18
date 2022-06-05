@@ -130,12 +130,26 @@ app.post("/upload", upload.fields([{ name: 'summary', maxCount: 1 }, { name: 'an
     // console.log(req)
 })
 
-app.get("/admin", (req, res) => {
+app.get("/admin", (req, result) => {
     if (req.session.loggedUserRole == 'admin') {
-        console.log("GET / session=", req.session);
-        res.render("admin", { layout: "main-admin" });
+        sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm`, (err, res) => {
+            if (err) {
+                console.log(err.message);
+            }
+            else {
+                // details = res.rows[0];
+                // console.log(res.rows);
+                returnTo = req.originalUrl;
+                // console.log('Details2', details);
+                result.render('admin', {
+                    drafts: res.rows,
+                    // page_title: 'Best Sellers',
+                    layout: "main-admin"
+                });
+            }
+        });
     }
-    else { res.redirect("/") }
+    else { result.redirect("/") }
 })
 
 app.get("/best-sellers", (req, result) => {

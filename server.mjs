@@ -48,7 +48,7 @@ app.listen(PORT, () => {
 
 //Αρχική σελίδα
 app.get("/", (req, result) => {
-    sql.query(`SELECT * FROM book LIMIT 7`, (err, res) => {
+    sql.query(`SELECT * FROM book ORDER BY sales DESC LIMIT 10`, (err, res) => {
         if (err) {
             console.log(err.message);
         }
@@ -92,7 +92,7 @@ app.get("/admin", (req, result) => {
 
 //Σελίδα με τα best sellers
 app.get("/best-sellers", (req, result) => {
-    sql.query(`SELECT * FROM book ORDER BY sales LIMIT 10`, (err, res) => {
+    sql.query(`SELECT * FROM book ORDER BY sales DESC LIMIT 10`, (err, res) => {
         if (err) {
             console.log(err.message);
         }

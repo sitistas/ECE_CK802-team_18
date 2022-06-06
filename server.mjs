@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 let returnTo = "/";
-let draftIndex = "" //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
+let draftIndex = 0 //Για την αρίθμηση αιτημάτων και το αντίστοιχο όνομα των αρχείων που ανεβαίνουν
 
 console.log(process.env.PORT)
 // Εκκίνηση του εξυπηρετητή
@@ -159,7 +159,7 @@ app.get('/drafts/:id', (req, result) => {
     }
 
     returnTo = req.originalUrl;
-    sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id='${req.params.id}'`, (err, res) => {
+    sql.query(`SELECT * FROM draft JOIN suggests on draft.id=suggests.id JOIN users on users.afm=suggests.afm WHERE draft.id=${req.params.id}`, (err, res) => {
         if (err) {
             result.redirect('/')
         }
@@ -294,6 +294,7 @@ app.get("/publish", (req, res) => {
 
     sql.query(`SELECT id FROM draft ORDER BY ID DESC LIMIT 1`, (err, res) => {
         draftIndex = parseInt(res.rows[0].id) + 1;
+        console.log(draftIndex);
     })
 
     returnTo = req.originalUrl;
@@ -314,7 +315,7 @@ app.get("/review/:id", (req, result) => {
     else {
         let action = req.query.edit;
         if (action == 'approve') {
-            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=true, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
+            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=true, admin_comments='${req.query.admincomments}' WHERE id=${req.params.id}`, (err, res) => {
                 if (err) {
                     result.redirect('/');
                 }
@@ -325,7 +326,7 @@ app.get("/review/:id", (req, result) => {
         }
 
         if (action == 'reject') {
-            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=false, admin_comments='${req.query.admincomments}' WHERE id='${req.params.id}'`, (err, res) => {
+            sql.query(`UPDATE draft SET is_reviewed=true, is_approved=false, admin_comments='${req.query.admincomments}' WHERE id=${req.params.id}`, (err, res) => {
                 if (err) {
                     result.redirect('/');
                 }
@@ -336,8 +337,8 @@ app.get("/review/:id", (req, result) => {
         }
 
         if (action == 'delete') {
-            sql.query(`DELETE FROM suggests WHERE id='${req.params.id}'`);
-            sql.query(`DELETE FROM draft WHERE id='${req.params.id}'`, (err, res) => {
+            sql.query(`DELETE FROM suggests WHERE id=${req.params.id}`);
+            sql.query(`DELETE FROM draft WHERE id=${req.params.id}`, (err, res) => {
                 if (err) {
                     result.redirect(returnTo);
                 }
@@ -388,13 +389,13 @@ app.post("/add-book", multer1.none(), (req, result) => {
     let aafm = "" //author afm
     db.getBookByISBN(req.body.isbn, (err, user) => {
         if (user != undefined) {
-            result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN' });
+            result.render('add-book', { message: 'Υπάρχει ήδη βιβλίο με αυτό το ISBN', layout: "main-admin" });
         }
     })
 
     db.getUserByName(req.body.author, (err, user) => {
         if (user == undefined) {
-            result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα' });
+            result.render('add-book', { message: 'Δεν υπάρχει συγγραφέας με αυτό το όνομα', layout: "main-admin" });
 
         }
         else {
@@ -415,11 +416,11 @@ app.post("/add-book", multer1.none(), (req, result) => {
             console.log('Inserted values\n\n\n\n');
             sql.query(query1, (err, res) => {
                 if (err) {
-                    result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' });
+                    result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' , layout: "main-admin"});
                 }
                 else {
                     sql.query(query2);
-                    result.render('add-book', { success: 'Επιτυχής προσθήκη!' });
+                    result.render('add-book', { success: 'Επιτυχής προσθήκη!' , layout: "main-admin"});
                 }
             })
         }

@@ -1,6 +1,8 @@
 # ECE_CK802-team_18
 Ιστοσελίδα εκδοτικού οίκου στα πλαίσια του μαθήματος "Προγραμματισμός Διαδικτύου"
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4031884c-b65f-49e1-81e6-0a6ffcf09a4e/deploy-status)](https://app.netlify.com/sites/web-project-team18/deploys)
+
 ~~Μπορείτε να δείτε την σελίδα στον σύνδεσμο: [Εφαρμογή εκδοτικού οίκου](https://web-project-team18.herokuapp.com/)~~
 
 ## Τρόπος εκπόνησης της εργασίας

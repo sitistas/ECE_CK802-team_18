@@ -12,7 +12,6 @@ const client = new Client({
 client.connect((err) => {
     if (err)
         throw err;
-    console.log(process.env.DATABASE_URL);
 });
 
 module.exports = client

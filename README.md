@@ -39,7 +39,7 @@
 
 ---
 
-# Website of a publishing house within the framework of the "Internet Programming" course
+# Website of a publishing house - Part of the "Web Programming" course
 
 You can visit the page at the link: [Publishing House Webpage](https://web-project-team18.herokuapp.com/)
 

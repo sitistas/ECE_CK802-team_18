@@ -1,5 +1,6 @@
 import express from "express";
-import { engine } from "express-handlebars";
+import exphbs from "express-handlebars"; // default import
+const { engine } = exphbs;               // extract manually
 import sql from './db.heroku-pg.js'
 import { convertDate } from "./date.mjs";
 import Session from './setup-session.mjs'
@@ -416,11 +417,11 @@ app.post("/add-book", multer1.none(), (req, result) => {
             console.log('Inserted values\n\n\n\n');
             sql.query(query1, (err, res) => {
                 if (err) {
-                    result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά' , layout: "main-admin"});
+                    result.render('add-book', { message: 'Προέκυψε κάποιο πρόβλημα. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά', layout: "main-admin" });
                 }
                 else {
                     sql.query(query2);
-                    result.render('add-book', { success: 'Επιτυχής προσθήκη!' , layout: "main-admin"});
+                    result.render('add-book', { success: 'Επιτυχής προσθήκη!', layout: "main-admin" });
                 }
             })
         }

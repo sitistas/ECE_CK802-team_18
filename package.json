@@ -16,7 +16,7 @@
     "aws-sdk": "^2.1354.0",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.1",
-    "ejs": "^3.1.10",
+    "ejs": "^3.1.8",
     "express": "^4.19.2",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",

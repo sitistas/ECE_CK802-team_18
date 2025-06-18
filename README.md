@@ -1,6 +1,6 @@
 # Ιστοσελίδα εκδοτικού οίκου στο πλαίσιο του μαθήματος "Προγραμματισμός Διαδικτύου"
 
-Μπορείτε να δείτε την σελίδα στον σύνδεσμο: [Εφαρμογή εκδοτικού οίκου](https://web-project-team18.herokuapp.com/)
+Μπορείτε να δείτε την σελίδα στον σύνδεσμο: [Εφαρμογή εκδοτικού οίκου](https://ece-ck802-team-18.onrender.com/)
 
 Δημιουργοί:
 
@@ -41,7 +41,7 @@
 
 # Website of a publishing house - Part of the "Web Programming" course
 
-You can visit the page at the link: [Publishing House Webpage](https://web-project-team18.herokuapp.com/)
+You can visit the page at the link: [Publishing House Webpage](https://ece-ck802-team-18.onrender.com/)
 
 Creators:
 
